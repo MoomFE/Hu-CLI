@@ -4,6 +4,10 @@
   "version": "0.0.0",
   "description": "",
   "scripts": {
+    "h": "bin\\hu -h",
+    "help": "bin\\hu --help",
+    "v": "bin\\hu -v",
+    "version": "bin\\hu --version",
     "build": "bin\\hu build",
     "watch": "bin\\hu watch"
   },
