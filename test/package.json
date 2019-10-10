@@ -1,0 +1,16 @@
+{
+  "private": true,
+  "name": "@moomfe/hu-cli-test",
+  "version": "0.0.0",
+  "description": "",
+  "scripts": {
+    "build": "bin\\hu build",
+    "watch": "bin\\hu watch"
+  },
+  "keywords": [],
+  "author": "Wei Zhang",
+  "license": "MIT",
+  "dependencies": {
+    
+  }
+}

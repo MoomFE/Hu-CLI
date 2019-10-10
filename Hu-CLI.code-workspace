@@ -1,0 +1,27 @@
+{
+  "folders": [
+    {
+      "path": "."
+    },
+    {
+      "path": "scripts"
+    },
+    {
+      "path": "test"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "bin": true,
+      "test": true,
+      "scripts": true,
+      "node_modules": true,
+      "package-lock.json": true,
+      "Hu-CLI.code-workspace": true,
+      ".gitignore": true
+    },
+    "editor.tabSize": 2,
+    "editor.detectIndentation": false,
+    "breadcrumbs.enabled": false
+  }
+}

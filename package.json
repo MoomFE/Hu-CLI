@@ -1,0 +1,24 @@
+{
+  "name": "@moomfe/hu-cli",
+  "version": "1.0.0-beta.0",
+  "description": "",
+  "keywords": [],
+  "author": "Wei Zhang",
+  "license": "MIT",
+  "bin": {
+    "hu": "bin/hu.js"
+  },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MoomFE/Hu-CLI.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MoomFE/Hu-CLI/issues"
+  },
+  "homepage": "https://github.com/MoomFE/Hu-CLI#readme",
+  "dependencies": {
+    "commander": "^3.0.2",
+    "rollup": "^1.23.1"
+  }
+}
