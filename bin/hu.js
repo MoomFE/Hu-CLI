@@ -10,18 +10,18 @@ program.version(
 
 program
   .command( 'watch' )
-  .action(function(){
-    console.log( arguments );
+  .action( command => {
+    console.log( command );
   });
 
 program
   .command( 'build' )
-  .action(function(){
-    console.log( arguments );
+  .action( command => {
+    console.log( command );
   });
 
 program.on('--help', function(){
-  console.log( arguments );
+  
 });
 
 
