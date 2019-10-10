@@ -10,14 +10,14 @@ program.version(
 
 program
   .command( 'watch' )
-  .action( command => {
-    console.log( command );
+  .action(() => {
+    require('../scripts/init/watch.js')();
   });
 
 program
   .command( 'build' )
-  .action( command => {
-    console.log( command );
+  .action(() => {
+    require('../scripts/init/build.js')();
   });
 
 program.on('--help', function(){
