@@ -2,10 +2,22 @@
 
 module.exports = {
 
-  // 项目打包入口目录
-  inputDir: './src',
+  // 打包入口文件
+  input: 'index.js',
+  // 打包输出文件
+  output: 'index.js',
 
-  // 项目打包输出目录
+  // 多项目打包
+  pipe: [
+    // {
+    //   input: '',
+    //   output: ''
+    // }
+  ],
+
+  // 打包入口目录
+  inputDir: './src',
+  // 打包输出目录
   outputDir: './dist',
 
   // 项目兼容性
@@ -55,4 +67,16 @@ module.exports = {
 
 /**
  * 项目打包输出目录 ( outputDir )
+ */
+
+/**
+ * 项目打包入口文件 ( input )
+ */
+
+/**
+ * 项目打包输出文件 ( output )
+ */
+
+/**
+ * 项目打包输出文件 ( pipe )
  */
