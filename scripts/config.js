@@ -2,13 +2,13 @@
 
 module.exports = {
 
-  /** 项目打包入口目录 */
+  // 项目打包入口目录
   inputDir: './src',
 
-  /** 项目打包输出目录 */
+  // 项目打包输出目录
   outputDir: './dist',
 
-  /** 项目兼容性 */
+  // 项目兼容性
   browserslist: [
     "Chrome >= 49",
     "Firefox >= 47",
