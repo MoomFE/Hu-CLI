@@ -15,6 +15,7 @@
       "bin": true,
       "test": true,
       "scripts": true,
+      "LICENSE": true,
       "node_modules": true,
       "package-lock.json": true,
       "Hu-CLI.code-workspace": true,
