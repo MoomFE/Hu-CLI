@@ -11,10 +11,9 @@ module.exports = async () => {
   const isConfigFileExists = await fs.pathExists( configFile );
   let config;
 
-  print.start();
-
   // 未找到配置文件
   if( !isConfigFileExists ){
+    print.start();
     print.end(`未能在指令执行目录 ( ${ root.yellow } ) 查找到配置文件 ( ${ 'hu.config.js'.yellow } ), 请确认后重试 !`);
     process.exit( 0 );
   }
@@ -23,6 +22,7 @@ module.exports = async () => {
   try {
     config = require( configFile );
   } catch ( error ){
+    print.start();
     print.log(`配置文件 ( ${ configFile.yellow } ) 执行时发生异常, 请确认无误后重试 !`);
     print.error( error );
     print.end();
@@ -44,6 +44,7 @@ module.exports = async () => {
   }
   // 非正常配置文件
   else{
+    print.start();
     print.end(`配置文件 ( ${ configFile.yellow } ) 不支持此格式, 请确认后重试 !`);
     process.exit( 0 );
   }

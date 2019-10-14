@@ -3,6 +3,7 @@ const print = require('../../utils/print.js');
 const fs = require('fs-extra');
 const pluginCommonjs = require('rollup-plugin-commonjs');
 const pluginNodeResolve = require('rollup-plugin-node-resolve');
+const pluginConsole = require('../../plugins/console');
 
 
 module.exports = async () => {
@@ -17,7 +18,8 @@ module.exports = async () => {
         input: config.input,
         plugins: [
           pluginCommonjs(),
-          pluginNodeResolve()
+          pluginNodeResolve(),
+          pluginConsole()
         ]
       },
       output: {
@@ -34,6 +36,7 @@ module.exports = async () => {
     const isInputFileExists = await fs.pathExists( config.input );
 
     if( !isInputFileExists ){
+      print.start();
       print.end(`未找到需要打包的入口文件 ( ${ config.input.yellow } ), 请确认后重试 !`);
       process.exit( 0 );
     }
