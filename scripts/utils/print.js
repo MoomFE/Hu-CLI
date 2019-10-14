@@ -1,5 +1,5 @@
-require('colors');
 require('@moomfe/zenjs');
+const colors = require('colors');
 const package = require('../../package.json');
 
 
@@ -25,6 +25,14 @@ module.exports = {
   end(){
     Reflect.apply( this.log, this, arguments );
     console.log( hr2 );
+  },
+
+  error( ...args ){
+    this.log(
+      args.map( message => {
+        return colors.red( message );
+      })
+    );
   }
 
 };

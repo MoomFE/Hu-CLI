@@ -1,6 +1,9 @@
 
 
+
 module.exports = async () => {
-  const originConfig = await require('./util/getConfigFile.js')();
+  const originConfigs = await require('./util/getConfigFile.js')();
+  const configs = require('./util/compilerConfigs')( originConfigs );
+
 
 };
