@@ -13,12 +13,21 @@ module.exports = async () => {
 
   // 生成 rollup 的配置
   for( const config of configs ){
+    const plugins = config.plugins();
+
     rollupConfigs.push({
       input: {
         input: config.input,
         plugins: [
           pluginCommonjs(),
           pluginNodeResolve(),
+          {
+            name: '__first__'
+          },
+          ...plugins,
+          {
+            name: '__last__'
+          },
           pluginConsole( config )
         ]
       },

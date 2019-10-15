@@ -12,6 +12,12 @@ module.exports = {
   // 打包输出目录
   outputDir: './dist',
 
+  // 提供给 rollup 的插件列表
+  plugins: () => {
+
+    return [];
+  },
+
   // 项目兼容性
   browserslist: [
     "Chrome >= 49",
@@ -79,4 +85,8 @@ module.exports = {
 
 /**
  * 多项目打包 ( pipe )
+ */
+
+/**
+ * 提供给 rollup 的插件列表 ( plugins )
  */
