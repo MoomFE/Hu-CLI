@@ -12,24 +12,23 @@ module.exports = async () => {
   let config;
 
   // 未找到配置文件
-  if( !isConfigFileExists ){
-    print.start();
-    print.end(`未能在指令执行目录 ( ${ yellow( root ) } ) 查找到配置文件 ( ${ yellow('hu.config.js') } ), 请确认后重试 !`);
-    process.exit( 0 );
-  }
-
-  // 配置文件报错或无内容导出
-  try {
-    config = require( configFile );
-  } catch ( error ){
-    print.start();
-    print.log(`配置文件 ( ${ yellow( configFile ) } ) 执行时发生异常, 请确认无误后重试 !`);
-    print.error( error );
-    print.end();
-    process.exit( 0 );
-  } finally {
-    // 确保配置文件重载时可以读取到最新的配置文件
-    delete require.cache[ configFile ];
+  if( isConfigFileExists === false ){
+    // 使用默认配置
+    config = [{}];
+  }else{
+    // 配置文件报错或无内容导出
+    try {
+      config = require( configFile );
+    } catch ( error ){
+      print.start();
+      print.log(`配置文件 ( ${ yellow( configFile ) } ) 执行时发生异常, 请确认无误后重试 !`);
+      print.error( error );
+      print.end();
+      process.exit( 0 );
+    } finally {
+      // 确保配置文件重载时可以读取到最新的配置文件
+      delete require.cache[ configFile ];
+    }
   }
 
   // 正常配置文件
