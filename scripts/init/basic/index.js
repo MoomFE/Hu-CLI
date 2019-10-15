@@ -19,7 +19,7 @@ module.exports = async () => {
         plugins: [
           pluginCommonjs(),
           pluginNodeResolve(),
-          pluginConsole()
+          pluginConsole( config )
         ]
       },
       output: {

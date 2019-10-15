@@ -33,6 +33,23 @@ module.exports = {
         return chalk.red( message );
       })
     );
+  },
+
+  stdout( message ){
+    if( process.stdout.isTTY ){
+      process.stdout.clearLine();
+      process.stdout.cursorTo( 0 );
+      process.stdout.write( '- ' + message );
+    }else{
+      this.log( message );
+    }
+  },
+
+  stdoutClear(){
+    if( process.stdout.isTTY ){
+      process.stdout.clearLine();
+      process.stdout.cursorTo( 0 );
+    }
   }
 
 };
