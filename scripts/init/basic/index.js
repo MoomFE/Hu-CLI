@@ -1,5 +1,5 @@
-require('colors');
 const print = require('../../utils/print.js');
+const chalk = require('chalk');
 const fs = require('fs-extra');
 const pluginCommonjs = require('rollup-plugin-commonjs');
 const pluginNodeResolve = require('rollup-plugin-node-resolve');
@@ -37,7 +37,7 @@ module.exports = async () => {
 
     if( !isInputFileExists ){
       print.start();
-      print.end(`未找到需要打包的入口文件 ( ${ config.input.yellow } ), 请确认后重试 !`);
+      print.end(`未找到需要打包的入口文件 ( ${ chalk.yellow( config.input ) } ), 请确认后重试 !`);
       process.exit( 0 );
     }
   }

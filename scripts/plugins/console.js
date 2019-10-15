@@ -1,3 +1,5 @@
+const print = require('../utils/print.js');
+const chalk = require('chalk');
 
 
 module.exports = () => ({
@@ -8,8 +10,8 @@ module.exports = () => ({
    * 构建开始时
    * 输出开始部分的信息
    */
-  buildStart( InputOptions ){
-    
+  buildStart( inputOptions ){
+    print.start(`Input   : ${ chalk.green( inputOptions.input ) }`);
   }
 
 });
