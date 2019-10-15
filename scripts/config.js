@@ -18,6 +18,11 @@ module.exports = {
     return [];
   },
 
+  // 传递给内置插件选项的配置
+  pluginOptions: {
+    
+  },
+
   // 项目兼容性
   browserslist: [
     "Chrome >= 49",
