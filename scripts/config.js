@@ -7,14 +7,6 @@ module.exports = {
   // 打包输出文件
   output: 'index.js',
 
-  // 多项目打包
-  pipe: [
-    // {
-    //   input: '',
-    //   output: ''
-    // }
-  ],
-
   // 打包入口目录
   inputDir: './src',
   // 打包输出目录
@@ -26,6 +18,14 @@ module.exports = {
     "Firefox >= 47",
     "Safari >= 10",
     "Edge >= 14"
+  ],
+
+  // 多项目打包
+  pipe: [
+    // {
+    //   input: '',
+    //   output: ''
+    // }
   ]
 
 };
@@ -78,5 +78,5 @@ module.exports = {
  */
 
 /**
- * 项目打包输出文件 ( pipe )
+ * 多项目打包 ( pipe )
  */
