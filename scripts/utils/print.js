@@ -1,12 +1,12 @@
 require('@moomfe/zenjs');
-const chalk = require('chalk');
+const { green, red } = require('chalk');
 const package = require('../../package.json');
 
 
 const hr = `------------------------------------------------------------------------------------------------------------`;
 const hr2 = `${ hr }\n`;
 const cliName = `Hu-CLI v${ package.version }`;
-const cliInfo = hr.split('').$splice( 6, cliName.length + 2, ` ${ chalk.green( cliName ) } ` ).join('');
+const cliInfo = hr.split('').$splice( 6, cliName.length + 2, ` ${ green( cliName ) } ` ).join('');
 
 
 module.exports = {
@@ -30,7 +30,7 @@ module.exports = {
   error( ...args ){
     this.log(
       args.map( message => {
-        return chalk.red( message );
+        return red( message );
       })
     );
   },

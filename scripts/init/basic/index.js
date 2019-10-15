@@ -1,8 +1,8 @@
-const print = require('../../utils/print.js');
-const chalk = require('chalk');
-const fs = require('fs-extra');
+const { yellow } = require('chalk');
+const { pathExists } = require('fs-extra');
 const pluginCommonjs = require('rollup-plugin-commonjs');
 const pluginNodeResolve = require('rollup-plugin-node-resolve');
+const print = require('../../utils/print.js');
 const pluginConsole = require('../../plugins/console');
 
 
@@ -33,11 +33,11 @@ module.exports = async () => {
 
   // 规避一些小问题
   for( const config of configs ){
-    const isInputFileExists = await fs.pathExists( config.input );
+    const isInputFileExists = await pathExists( config.input );
 
     if( !isInputFileExists ){
       print.start();
-      print.end(`未找到需要打包的入口文件 ( ${ chalk.yellow( config.input ) } ), 请确认后重试 !`);
+      print.end(`未找到需要打包的入口文件 ( ${ yellow( config.input ) } ), 请确认后重试 !`);
       process.exit( 0 );
     }
   }
