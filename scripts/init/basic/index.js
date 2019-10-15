@@ -14,8 +14,8 @@ module.exports = async () => {
   // 生成 rollup 的配置
   for( const config of configs ){
     const plugins = config.plugins();
-
-    rollupConfigs.push({
+    const rollupConfig = {
+      config,
       input: {
         input: config.input,
         plugins: [
@@ -37,7 +37,9 @@ module.exports = async () => {
         name: undefined,
         silent: true
       }
-    });
+    };
+
+    rollupConfigs.push( rollupConfig );
   }
 
   // 规避一些小问题
