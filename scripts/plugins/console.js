@@ -14,7 +14,7 @@ module.exports = ( config ) => {
   return {
 
     name: 'console',
-  
+
     /**
      * 构建开始时
      * 输出开始部分的信息
@@ -75,7 +75,7 @@ module.exports = ( config ) => {
       print.log(`Time    : ${ green( time ) }`);
       print.end();
     }
-  
+
   };
 };
 

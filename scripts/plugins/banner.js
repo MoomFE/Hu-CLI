@@ -24,7 +24,7 @@ module.exports = ( config ) => {
       generateBundle: async function( outputOptions, bundle, isWrite ){
         Object.entries( bundle ).forEach(([ name, options ]) => {
           const ext = extname( options.fileName );
-          
+
           if( extensions.includes( ext ) ){
             options.code = banner + options.code;
           }

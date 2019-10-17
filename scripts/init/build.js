@@ -12,7 +12,7 @@ module.exports = async () => {
     configs.forEach(({ config, input: { plugins } }) => {
       const index = plugins.$findIndex({ name: '__last__' });// 放到除置底外的末尾
       const plugin = pluginTerser( config );
-      
+
       plugins.$add(
         index,
         plugin

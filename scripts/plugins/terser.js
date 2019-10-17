@@ -15,7 +15,7 @@ const defaultOptions = {
     passes: 3,
     /**
      * 不安全的转换
-     * 
+     *
      * new Array( 1, 2, 3 )                         -> [ 1, 2, 3 ]
      * Array( 1, 2, 3 )                             -> [ 1, 2, 3 ]
      * new Object()                                 -> {}
@@ -27,19 +27,19 @@ const defaultOptions = {
     unsafe: true,
     /**
      * 优化表达式
-     * 
+     *
      * Array.prototype.slice.call( a )              ->  [].slice.call(a)
      */
     unsafe_proto: true,
     /**
      * 优化匿名函数
-     * 
+     *
      * (function(){})()                             -> (() => {})()
      */
     unsafe_arrows: true,
     /**
      * 简短写法
-     * 
+     *
      * { a: function(){} }                          -> { a(){} }
      */
     unsafe_methods: true
