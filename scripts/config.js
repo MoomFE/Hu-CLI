@@ -12,6 +12,9 @@ module.exports = {
   // 打包输出目录
   outputDir: './dist',
 
+  // 在打包好的文件最顶部插入一段内容
+  banner: '',
+
   // 提供给 rollup 的插件列表
   plugins: () => {
 
@@ -20,7 +23,11 @@ module.exports = {
 
   // 传递给内置插件选项的配置
   pluginOptions: {
-    
+    // 传递给 banner 选项相关的配置
+    banner: {
+      extensions: [ '.js', '.css' ],
+      isComment: true
+    }
   },
 
   // 项目兼容性
@@ -70,28 +77,4 @@ module.exports = {
  *  - "for...of" (https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/for...of)
  *  - "const" (https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/const)
  *  - "let" (https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/let)
- */
-
-/**
- * 项目打包入口目录 ( inputDir )
- */
-
-/**
- * 项目打包输出目录 ( outputDir )
- */
-
-/**
- * 项目打包入口文件 ( input )
- */
-
-/**
- * 项目打包输出文件 ( output )
- */
-
-/**
- * 多项目打包 ( pipe )
- */
-
-/**
- * 提供给 rollup 的插件列表 ( plugins )
  */

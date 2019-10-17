@@ -3,7 +3,8 @@ const { pathExists } = require('fs-extra');
 const pluginCommonjs = require('rollup-plugin-commonjs');
 const pluginNodeResolve = require('rollup-plugin-node-resolve');
 const print = require('../../utils/print.js');
-const pluginConsole = require('../../plugins/console');
+const pluginConsole = require('../../plugins/console.js');
+const pluginBanner = require('../../plugins/banner.js');
 
 
 module.exports = async () => {
@@ -13,23 +14,25 @@ module.exports = async () => {
 
   // 生成 rollup 的配置
   for( const config of configs ){
-    const plugins = config.plugins();
-    const rollupConfig = {
+    const plugins = [
+      pluginCommonjs(),
+      pluginNodeResolve(),
+      {
+        name: '__first__'
+      },
+      ...config.plugins(),
+      {
+        name: '__last__'
+      },
+      pluginBanner( config ),
+      pluginConsole( config )
+    ];
+
+    rollupConfigs.push({
       config,
       input: {
         input: config.input,
-        plugins: [
-          pluginCommonjs(),
-          pluginNodeResolve(),
-          {
-            name: '__first__'
-          },
-          ...plugins,
-          {
-            name: '__last__'
-          },
-          pluginConsole( config )
-        ]
+        plugins: plugins.$deleteValue()
       },
       output: {
         file: config.output,
@@ -37,9 +40,7 @@ module.exports = async () => {
         name: undefined,
         silent: true
       }
-    };
-
-    rollupConfigs.push( rollupConfig );
+    });
   }
 
   // 规避一些小问题

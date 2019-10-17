@@ -25,6 +25,10 @@ module.exports = function compilerConfigs( originConfigs, parentConfig, configs 
       process.exit( 0 );
     }
 
+    if( Object.$isPlainObject( config.pluginOptions ) === false ){
+      config.pluginOptions = {};
+    }
+
     if( Array.isArray( childConfigs ) && childConfigs.length ){
       delete config.pipe;
       compilerConfigs( childConfigs, config, configs );
