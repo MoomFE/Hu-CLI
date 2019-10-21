@@ -15,6 +15,9 @@ module.exports = {
   // 在打包好的文件最顶部插入一段内容
   banner: '',
 
+  // 将代码中指定文本进行替换
+  replace: {},
+
   // 提供给 rollup 的插件列表
   plugins: () => {
 

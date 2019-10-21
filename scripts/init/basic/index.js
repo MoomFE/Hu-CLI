@@ -5,6 +5,7 @@ const pluginNodeResolve = require('rollup-plugin-node-resolve');
 const print = require('../../utils/print.js');
 const pluginConsole = require('../../plugins/console.js');
 const pluginBanner = require('../../plugins/banner.js');
+const pluginReplace = require('../../plugins/replace.js');
 
 
 module.exports = async () => {
@@ -17,6 +18,7 @@ module.exports = async () => {
     const plugins = [
       pluginCommonjs(),
       pluginNodeResolve(),
+      pluginReplace( config ),
       {
         name: '__first__'
       },
