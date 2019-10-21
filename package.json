@@ -8,7 +8,9 @@
   "bin": {
     "hu": "bin/hu.js"
   },
-  "scripts": {},
+  "scripts": {
+    "test": "node_modules\\.bin\\mocha test/Test/**/*.test.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MoomFE/Hu-CLI.git"
@@ -27,5 +29,8 @@
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-terser": "^5.1.2"
+  },
+  "devDependencies": {
+    "mocha": "^6.2.2"
   }
 }
