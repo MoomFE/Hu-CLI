@@ -4,7 +4,6 @@ const compilerRollupConfigs = require('../../scripts/init/basic/util/compilerRol
 
 
 module.exports = ( config ) => {
-
   // 未传入配置文件
   if( config == null ) config = [{}];
   // 传入了正常配置文件
