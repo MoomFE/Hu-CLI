@@ -24,10 +24,104 @@ describe( 'plugins.banner', function(){
     ).is.not.undefined;
   });
 
-  it( '在使用 banner 选项进行打包时, 默认会将传入的 banner 转为注释', function(){
+  it( '在使用 banner 选项进行打包时, 默认会将传入的 banner 转为注释', () => {
     return runBuild({ banner: '123' }).then(({ codes, logs }) => {
       expect(
         codes[0].startsWith(`/*!\n * 123\n */`)
+      ).is.true;
+    });
+  });
+
+  it( '在使用 banner 选项进行打包时, 默认会将传入的 banner 转为注释, 多行测试', () => {
+    return runBuild({
+      banner: `
+        1
+        2
+        3
+        4
+        5
+        6
+      `
+    }).then(({ codes, logs }) => {
+      expect(
+        codes[0].startsWith(`/*!\n * \n *         1\n *         2\n *         3\n *         4\n *         5\n *         6\n *       \n */`)
+      ).is.true;
+    });
+  });
+
+  it( '在使用 banner 选项进行打包时, 设置 isComment: false 可以不将传入的 banner 转为注释', () => {
+    return runBuild({
+      banner: '123',
+      pluginOptions: {
+        banner: {
+          isComment: false
+        }
+      }
+    }).then(({ codes, logs }) => {
+      expect(
+        codes[0].startsWith(`123`)
+      ).is.true;
+    });
+  });
+
+  it( '在使用 banner 选项进行打包时, 设置 extensions 可以约定需要输出 banner 的文件格式 ( js -> .js )', () => {
+    return runBuild({
+      banner: '123',
+      pluginOptions: {
+        banner: {
+          extensions: [ '.js' ]
+        }
+      }
+    }).then(({ codes, logs }) => {
+      expect(
+        codes[0].startsWith(`/*!\n * 123\n */`)
+      ).is.true;
+    });
+  });
+
+  it( '在使用 banner 选项进行打包时, 设置 extensions 可以约定需要输出 banner 的文件格式 ( js -> .css ) ( 二 )', () => {
+    return runBuild({
+      banner: '123',
+      pluginOptions: {
+        banner: {
+          extensions: [ '.css' ]
+        }
+      }
+    }).then(({ codes, logs }) => {
+      expect(
+        codes[0].startsWith(`/*!\n * 123\n */`)
+      ).is.false;
+    });
+  });
+
+  it( '综合测试 ( js -> .js )', () => {
+    return runBuild({
+      banner: '123',
+      pluginOptions: {
+        banner: {
+          extensions: [ '.js' ],
+          isComment: true
+        }
+      }
+    }).then(({ codes, logs }) => {
+      expect(
+        codes[0].startsWith(`/*!\n * 123\n */`)
+      ).is.true;
+    });
+  });
+
+  it( '综合测试 ( js -> .js ) ( 二 )', () => {
+    return runBuild({
+      banner: '123',
+      pluginOptions: {
+        banner: {
+          extensions: [ '.js' ],
+          isComment: false
+        }
+      }
+    }).then(({ codes, logs }) => {
+      expect(
+        codes[0].startsWith(`123`)
       ).is.true;
     });
   });
