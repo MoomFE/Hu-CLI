@@ -3,6 +3,7 @@ const pluginNodeResolve = require('rollup-plugin-node-resolve');
 const pluginConsole = require('../../../plugins/console.js');
 const pluginBanner = require('../../../plugins/banner.js');
 const pluginReplace = require('../../../plugins/replace.js');
+const pluginTerser = require('../../../plugins/terser.js');
 
 
 module.exports = ( configs ) => {
@@ -14,13 +15,8 @@ module.exports = ( configs ) => {
       pluginCommonjs(),
       pluginNodeResolve(),
       pluginReplace( config ),
-      {
-        name: '__first__'
-      },
       ...config.plugins(),
-      {
-        name: '__last__'
-      },
+      process.env.HU_RUNNING_COMMAND === 'build' && pluginTerser( config ),
       pluginBanner( config ),
       pluginConsole( config )
     ];
@@ -30,6 +26,7 @@ module.exports = ( configs ) => {
       input: {
         input: config.input,
         plugins: plugins.$deleteValue()
+                        .$deleteValue( false )
       },
       output: {
         file: config.output,
