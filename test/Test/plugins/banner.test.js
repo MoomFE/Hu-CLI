@@ -1,6 +1,5 @@
 const compilerRollupConfigs = require('../../Lib/compilerRollupConfigs');
 const runBuild = require('../../Lib/runBuild');
-const expect = require('chai').expect;
 
 
 describe( 'plugins.banner', function(){

@@ -1,5 +1,7 @@
 require('../../node_modules/@moomfe/zenjs');
 require('chai/register-expect');
+require('chai/register-should');
+
 
 const { root } = require('../Lib/const');
 
@@ -10,4 +12,5 @@ process.cwd = () => {
 };
 
 
+require('./command/build.test');
 require('./plugins/banner.test');
