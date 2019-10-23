@@ -7,6 +7,7 @@ const { terser } = require('rollup-plugin-terser');
 const defaultOptions = {
   // rollup-plugin-terser 的配置
   sourcemap: false,
+  numWorkers: 1,
 
   ecma: 6,
   warnings: true,
