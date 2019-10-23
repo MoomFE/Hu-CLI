@@ -1,43 +1,41 @@
-const { remove, outputFile, readFile } = require('fs-extra');
-const { exec } = require('child_process');
-const { defaultInput, root } = require('./const');
-const compilerRollupConfigs = require('./compilerRollupConfigs');
-const outputConfig = require('../Lib/utils/outputConfig');
+const { readFile } = require('fs-extra');
+const { init } = require('./runBuildCommand');
+const build = require('../../scripts/init/build');
 
 
+/**
+ * 调用 build.js 对传入配置进行打包,
+ * 执行较快
+ */
 module.exports = async ( config ) => {
   // 解析为最终配置
-  const rollupConfigs = compilerRollupConfigs( config );
-
-  // 确保打包入口和出口被删除
-  for( const { config } of rollupConfigs ){
-    await Promise.all([
-      // 删除打包出口
-      remove( config.output ),
-      // 输出打包入口内容
-      outputFile( config.input, config.code || defaultInput )
-    ]);
-  }
-
-  await outputConfig( config );
+  const rollupConfigs = await init( config );
 
   // 执行指令
-  return new Promise(( resolve, reject ) => {
-    exec( `npm run build`, { cwd: root }, async ( error, stdout, stderr ) => {
-      if( error ){
-        reject({ error, stdout, stderr });
-      }else{
-        const codes = [];
+  return new Promise( async ( resolve, reject ) => {
+    let stdout = '';
+    const codes = [];
+    const consoleLog = console.log;
 
-        // 读取所有输出文件内容
-        for( const { config } of rollupConfigs ){
-          codes.push(
-            await readFile( config.output, 'utf-8' )
-          );
-        }
+    // 劫持控制台输出
+    console.log = ( ...args ) => {
+      stdout = stdout + '\n' + args.join('\n');
+    }
 
-        resolve({ codes, stdout, logs: stdout });
-      }
-    });
+    // 执行打包程序
+    await build( rollupConfigs );
+
+    // 读取所有输出文件内容
+    for( const { config } of rollupConfigs ){
+      codes.push(
+        await readFile( config.output, 'utf-8' )
+      );
+    }
+
+    // 还原劫持控制台输出
+    console.log = consoleLog;
+
+    // 返回结果
+    resolve({ codes, stdout, logs: stdout });
   });
 }

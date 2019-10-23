@@ -1,9 +1,10 @@
 require('@moomfe/zenjs');
 const rollup = require('rollup');
+const basic = require('./basic/index.js');
 
 
-module.exports = async () => {
-  const configs = await require('./basic/index.js')();
+module.exports = async ( configsFromTest ) => {
+  const configs = configsFromTest || await basic();
 
   for( const config of configs ){
     const bundle = await rollup.rollup( config.input );
