@@ -5,7 +5,7 @@ const runBuild = require('../../Lib/runBuild');
 describe( 'plugins.banner', function(){
   this.timeout( Infinity );
 
-  it( '不使用 banner 选项时, 在生成打包配置时不会加载相关插件', async () => {
+  it( '不使用 banner 选项时, 在生成打包配置时不会加载相关插件', () => {
     const rollupConfig = compilerRollupConfigs()[0];
 
     expect(

@@ -14,3 +14,4 @@ process.cwd = () => {
 
 require('./command/build.test');
 require('./plugins/banner.test');
+require('./plugins/replace.test');
