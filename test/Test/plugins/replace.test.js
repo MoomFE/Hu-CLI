@@ -118,7 +118,7 @@ describe( 'plugins.replace', function(){
   it( '在使用 replace 选项进行打包时, 可以传入 Map 类型的选项, 可以自定义正则表达式进行替换', () => {
     return runBuild({
       code: `
-        console.log("aaa-BBB-aaa")
+        console.log("aaa-BBB-aaa-BBB")
       `,
       replace: new Map([
         [ /aaa(?=-)/, "AAA" ],
@@ -126,7 +126,7 @@ describe( 'plugins.replace', function(){
       ])
     }).then(({ codes, logs }) => {
       expect(
-        codes[0].includes('AAA-CCC-aaa')
+        codes[0].includes('AAA-CCC-aaa-CCC')
       ).is.true;
     });
   });
