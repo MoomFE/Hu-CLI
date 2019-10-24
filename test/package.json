@@ -9,12 +9,11 @@
     "v": "bin\\hu -v",
     "version": "bin\\hu --version",
     "build": "bin\\hu build",
-    "watch": "bin\\hu watch"
+    "watch": "bin\\hu watch",
+    "test": "cd ../ && npm run test"
   },
   "keywords": [],
   "author": "Wei Zhang",
   "license": "MIT",
-  "dependencies": {
-    "@moomfe/hu": "^1.0.0-bata.19"
-  }
+  "dependencies": {}
 }
