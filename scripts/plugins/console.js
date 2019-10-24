@@ -1,4 +1,3 @@
-require('@moomfe/zenjs');
 const { green } = require('chalk');
 const { outputFile } = require('fs-extra');
 const { resolve } = require('path');

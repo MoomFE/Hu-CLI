@@ -1,4 +1,3 @@
-require('../../node_modules/@moomfe/zenjs');
 const compilerConfigs = require('../../scripts/init/basic/util/compilerConfigs');
 const compilerRollupConfigs = require('../../scripts/init/basic/util/compilerRollupConfigs');
 

@@ -1,4 +1,3 @@
-require('@moomfe/zenjs');
 const rollup = require('rollup');
 const basic = require('./basic/index.js');
 

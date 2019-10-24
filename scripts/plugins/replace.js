@@ -1,4 +1,3 @@
-require('@moomfe/zenjs');
 
 
 module.exports = ( config ) => {

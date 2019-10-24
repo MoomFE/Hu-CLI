@@ -1,4 +1,3 @@
-require('@moomfe/zenjs');
 const { green, red } = require('chalk');
 const package = require('../../package.json');
 
