@@ -40,9 +40,15 @@ function parseReplaceOptions( replace, replaceArray ){
   // Map 类型传参支持
   else if( replace instanceof Map ){
     replace.forEach(( value, key ) => {
-      if( ZenJS.isString( key ) || ZenJS.isRegExp( key ) ){
+      if( ZenJS.isRegExp( key ) ){
         replaceArray.push([
           key,
+          value
+        ]);
+      }else if( ZenJS.isString( key ) ){
+        const regKey = RegExp.$parse( key, 'g' );
+        replaceArray.push([
+          regKey,
           value
         ]);
       }
