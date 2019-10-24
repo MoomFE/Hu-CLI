@@ -67,4 +67,68 @@ describe( 'plugins.replace', function(){
     });
   });
 
+  it( '在使用 replace 选项进行打包时, 可以对各种字符进行替换', () => {
+    return runBuild({
+      code: `
+        console.log(\`-=~!@#$%^&*()_+[]\\\\{}|;':",./<>?\`)
+      `,
+      replace: {
+        "-": "",
+        "=": "",
+        "~": "",
+        "!": "",
+        "@": "",
+        "#": "",
+        "$": "",
+        "%": "",
+        "^": "",
+        "&": "",
+        "*": "",
+        "(": "",
+        ")": "",
+        "_": "",
+        "+": "",
+        "[": "",
+        "]": "",
+        "\\\\": "",
+        "{": "",
+        "}": "",
+        "|": "",
+        ";": "",
+        "'": "",
+        ":": "",
+        "\"": "",
+        ",": "",
+        ".": "",
+        "/": "",
+        "<": "",
+        ">": "",
+        "?": "",
+        " ": "",
+        "`": "\"",
+        "consolelog\"\"": "console.log(\"\")"
+      }
+    }).then(({ codes, logs }) => {
+      expect(
+        codes[0].includes('console.log("")')
+      ).is.true;
+    });
+  });
+
+  it( '在使用 replace 选项进行打包时, 可以传入 Map 类型的选项, 可以自定义正则表达式进行替换', () => {
+    return runBuild({
+      code: `
+        console.log("aaa-BBB-aaa")
+      `,
+      replace: new Map([
+        [ /aaa(?=-)/, "AAA" ],
+        [ "BBB", "CCC" ]
+      ])
+    }).then(({ codes, logs }) => {
+      expect(
+        codes[0].includes('AAA-CCC-aaa')
+      ).is.true;
+    })
+  });
+
 });
