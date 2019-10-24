@@ -1,47 +1,62 @@
 
 
 module.exports = ( config ) => {
-  const replace = config.replace;
-  const replaceMap = new Map;
+  const replaceArray = parseReplaceOptions( config.replace, [] );
 
+  if( replaceArray && replaceArray.length ) return {
+    name: 'replace',
+    transform( code, id ){
+      replaceArray.forEach(([ key, value ]) => {
+        code = code.replace( key, value );
+      });
+      return code;
+    }
+  };
+}
+
+
+function parseReplaceOptions( replace, replaceArray ){
+  // 不合法选项
   if( !replace ){
     return;
   }
 
   // 正常传参
   if( Object.$isPlainObject( replace ) ){
-    // 空对象
+    // 空传参
     if( Object.$isEmptyObject( replace ) ){
       return;
     }
 
     Object.entries( replace ).$each(([ key, value ]) => {
       const regKey = RegExp.$parse( key, 'g' );
-      replaceMap.set( regKey, value );
+      replaceArray.push([
+        regKey,
+        value
+      ]);
     });
   }
   // Map 类型传参支持
   else if( replace instanceof Map ){
     replace.forEach(( value, key ) => {
       if( ZenJS.isString( key ) || ZenJS.isRegExp( key ) ){
-        replaceMap.set( key, value );
+        replaceArray.push([
+          key,
+          value
+        ]);
       }
+    })
+  }
+  // 数组类型支持
+  else if( Array.isArray( replace ) ){
+    replace.forEach( value => {
+      parseReplaceOptions( value, replaceArray );
     });
   }
-  // 不支持的值
+  // 不合法选项
   else{
     return;
   }
 
-  if( replaceMap.size ){
-    return {
-      name: 'replace',
-      transform( code, id ){
-        replaceMap.forEach(( value, key ) => {
-          code = code.replace( key, value );
-        });
-        return code;
-      }
-    };
-  }
+  return replaceArray;
 }
