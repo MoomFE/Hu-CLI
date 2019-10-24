@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-require('@moomfe/zenjs');
 const program = require('commander');
 
 

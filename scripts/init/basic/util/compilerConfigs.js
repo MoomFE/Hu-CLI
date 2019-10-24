@@ -1,3 +1,4 @@
+require('@moomfe/zenjs');
 const { resolve } = require('path');
 const defaultConfig = require('../../../config.js');
 

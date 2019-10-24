@@ -1,3 +1,4 @@
+require('@moomfe/zenjs');
 const { yellow, bgBlackBright } = require('chalk');
 const { pathExists } = require('fs-extra');
 const print = require('../../utils/print.js');

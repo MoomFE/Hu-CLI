@@ -1,3 +1,4 @@
+require('@moomfe/zenjs');
 const { yellow } = require('chalk');
 const { resolve } = require('path');
 const { pathExists } = require('fs-extra');
