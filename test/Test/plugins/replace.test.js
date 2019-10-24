@@ -55,11 +55,11 @@ describe( 'plugins.replace', function(){
       code: `
         console.log("aaa-BBB-aaa")
       `,
-      replace: {
-        aaa: 'BBB',
-        BBB: 'AAA',
-        AAA: 'CCC'
-      }
+      replace: [
+        { aaa: 'BBB' },
+        { BBB: 'AAA' },
+        { AAA: 'CCC' }
+      ]
     }).then(({ codes, logs }) => {
       expect(
         codes[0].includes('CCC-CCC-CCC')
@@ -128,7 +128,30 @@ describe( 'plugins.replace', function(){
       expect(
         codes[0].includes('AAA-CCC-aaa')
       ).is.true;
-    })
+    });
+  });
+
+  it( '在使用 replace 选项进行打包时, 可以传入数组类型的选项, 可以多个包含符合条件的 replace 选项', () => {
+    return runBuild({
+      code: `
+        console.log("aaa-BBB-aaa-DDD")
+      `,
+      replace: [
+        {
+          BBB: "CCC"
+        },
+        new Map([
+          [ /aaa(?=-)/, "AAA" ]
+        ]),
+        [{
+          DDD: 'BBB'
+        }]
+      ]
+    }).then(({ codes, logs }) => {
+      expect(
+        codes[0].includes('AAA-CCC-aaa-BBB')
+      ).is.true;
+    });
   });
 
 });
