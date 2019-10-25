@@ -25,7 +25,7 @@ Hu-CLI 是一个基于 rollup 的打包工具
 <br>
 
 ## 配置
-``` js
+```js
   // hu.config.js
   //  - 此配置表为默认配置
   module.exports = {
