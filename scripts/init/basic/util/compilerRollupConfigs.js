@@ -30,8 +30,8 @@ module.exports = ( configs ) => {
       },
       output: {
         file: config.output,
-        format: 'iife',
-        name: undefined,
+        format: config.format,
+        name: config.name,
         silent: true
       }
     });
