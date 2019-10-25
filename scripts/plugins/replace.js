@@ -29,35 +29,26 @@ function parseReplaceOptions( replace, replaceArray ){
       return;
     }
 
-    Object.entries( replace ).$each(([ key, value ]) => {
-      const regKey = RegExp.$parse( key, 'g' );
+    Object.entries( replace ).$each(([ from, to ]) => {
       replaceArray.push([
-        regKey,
-        value
+        RegExp.$parse( from, 'g' ),
+        to
       ]);
     });
   }
-  // Map 类型传参支持
-  else if( replace instanceof Map ){
-    replace.forEach(( value, key ) => {
-      if( ZenJS.isRegExp( key ) ){
-        replaceArray.push([
-          key,
-          value
-        ]);
-      }else if( ZenJS.isString( key ) ){
-        const regKey = RegExp.$parse( key, 'g' );
-        replaceArray.push([
-          regKey,
-          value
-        ]);
-      }
-    })
-  }
-  // 数组类型支持
+  // 数组类型传参
   else if( Array.isArray( replace ) ){
-    replace.forEach( value => {
-      parseReplaceOptions( value, replaceArray );
+    replace.forEach( config => {
+      const { from, to } = config;
+      
+      if( ZenJS.isRegExp( from ) ){
+        replaceArray.push([
+          from,
+          to
+        ]);
+      }else if( ZenJS.isString( from ) ){
+        parseReplaceOptions({ [ from ]: to }, replaceArray);
+      }
     });
   }
   // 不合法选项
