@@ -48,8 +48,9 @@ Hu-CLI 是一个基于 rollup 的打包工具
       // 'process.env.NODE_ENV': JSON.stringify('production')
     },
     // 将代码中指定文本进行替换 ( 数组形式 )
+    //  - 支持传入正则
     replace: [
-      // { from: 'process.env.NODE_ENV', to: JSON.stringify('production') }
+      // { from: 'process.env.NODE_ENV', to: JSON.stringify('production') },
       // { from: /aaa(?=-)/, to: 'AAA' }
     ],
 
