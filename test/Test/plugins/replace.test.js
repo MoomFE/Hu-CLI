@@ -56,9 +56,9 @@ describe( 'plugins.replace', function(){
         console.log("aaa-BBB-aaa")
       `,
       replace: [
-        { aaa: 'BBB' },
-        { BBB: 'AAA' },
-        { AAA: 'CCC' }
+        { from: 'aaa', to: 'BBB' },
+        { from: 'BBB', to: 'AAA' },
+        { from: 'AAA', to: 'CCC' }
       ]
     }).then(({ codes, logs }) => {
       expect(
@@ -115,37 +115,15 @@ describe( 'plugins.replace', function(){
     });
   });
 
-  it( '在使用 replace 选项进行打包时, 可以传入 Map 类型的选项, 可以自定义正则表达式进行替换', () => {
-    return runBuild({
-      code: `
-        console.log("aaa-BBB-aaa-BBB")
-      `,
-      replace: new Map([
-        [ /aaa(?=-)/, "AAA" ],
-        [ "BBB", "CCC" ]
-      ])
-    }).then(({ codes, logs }) => {
-      expect(
-        codes[0].includes('AAA-CCC-aaa-CCC')
-      ).is.true;
-    });
-  });
-
-  it( '在使用 replace 选项进行打包时, 可以传入数组类型的选项, 可以多个包含符合条件的 replace 选项', () => {
+  it( '在使用 replace 选项进行打包时, 可以传入数组类型的选项, 可以自定义正则表达式进行替换', () => {
     return runBuild({
       code: `
         console.log("aaa-BBB-aaa-DDD")
       `,
       replace: [
-        {
-          BBB: "CCC"
-        },
-        new Map([
-          [ /aaa(?=-)/, "AAA" ]
-        ]),
-        [{
-          DDD: 'BBB'
-        }]
+        { from: 'BBB', to: 'CCC' },
+        { from: /aaa(?=-)/, to: 'AAA' },
+        { from: 'DDD', to: 'BBB' }
       ]
     }).then(({ codes, logs }) => {
       expect(
