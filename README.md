@@ -43,10 +43,15 @@ Hu-CLI 是一个基于 rollup 的打包工具
     // 在打包好的文件最顶部插入一段内容
     banner: '',
 
-    // 将代码中指定文本进行替换
+    // 将代码中指定文本进行替换 ( 对象形式 )
     replace: {
       // 'process.env.NODE_ENV': JSON.stringify('production')
     },
+    // 将代码中指定文本进行替换 ( 数组形式 )
+    replace: [
+      // { from: 'process.env.NODE_ENV', to: JSON.stringify('production') }
+      // { from: /aaa(?=-)/, to: 'AAA' }
+    ],
 
     // 提供给 rollup 的插件列表
     //  - 可以自行安装一些其他的 rollup 插件
