@@ -15,8 +15,8 @@ module.exports = async () => {
 
   // 规避一些小问题
   for( const config of configs ){
-    // 未定义 format 选项
-    if( !config.format || [ 'amd', 'cjs', 'system', 'esm', 'iife', 'umd' ].includes( config.format ) ){
+    // 未定义 format 选项或 format 选项不合法
+    if( [ 'amd', 'cjs', 'system', 'esm', 'iife', 'umd' ].includes( config.format ) === false ){
       errors.add(`${ bgBlackBright(' format ') } : 选项必须为 'amd', 'cjs', 'system', 'esm', 'iife', 'umd' 中的一个 !`);
     }
     // 选项 pluginOptions 并非是一个纯粹的对象
