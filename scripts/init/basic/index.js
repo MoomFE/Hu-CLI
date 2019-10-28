@@ -14,6 +14,12 @@ module.exports = async () => {
 
   // 规避一些小问题
   for( const config of configs ){
+    // 未定义 format 选项
+    if( !config.format || [ 'amd', 'cjs', 'system', 'esm', 'iife', 'umd' ].includes( config.format ) ){
+      print.start();
+      print.end(`${ bgBlackBright(' format ') } : 选项必须为 'amd', 'cjs', 'system', 'esm', 'iife', 'umd' 中的一个 !`);
+      process.exit( 0 );
+    }
     // 选项 pluginOptions 并非是一个纯粹的对象
     if( Object.$isPlainObject( config.pluginOptions ) === false ){
       print.start();
