@@ -207,4 +207,76 @@ describe( 'config', function(){
     }
   });
 
+  it( '对配置进行解析时, 若配置不合法, 将会退出打包程序 ( pluginOptions )', async () => {
+    {
+      processExit.start();
+      expect( processExit.isExit ).is.false;
+
+      const stdout = await proxyLog( async () => {
+        await compilerRollupConfigs({
+          pluginOptions: []
+        }, true);
+      });
+
+      expect( stdout ).is.includes('选项必须为一个纯粹的对象, 请检查您的配置文件');
+      expect( processExit.isExit ).is.true;
+      processExit.end();
+    }
+
+    // -------------------------------------------
+    // - 反向测试
+    // -------------------------------------------
+
+    {
+      processExit.start();
+      expect( processExit.isExit ).is.false;
+
+      const stdout = await proxyLog( async () => {
+        await compilerRollupConfigs({
+          pluginOptions: {}
+        }, true);
+      });
+
+      expect( stdout ).is.equals('');
+      expect( processExit.isExit ).is.false;
+      processExit.end();
+    }
+  });
+
+  it( '对配置进行解析时, 若配置不合法, 将会退出打包程序 ( plugins )', async () => {
+    {
+      processExit.start();
+      expect( processExit.isExit ).is.false;
+
+      const stdout = await proxyLog( async () => {
+        await compilerRollupConfigs({
+          plugins: []
+        }, true);
+      });
+
+      expect( stdout ).is.includes('选项必须为一个函数并且函数返回 plugins 数组, 请检查您的配置文件');
+      expect( processExit.isExit ).is.true;
+      processExit.end();
+    }
+
+    // -------------------------------------------
+    // - 反向测试
+    // -------------------------------------------
+
+    {
+      processExit.start();
+      expect( processExit.isExit ).is.false;
+
+      const stdout = await proxyLog( async () => {
+        await compilerRollupConfigs({
+          plugins: () => []
+        }, true);
+      });
+
+      expect( stdout ).is.equals('');
+      expect( processExit.isExit ).is.false;
+      processExit.end();
+    }
+  });
+
 });
