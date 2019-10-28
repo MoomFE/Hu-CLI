@@ -49,9 +49,12 @@ module.exports.init = async ( config ) => {
       // 删除打包出口
       remove( config.output ),
       // 输出打包入口内容
-      outputFile( config.input, config.code || defaultInput )
+      outputFile( config.input, config._code || defaultInput )
     ]);
   }
+
+  // 删除无用属性
+  delete config._code;
 
   // 输出配置文件
   await outputConfig( config );

@@ -37,7 +37,7 @@ describe( 'plugins.replace', function(){
 
   it( '在使用 replace 选项进行打包时, 会按照传入的 key: value 进行全部替换', () => {
     return runBuild({
-      code: `
+      _code: `
         console.log("aaa-BBB-aaa")
       `,
       replace: {
@@ -52,7 +52,7 @@ describe( 'plugins.replace', function(){
 
   it( '在使用 replace 选项进行打包时, 会按照传入的 key: value 进行依次替换', () => {
     return runBuild({
-      code: `
+      _code: `
         console.log("aaa-BBB-aaa")
       `,
       replace: [
@@ -69,7 +69,7 @@ describe( 'plugins.replace', function(){
 
   it( '在使用 replace 选项进行打包时, 可以对各种字符进行替换', () => {
     return runBuild({
-      code: `
+      _code: `
         console.log(\`-=~!@#$%^&*()_+[]\\\\{}|;':",./<>?\`)
       `,
       replace: {
@@ -117,7 +117,7 @@ describe( 'plugins.replace', function(){
 
   it( '在使用 replace 选项进行打包时, 可以传入数组类型的选项, 可以自定义正则表达式进行替换', () => {
     return runBuild({
-      code: `
+      _code: `
         console.log("aaa-BBB-aaa-DDD")
       `,
       replace: [
