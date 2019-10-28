@@ -1,8 +1,8 @@
-const { remove, outputFile, readFile } = require('fs-extra');
+const { readFile } = require('fs-extra');
 const { exec } = require('child_process');
-const { defaultInput, root } = require('./const');
+const { root } = require('./const');
 const compilerRollupConfigs = require('./compilerRollupConfigs');
-const outputConfig = require('../Lib/utils/outputConfig');
+const outputConfigAndInput = require('./utils/outputConfigAndInput');
 
 
 /**
@@ -43,21 +43,8 @@ module.exports.init = async ( config ) => {
   // 解析为最终配置
   const rollupConfigs = compilerRollupConfigs( config );
 
-  // 确保打包入口和出口被删除
-  for( const { config } of rollupConfigs ){
-    await Promise.all([
-      // 删除打包出口
-      remove( config.output ),
-      // 输出打包入口内容
-      outputFile( config.input, config._code || defaultInput )
-    ]);
-  }
-
-  // 删除无用属性
-  delete config._code;
-
-  // 输出配置文件
-  await outputConfig( config );
+  // 输出打包相关文件
+  await outputConfigAndInput( rollupConfigs, config );
 
   return rollupConfigs;
 };

@@ -12,6 +12,7 @@ process.cwd = () => {
 };
 
 
+require('./config/config.test');
 require('./command/build.test');
 require('./plugins/banner.test');
 require('./plugins/replace.test');
