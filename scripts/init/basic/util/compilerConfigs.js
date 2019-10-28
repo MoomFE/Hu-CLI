@@ -20,9 +20,9 @@ module.exports = function compilerConfigs( originConfigs, parentConfig, configs 
     if( Array.isArray( childConfigs ) && childConfigs.length ){
       delete config.pipe;
       compilerConfigs( childConfigs, config, configs );
+    }else{
+      configs.push( config );
     }
-
-    configs.push( config );
   }
 
   return configs;
