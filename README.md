@@ -30,6 +30,12 @@ Hu-CLI 是一个基于 rollup 的打包工具
   //  - 此配置表为默认配置
   module.exports = {
 
+    // 打包模式
+    //  - 开发环境: 'development' || false
+    //  - 生产环境: 'production' || true
+    //     - 生产环境会自动调用代码压缩工具对代码进行压缩, 速度较慢
+    mode: 'development',
+
     // 打包入口文件
     input: 'index.js',
     // 打包输出文件
@@ -85,10 +91,10 @@ Hu-CLI 是一个基于 rollup 的打包工具
 
     // 项目兼容性
     browserslist: [
-      "Chrome >= 49",
-      "Firefox >= 47",
-      "Safari >= 10",
-      "Edge >= 14"
+      'Chrome >= 49',
+      'Firefox >= 47',
+      'Safari >= 10',
+      'Edge >= 14'
     ],
 
     // 多项目打包
