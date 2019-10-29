@@ -37,9 +37,6 @@ module.exports = async ( config ) => {
  * 在执行打包前的一些预处理
  */
 module.exports.init = async ( config ) => {
-  // 将标识当前正在执行的指令的环境变量进行重定向
-  process.env.HU_RUNNING_COMMAND = 'build';
-
   // 解析为最终配置
   const rollupConfigs = compilerRollupConfigs( config );
 

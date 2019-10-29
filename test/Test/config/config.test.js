@@ -52,6 +52,54 @@ describe( 'config', function(){
     expect( rollupConfig.input.input ).is.equals('isEdit');
   });
 
+  it( '使用 mode 并指定为生产环境时, 会加载 terser 用于代码压缩', () => {
+    // 1
+    {
+      const rollupConfig = compilerRollupConfigs({
+        mode: 'production'
+      })[0];
+  
+      expect(
+        rollupConfig.input.plugins.$find({ name: 'terser' })
+      ).is.not.undefined;
+    }
+    // 2
+    {
+      const rollupConfig = compilerRollupConfigs({
+        mode: true
+      })[0];
+  
+      expect(
+        rollupConfig.input.plugins.$find({ name: 'terser' })
+      ).is.not.undefined;
+    }
+
+    // -------------------------------------------
+    // - 反向测试
+    // -------------------------------------------
+
+    // 1
+    {
+      const rollupConfig = compilerRollupConfigs({
+        mode: 'development'
+      })[0];
+  
+      expect(
+        rollupConfig.input.plugins.$find({ name: 'terser' })
+      ).is.undefined;
+    }
+    // 2
+    {
+      const rollupConfig = compilerRollupConfigs({
+        mode: false
+      })[0];
+  
+      expect(
+        rollupConfig.input.plugins.$find({ name: 'terser' })
+      ).is.undefined;
+    }
+  });
+
   it( '对配置进行解析时, 若配置合法, 打包程序会正确执行', async () => {
     const isExit = await proxyProcessExit( async () => {
       const stdout = await proxyLog( async () => {
@@ -304,6 +352,112 @@ describe( 'config', function(){
         const stdout = await proxyLog( async () => {
           await compilerRollupConfigs({
             configureRollup: () => {}
+          }, true);
+        });
+
+        expect( stdout ).is.equals('');
+      });
+
+      expect( isExit ).is.false;
+    }
+  });
+
+  it( '对配置进行解析时, 若配置不合法, 将会退出打包程序 ( mode )', async () => {
+    // 1
+    {
+      const isExit = await proxyProcessExit( async () => {
+        const stdout = await proxyLog( async () => {
+          await compilerRollupConfigs({
+            mode: ''
+          }, true);
+        });
+
+        expect( stdout ).is.includes(`选项必须为 'development', 'production', true, false 中的一个, 请检查您的配置文件`);
+      });
+
+      expect( isExit ).is.true;
+    }
+    // 2
+    {
+      const isExit = await proxyProcessExit( async () => {
+        const stdout = await proxyLog( async () => {
+          await compilerRollupConfigs({
+            mode: 0
+          }, true);
+        });
+
+        expect( stdout ).is.includes(`选项必须为 'development', 'production', true, false 中的一个, 请检查您的配置文件`);
+      });
+
+      expect( isExit ).is.true;
+    }
+    // 3
+    {
+      const isExit = await proxyProcessExit( async () => {
+        const stdout = await proxyLog( async () => {
+          await compilerRollupConfigs({
+            mode: 1
+          }, true);
+        });
+
+        expect( stdout ).is.includes(`选项必须为 'development', 'production', true, false 中的一个, 请检查您的配置文件`);
+      });
+
+      expect( isExit ).is.true;
+    }
+
+    // -------------------------------------------
+    // - 反向测试
+    // -------------------------------------------
+
+    // 1
+    {
+      const isExit = await proxyProcessExit( async () => {
+        const stdout = await proxyLog( async () => {
+          await compilerRollupConfigs({
+            mode: 'development'
+          }, true);
+        });
+
+        expect( stdout ).is.equals('');
+      });
+
+      expect( isExit ).is.false;
+    }
+    // 2
+    {
+      const isExit = await proxyProcessExit( async () => {
+        const stdout = await proxyLog( async () => {
+          await compilerRollupConfigs({
+            mode: 'production'
+          }, true);
+        });
+
+        expect( stdout ).is.equals('');
+      });
+
+      expect( isExit ).is.false;
+    }
+    // 3
+    {
+      const isExit = await proxyProcessExit( async () => {
+        const stdout = await proxyLog( async () => {
+          await compilerRollupConfigs({
+            mode: true
+          }, true);
+        });
+
+        expect( stdout ).is.equals('');
+      });
+
+      expect( isExit ).is.false;
+    }
+    // 4
+    {
+      const isExit = await proxyProcessExit( async () => {
+        const stdout = await proxyLog( async () => {
+          await compilerRollupConfigs({
+            mode: false
           }, true);
         });
 
