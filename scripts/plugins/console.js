@@ -1,5 +1,5 @@
 require('@moomfe/zenjs');
-const { green } = require('chalk');
+const { green, yellow } = require('chalk');
 const { outputFile } = require('fs-extra');
 const { resolve } = require('path');
 const { gzipSync } = require('zlib');
@@ -7,9 +7,19 @@ const print = require('../utils/print.js');
 const getSize = require('../utils/getSize');
 
 
-module.exports = ( config ) => {
+module.exports = ( config, rollupConfig ) => {
   let progress = 0;
   let startTime = new Date;
+  let warnSet = new Set;
+
+
+  rollupConfig.input.onwarn = ( warning, defaultHandler ) => {
+    switch( warning.code ){
+      case 'EMPTY_BUNDLE': break;
+      default: warnSet.add( warning.message );
+    }
+  }
+
 
   return {
 
@@ -22,6 +32,7 @@ module.exports = ( config ) => {
     buildStart( inputOptions ){
       progress = 0;
       startTime = new Date;
+      warnSet.clear();
 
       print.start(`Input   : ${ green( inputOptions.input ) }`);
     },
@@ -73,6 +84,21 @@ module.exports = ( config ) => {
 
       print.log(`Built at: ${ green( dateFormat ) }`);
       print.log(`Time    : ${ green( time ) }`);
+
+      // 输出警告信息
+      if( warnSet.size ){
+        let index = 0;
+
+        warnSet.forEach( message => {
+          const prefix = index++ ? '    ' : 'Warn';
+          const msg = yellow( message );
+
+          print.log(`${ prefix }    : ${ msg }`);
+        });
+
+        warnSet.clear();
+      }
+
       print.end();
     }
 

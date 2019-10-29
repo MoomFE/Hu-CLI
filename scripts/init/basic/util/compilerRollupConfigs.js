@@ -60,11 +60,11 @@ function mergeDefaultPlugins( config, rollupConfig ){
     rollupConfig.input.plugins = [
       pluginCommonjs(),
       pluginNodeResolve(),
-      pluginReplace( config ),
+      pluginReplace( config, rollupConfig ),
       ...plugins,
-      pluginTerser( config ),
-      pluginBanner( config ),
-      pluginConsole( config )
+      pluginTerser( config, rollupConfig ),
+      pluginBanner( config, rollupConfig ),
+      pluginConsole( config, rollupConfig )
     ];
     rollupConfig.input.plugins.$deleteValue()
                               .$deleteValue( false );
