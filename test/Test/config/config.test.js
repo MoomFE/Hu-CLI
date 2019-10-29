@@ -23,6 +23,35 @@ describe( 'config', function(){
     expect( rollupConfigs.length ).is.equals( 2 );
   });
 
+  it( '使用 configureRollup 可以用于修改已经解析完成的 rollup 配置', () => {
+    const rollupConfig = compilerRollupConfigs({
+      configureRollup: rollupConfig => {
+        rollupConfig.input.input = 'isEdit';
+      }
+    })[0];
+
+    expect( rollupConfig.input.input ).is.equals('isEdit');
+  });
+
+  it( '使用 configureRollup 将会始终采纳方法返回的 rollup 配置', () => {
+    const rollupConfig = compilerRollupConfigs({
+      configureRollup: rollupConfig => {
+        const newRollupConfig = Object.$assign( null, rollupConfig, {
+          input: {
+            input: 'isEdit'
+          }
+        });
+
+        expect( rollupConfig.input.input ).is.not.equals('isEdit');
+        expect( newRollupConfig.input.input ).is.equals('isEdit');
+
+        return newRollupConfig;
+      }
+    })[0];
+
+    expect( rollupConfig.input.input ).is.equals('isEdit');
+  });
+
   it( '对配置进行解析时, 若配置合法, 打包程序会正确执行', async () => {
     const isExit = await proxyProcessExit( async () => {
       const stdout = await proxyLog( async () => {
