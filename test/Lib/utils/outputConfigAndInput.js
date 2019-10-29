@@ -12,8 +12,12 @@ module.exports = async ( rollupConfigs, config ) => {
     await Promise.all([
       // 删除打包出口
       remove( config.output ),
-      // 输出打包入口内容
-      outputFile( config.input, config._code || defaultInput )
+      // 输出打包入口内容或删除打包入口文件
+      (
+        config._code === null
+          ? remove( config.input )
+          : outputFile( config.input, config._code || defaultInput )
+      )
     ]);
     // 删除无用属性
     delete config._code;

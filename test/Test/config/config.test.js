@@ -279,4 +279,40 @@ describe( 'config', function(){
     }
   });
 
+  it( '对配置进行解析时, 若入口文件不存在, 将会退出打包程序', async () => {
+    {
+      processExit.start();
+      expect( processExit.isExit ).is.false;
+
+      const stdout = await proxyLog( async () => {
+        await compilerRollupConfigs({
+          _code: null
+        }, true);
+      });
+
+      expect( stdout ).is.includes('未找到需要打包的入口文件');
+      expect( processExit.isExit ).is.true;
+      processExit.end();
+    }
+
+    // -------------------------------------------
+    // - 反向测试
+    // -------------------------------------------
+
+    {
+      processExit.start();
+      expect( processExit.isExit ).is.false;
+
+      const stdout = await proxyLog( async () => {
+        await compilerRollupConfigs({
+          _code: 'null'
+        }, true);
+      });
+
+      expect( stdout ).is.equals('');
+      expect( processExit.isExit ).is.false;
+      processExit.end();
+    }
+  });
+
 });
