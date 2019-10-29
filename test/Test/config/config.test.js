@@ -74,7 +74,7 @@ describe( 'config', function(){
           }, true);
         });
 
-        expect( stdout ).is.includes(`选项必须为 'amd', 'cjs', 'system', 'esm', 'iife', 'umd' 中的一个`);
+        expect( stdout ).is.includes(`选项必须为 'amd', 'cjs', 'system', 'esm', 'iife', 'umd' 中的一个, 请检查您的配置文件`);
       });
 
       expect( isExit ).is.true;
@@ -88,7 +88,7 @@ describe( 'config', function(){
           }, true);
         });
 
-        expect( stdout ).is.includes(`选项必须为 'amd', 'cjs', 'system', 'esm', 'iife', 'umd' 中的一个`);
+        expect( stdout ).is.includes(`选项必须为 'amd', 'cjs', 'system', 'esm', 'iife', 'umd' 中的一个, 请检查您的配置文件`);
       });
 
       expect( isExit ).is.true;
@@ -102,7 +102,7 @@ describe( 'config', function(){
           }, true);
         });
 
-        expect( stdout ).is.includes(`选项必须为 'amd', 'cjs', 'system', 'esm', 'iife', 'umd' 中的一个`);
+        expect( stdout ).is.includes(`选项必须为 'amd', 'cjs', 'system', 'esm', 'iife', 'umd' 中的一个, 请检查您的配置文件`);
       });
 
       expect( isExit ).is.true;
@@ -116,7 +116,7 @@ describe( 'config', function(){
           }, true);
         });
 
-        expect( stdout ).is.includes(`选项必须为 'amd', 'cjs', 'system', 'esm', 'iife', 'umd' 中的一个`);
+        expect( stdout ).is.includes(`选项必须为 'amd', 'cjs', 'system', 'esm', 'iife', 'umd' 中的一个, 请检查您的配置文件`);
       });
 
       expect( isExit ).is.true;
@@ -270,6 +270,40 @@ describe( 'config', function(){
         const stdout = await proxyLog( async () => {
           await compilerRollupConfigs({
             plugins: () => []
+          }, true);
+        });
+
+        expect( stdout ).is.equals('');
+      });
+
+      expect( isExit ).is.false;
+    }
+  });
+
+  it( '对配置进行解析时, 若配置不合法, 将会退出打包程序 ( configureRollup )', async () => {
+    {
+      const isExit = await proxyProcessExit( async () => {
+        const stdout = await proxyLog( async () => {
+          await compilerRollupConfigs({
+            configureRollup: []
+          }, true);
+        });
+
+        expect( stdout ).is.includes('选项必须为一个函数, 请检查您的配置文件');
+      });
+
+      expect( isExit ).is.true;
+    }
+
+    // -------------------------------------------
+    // - 反向测试
+    // -------------------------------------------
+
+    {
+      const isExit = await proxyProcessExit( async () => {
+        const stdout = await proxyLog( async () => {
+          await compilerRollupConfigs({
+            configureRollup: () => {}
           }, true);
         });
 
