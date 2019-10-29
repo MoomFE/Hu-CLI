@@ -62,7 +62,7 @@ function mergeDefaultPlugins( config, rollupConfig ){
       pluginNodeResolve(),
       pluginReplace( config ),
       ...plugins,
-      process.env.HU_RUNNING_COMMAND === 'build' && pluginTerser( config ),
+      pluginTerser( config ),
       pluginBanner( config ),
       pluginConsole( config )
     ];

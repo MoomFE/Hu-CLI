@@ -1,6 +1,12 @@
 const { terser } = require('rollup-plugin-terser');
 
 
+module.exports = ( config ) => {
+  if( config.mode === 'production' || config.mode === true ){
+    return terser( defaultOptions );
+  }
+};
+
 /**
  * 默认 terser 打包配置
  */
@@ -45,9 +51,4 @@ const defaultOptions = {
      */
     unsafe_methods: true
   }
-};
-
-
-module.exports = ( config ) => {
-  return terser( defaultOptions );
 };

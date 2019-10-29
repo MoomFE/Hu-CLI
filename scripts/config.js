@@ -2,6 +2,11 @@
 
 module.exports = {
 
+  // 打包模式
+  //  - 开发环境: 'development' || false
+  //  - 生产环境: 'production' || true
+  mode: 'development',
+
   // 打包入口文件
   input: 'index.js',
   // 打包输出文件
@@ -46,10 +51,10 @@ module.exports = {
 
   // 项目兼容性
   browserslist: [
-    "Chrome >= 49",
-    "Firefox >= 47",
-    "Safari >= 10",
-    "Edge >= 14"
+    'Chrome >= 49',
+    'Firefox >= 47',
+    'Safari >= 10',
+    'Edge >= 14'
   ],
 
   // 多项目打包

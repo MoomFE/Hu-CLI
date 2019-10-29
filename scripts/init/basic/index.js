@@ -16,6 +16,10 @@ module.exports = async ( _configs ) => {
 
   // 规避一些小问题
   for( const config of configs ){
+    // 不合法的 mode 选项
+    if( [ 'development', 'production', true, false ].includes( config.mode ) === false ){
+      errors.add(`${ bgBlackBright(' mode ') } : 选项必须为 'development', 'production', true, false 中的一个, 请检查您的配置文件 !`);
+    }
     // 未定义 format 选项
     if( [ 'amd', 'cjs', 'system', 'esm', 'iife', 'umd' ].includes( config.format ) === false ){
       errors.add(`${ bgBlackBright(' format ') } : 选项必须为 'amd', 'cjs', 'system', 'esm', 'iife', 'umd' 中的一个, 请检查您的配置文件 !`);
