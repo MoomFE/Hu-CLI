@@ -7,24 +7,30 @@ const hr = `--------------------------------------------------------------------
 const hr2 = `${ hr }\n`;
 const cliName = `Hu-CLI v${ package.version }`;
 const cliInfo = hr.split('').$splice( 6, cliName.length + 2, ` ${ green( cliName ) } ` ).join('');
+let lastLog;
 
 
 module.exports = {
 
+  _log( message ){
+    console.log( lastLog = message );
+  },
+
   log( ...args ){
     for( const message of args ){
-      console.log( `- ${ message }` );
+      this._log( `- ${ message }` );
     }
   },
 
   start(){
-    console.log( cliInfo );
+    lastLog !== hr2 && console.log( hr2 );
+    this._log( cliInfo );
     Reflect.apply( this.log, this, arguments );
   },
 
   end(){
     Reflect.apply( this.log, this, arguments );
-    console.log( hr2 );
+    this._log( hr2 );
   },
 
   error( ...args ){
