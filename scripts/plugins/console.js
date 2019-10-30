@@ -16,7 +16,9 @@ module.exports = ( config, rollupConfig ) => {
   rollupConfig.input.onwarn = ( warning, defaultHandler ) => {
     switch( warning.code ){
       case 'EMPTY_BUNDLE': break;
-      default: warnSet.add( warning.message );
+      default: {
+        warnSet.add( warning.message );
+      };
     }
   }
 
@@ -106,3 +108,20 @@ module.exports = ( config, rollupConfig ) => {
 };
 
 
+module.exports.watch = rollupWatcher => {
+  rollupWatcher.on( 'event', event => {
+    switch( event.code ){
+      case 'START':
+      case 'BUNDLE_START':
+      case 'BUNDLE_END':
+      case 'END': break;
+      case 'ERROR': {
+        console.log( event.error.stack );
+        break;
+      };
+      default:{
+        console.log( event );
+      };
+    }
+  });
+}

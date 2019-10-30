@@ -2,6 +2,7 @@ const { resolve } = require('path');
 const rollup = require('rollup');
 const chokidar = require('chokidar');
 const print = require('../utils/print.js');
+const pluginConsole = require('../plugins/console.js');
 
 
 let rollupWatcher = null;
@@ -9,17 +10,17 @@ let rollupWatcher = null;
 
 module.exports = async () => {
   const configs = await require('./basic/index.js')();
+  const rollupConfigs = configs.map( config => {
+    return Object.assign( {}, config.input, {
+      output: config.output,
+      watch: {
+        chokidar: true
+      }
+    });
+  });
 
-  rollupWatcher = rollup.watch(
-    configs.map( config => {
-      return Object.assign( {}, config.input, {
-        output: config.output,
-        watch: {
-          chokidar: true
-        }
-      });
-    })
-  );
+  rollupWatcher = rollup.watch( rollupConfigs );
+  pluginConsole.watch( rollupWatcher );
 }
 
 
