@@ -44,7 +44,7 @@ module.exports = {
   },
 
   // 方法会接收被解析的 rollup 配置作为参数, 可直接对传入配置进行修改或返回一个新的配置
-  configureRollup: ( rollupConfig ) => {
+  configureRollup: ( rollupConfig, config ) => {
 
     // return newRollupConfig;
   },

@@ -47,7 +47,7 @@ function getUserPlugins( config ){
 
 function getConfiguredRollupConfig( config, rollupConfig ){
   const configureRollupFn = ZenJS.isFunction( config.configureRollup ) ? config.configureRollup : defaultConfig.configureRollup;
-  const configureRollupFnResult = configureRollupFn( rollupConfig );
+  const configureRollupFnResult = configureRollupFn( rollupConfig, config );
 
   return configureRollupFnResult ||
          rollupConfig;
