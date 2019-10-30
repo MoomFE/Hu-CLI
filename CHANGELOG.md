@@ -1,3 +1,5 @@
+# 1.4.2
+  - 📅 2019-10-30
   - 💄 `plugins` 选项会在执行时传入解析后的 Hu-CLI 配置
   - 💄 `configureRollup` 选项会在执行时传入解析后的 Hu-CLI 配置
 
