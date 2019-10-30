@@ -38,7 +38,7 @@ module.exports = ( configs ) => {
 
 function getUserPlugins( config ){
   const userPluginsFn = ZenJS.isFunction( config.plugins ) ? config.plugins : defaultConfig.plugins;
-  const userPluginsFnResult = userPluginsFn();
+  const userPluginsFnResult = userPluginsFn( config );
 
   return Array.isArray( userPluginsFnResult )
            ? userPluginsFnResult

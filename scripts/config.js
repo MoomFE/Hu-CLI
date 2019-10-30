@@ -29,7 +29,7 @@ module.exports = {
   replace: {},
 
   // 提供给 rollup 的插件列表
-  plugins: () => {
+  plugins: ( config ) => {
 
     return [];
   },

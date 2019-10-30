@@ -65,9 +65,12 @@ Hu-CLI 是一个基于 rollup 的打包工具
       // { from: /aaa(?=-)/, to: 'AAA' }
     ],
 
-    // 提供给 rollup 的插件列表
-    //  - 可以自行安装一些其他的 rollup 插件
-    plugins: () => {
+    /**
+     * 提供给 rollup 的插件列表
+     *  - 可以自行安装一些其他的 rollup 插件
+     * @param config 被解析后的 Hu-CLI 配置
+     */
+    plugins: ( config ) => {
       // 需要通过这样一个工厂函数对 rollup 插件进行返回
       return [];
     },
