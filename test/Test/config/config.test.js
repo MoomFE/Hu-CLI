@@ -1,4 +1,5 @@
 const compilerRollupConfigs = require('../../Lib/compilerRollupConfigs');
+const runBuild = require('../../Lib/runBuild');
 const proxyLog = require('../../Lib/utils/proxyLog');
 const proxyProcessExit = require('../../Lib/utils/proxyProcessExit');
 
@@ -52,6 +53,17 @@ describe( 'config', function(){
     expect( rollupConfig.input.input ).is.equals('isEdit');
   });
 
+  it( '使用 configureRollup 选项时可以接受被解析后的 Hu-CLI 配置作为参数', () => {
+    let config;
+
+    compilerRollupConfigs({
+      xxx: 123,
+      configureRollup: ( rollupConfig, _config ) => config = _config
+    })[0];
+
+    expect( config.xxx ).is.equals( 123 );
+  });
+
   it( '使用 mode 并指定为生产环境时, 会加载 terser 用于代码压缩', () => {
     // 1
     {
@@ -98,6 +110,30 @@ describe( 'config', function(){
         rollupConfig.input.plugins.$find({ name: 'terser' })
       ).is.undefined;
     }
+  });
+
+  it( '使用 plugins 选项可以安装自定义 rollup 插件', () => {
+    let code;
+
+    return runBuild({
+      _code: 'console.log(123)',
+      plugins: () => [
+        { transform: _code => code = _code }
+      ]
+    }).then(({ codes, logs }) => {
+      expect( code ).is.equals('console.log(123)');
+    });
+  });
+
+  it( '使用 plugins 选项时可以接受被解析后的 Hu-CLI 配置作为参数', () => {
+    let config;
+
+    compilerRollupConfigs({
+      xxx: 123,
+      plugins: _config => config = _config
+    })[0];
+
+    expect( config.xxx ).is.equals( 123 );
   });
 
   it( '对配置进行解析时, 若配置合法, 打包程序会正确执行', async () => {
