@@ -59,7 +59,7 @@ function mergeDefaultPlugins( config, rollupConfig ){
   if( Array.isArray( plugins ) ){
     rollupConfig.input.plugins = [
       pluginCommonjs( config.pluginOptions.commonjs ),
-      pluginNodeResolve(),
+      pluginNodeResolve( config.pluginOptions.nodeResolve ),
       pluginReplace( config, rollupConfig ),
       ...plugins,
       pluginTerser( config, rollupConfig ),
