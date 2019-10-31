@@ -57,6 +57,10 @@ module.exports = {
       output: {
         comments: false
       }
+    },
+    // 传递给 rollup-plugin-commonjs 插件的配置
+    commonjs: {
+
     }
   },
 

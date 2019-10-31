@@ -102,6 +102,11 @@ Hu-CLI 是一个基于 rollup 的打包工具
         output: {
           comments: false
         }
+      },
+      // 传递给 rollup-plugin-commonjs 插件的配置
+      //  - 完整选项请查看插件官网 ( https://github.com/rollup/rollup-plugin-commonjs )
+      commonjs: {
+
       }
     },
 
