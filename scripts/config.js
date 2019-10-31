@@ -40,6 +40,23 @@ module.exports = {
     banner: {
       extensions: [ '.js', '.css' ],
       isComment: true
+    },
+    // 传递给 rollup-plugin-terser 插件的配置
+    terser: {
+      sourcemap: false,
+      numWorkers: 1,
+      ecma: 6,
+      warnings: true,
+      compress: {
+        passes: 3,
+        unsafe: true,
+        unsafe_proto: true,
+        unsafe_arrows: true,
+        unsafe_methods: true
+      },
+      output: {
+        comments: false
+      }
     }
   },
 
