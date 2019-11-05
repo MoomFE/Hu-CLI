@@ -48,7 +48,7 @@ module.exports = {
       ecma: 6,
       warnings: true,
       compress: {
-        passes: 3,
+        passes: 1,
         unsafe: true,
         unsafe_proto: true,
         unsafe_arrows: true,
