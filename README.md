@@ -93,7 +93,7 @@ Hu-CLI 是一个基于 rollup 的打包工具
         ecma: 6,
         warnings: true,
         compress: {
-          passes: 3,
+          passes: 1,
           unsafe: true,
           unsafe_proto: true,
           unsafe_arrows: true,
