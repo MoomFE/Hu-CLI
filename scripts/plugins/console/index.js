@@ -3,8 +3,8 @@ const { green, yellow } = require('chalk');
 const { outputFile } = require('fs-extra');
 const { resolve } = require('path');
 const { gzipSync } = require('zlib');
-const print = require('../utils/print.js');
-const getSize = require('../utils/getSize');
+const print = require('../../utils/print');
+const getSize = require('../../utils/getSize');
 
 
 module.exports = ( config, rollupConfig ) => {

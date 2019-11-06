@@ -2,10 +2,10 @@ require('@moomfe/zenjs');
 const defaultConfig = require('../../../config.js');
 const pluginCommonjs = require('rollup-plugin-commonjs');
 const pluginNodeResolve = require('rollup-plugin-node-resolve');
-const pluginConsole = require('../../../plugins/console.js');
-const pluginBanner = require('../../../plugins/banner.js');
-const pluginReplace = require('../../../plugins/replace.js');
-const pluginTerser = require('../../../plugins/terser.js');
+const pluginConsole = require('../../../plugins/console/index.js');
+const pluginBanner = require('../../../plugins/banner/index.js');
+const pluginReplace = require('../../../plugins/replace/index.js');
+const pluginTerser = require('../../../plugins/terser/index.js');
 
 
 module.exports = ( configs ) => {
