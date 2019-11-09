@@ -2,7 +2,7 @@ const { resolve } = require('path');
 const rollup = require('rollup');
 const chokidar = require('chokidar');
 const print = require('../utils/print.js');
-const pluginConsole = require('../plugins/console.js');
+const pluginConsole = require('../plugins/console/index.js');
 
 
 let rollupWatcher = null;
