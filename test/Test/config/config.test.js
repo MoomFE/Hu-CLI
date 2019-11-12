@@ -64,6 +64,54 @@ describe( 'config', function(){
     expect( config.xxx ).is.equals( 123 );
   });
 
+  it( '使用 mode 并指定为生产环境时, 会加载 @moomfe/hu-template-minifier 用于模板压缩', () => {
+    // 1
+    {
+      const rollupConfig = compilerRollupConfigs({
+        mode: 'production'
+      })[0];
+  
+      expect(
+        rollupConfig.input.plugins.$find({ name: 'hu-template-minifier' })
+      ).is.not.undefined;
+    }
+    // 2
+    {
+      const rollupConfig = compilerRollupConfigs({
+        mode: true
+      })[0];
+  
+      expect(
+        rollupConfig.input.plugins.$find({ name: 'hu-template-minifier' })
+      ).is.not.undefined;
+    }
+
+    // -------------------------------------------
+    // - 反向测试
+    // -------------------------------------------
+
+    // 1
+    {
+      const rollupConfig = compilerRollupConfigs({
+        mode: 'development'
+      })[0];
+  
+      expect(
+        rollupConfig.input.plugins.$find({ name: 'hu-template-minifier' })
+      ).is.undefined;
+    }
+    // 2
+    {
+      const rollupConfig = compilerRollupConfigs({
+        mode: false
+      })[0];
+  
+      expect(
+        rollupConfig.input.plugins.$find({ name: 'hu-template-minifier' })
+      ).is.undefined;
+    }
+  });
+
   it( '使用 mode 并指定为生产环境时, 会加载 terser 用于代码压缩', () => {
     // 1
     {
