@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/MoomFE/Hu-CLI#readme",
   "dependencies": {
+    "@moomfe/hu-template-minifier": "^1.1.0",
     "@moomfe/zenjs": "^5.0.0-beta.5",
     "chalk": "^2.4.2",
     "chokidar": "^3.3.0",
