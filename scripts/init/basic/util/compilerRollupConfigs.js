@@ -6,6 +6,7 @@ const pluginConsole = require('../../../plugins/console/index.js');
 const pluginBanner = require('../../../plugins/banner/index.js');
 const pluginReplace = require('../../../plugins/replace/index.js');
 const pluginTerser = require('../../../plugins/terser/index.js');
+const pluginTemplateMinifier = require('../../../plugins/template-minifier/index.js');
 
 
 module.exports = ( configs ) => {
@@ -63,6 +64,7 @@ function mergeDefaultPlugins( config, rollupConfig ){
       pluginReplace( config, rollupConfig ),
       pluginBanner( config, rollupConfig ),
       ...plugins,
+      pluginTemplateMinifier( config, rollupConfig ),
       pluginTerser( config, rollupConfig ),
       pluginConsole( config, rollupConfig )
     ];
