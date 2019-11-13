@@ -1,3 +1,5 @@
+  - 💄 新增 `pluginOptions.templateMinifier` 选项, 用于配置传递给内部使用的 `@moomfe/hu-template-minifier` 插件的配置
+
 # 1.5.0
   - 📅 2019-11-12
   - 🌟 在开发模式下会使用 `@moomfe/hu-template-minifier` 对模板进行压缩
