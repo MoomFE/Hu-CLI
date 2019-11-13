@@ -61,7 +61,9 @@ module.exports = {
     // 传递给 rollup-plugin-commonjs 插件的配置
     commonjs: {},
     // 传递给 rollup-plugin-node-resolve 插件的配置
-    nodeResolve: {}
+    nodeResolve: {},
+    // 传递给 @moomfe/hu-template-minifier 插件的配置
+    templateMinifier: {}
   },
 
   // 方法会接收被解析的 rollup 配置作为参数, 可直接对传入配置进行修改或返回一个新的配置
