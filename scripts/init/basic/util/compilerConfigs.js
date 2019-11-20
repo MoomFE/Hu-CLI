@@ -12,8 +12,8 @@ module.exports = function compilerConfigs( originConfigs, parentConfig, configs 
     const outputDir = resolve( rootPath, config.outputDir );
     const childConfigs = config.pipe;
 
-    config._originConfig = originConfig;
     config._mergedConfig = Object.$assign( null, config );
+    config._originConfig = originConfig;
     config.inputDir = inputDir;
     config.outputDir = outputDir;
     config.input = resolve( inputDir, config.input );
