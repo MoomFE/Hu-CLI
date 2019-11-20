@@ -21,8 +21,8 @@ module.exports = async ( _configs ) => {
       errors.add(`${ bgBlackBright(' mode ') } : 选项必须为 'development', 'production', true, false 中的一个, 请检查您的配置文件 !`);
     }
     // 未定义 format 选项
-    if( [ 'amd', 'cjs', 'system', 'esm', 'iife', 'umd' ].includes( config.format ) === false ){
-      errors.add(`${ bgBlackBright(' format ') } : 选项必须为 'amd', 'cjs', 'system', 'esm', 'iife', 'umd' 中的一个, 请检查您的配置文件 !`);
+    if( [ 'amd', 'cjs', 'system', 'esm', 'esm.browser', 'iife', 'umd' ].includes( config.format ) === false ){
+      errors.add(`${ bgBlackBright(' format ') } : 选项必须为 'amd', 'cjs', 'system', 'esm', 'esm.browser', 'iife', 'umd' 中的一个, 请检查您的配置文件 !`);
     }
     // 选项 pluginOptions 并非是一个纯粹的对象
     if( Object.$isPlainObject( config.pluginOptions ) === false ){

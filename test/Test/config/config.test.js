@@ -31,7 +31,7 @@ describe( 'config', function(){
           }, true);
         });
 
-        expect( stdout ).is.includes(`选项必须为 'amd', 'cjs', 'system', 'esm', 'iife', 'umd' 中的一个, 请检查您的配置文件`);
+        expect( stdout ).is.includes(`选项必须为 'amd', 'cjs', 'system', 'esm', 'esm.browser', 'iife', 'umd' 中的一个, 请检查您的配置文件`);
       });
 
       expect( isExit ).is.true;
@@ -45,7 +45,7 @@ describe( 'config', function(){
           }, true);
         });
 
-        expect( stdout ).is.includes(`选项必须为 'amd', 'cjs', 'system', 'esm', 'iife', 'umd' 中的一个, 请检查您的配置文件`);
+        expect( stdout ).is.includes(`选项必须为 'amd', 'cjs', 'system', 'esm', 'esm.browser', 'iife', 'umd' 中的一个, 请检查您的配置文件`);
       });
 
       expect( isExit ).is.true;
@@ -59,7 +59,7 @@ describe( 'config', function(){
           }, true);
         });
 
-        expect( stdout ).is.includes(`选项必须为 'amd', 'cjs', 'system', 'esm', 'iife', 'umd' 中的一个, 请检查您的配置文件`);
+        expect( stdout ).is.includes(`选项必须为 'amd', 'cjs', 'system', 'esm', 'esm.browser', 'iife', 'umd' 中的一个, 请检查您的配置文件`);
       });
 
       expect( isExit ).is.true;
@@ -73,7 +73,7 @@ describe( 'config', function(){
           }, true);
         });
 
-        expect( stdout ).is.includes(`选项必须为 'amd', 'cjs', 'system', 'esm', 'iife', 'umd' 中的一个, 请检查您的配置文件`);
+        expect( stdout ).is.includes(`选项必须为 'amd', 'cjs', 'system', 'esm', 'esm.browser', 'iife', 'umd' 中的一个, 请检查您的配置文件`);
       });
 
       expect( isExit ).is.true;
@@ -144,6 +144,27 @@ describe( 'config', function(){
       const isExit = await proxyProcessExit( async () => {
         const stdout = await proxyLog( async () => {
           await compilerRollupConfigs({
+            format: 'esm.browser'
+          }, true);
+        });
+
+        expect( stdout ).is.equals('');
+      });
+
+      expect( isExit ).is.false;
+
+      // 'esm.browser' 格式其实也是 'esm'
+      const rollupConfig = compilerRollupConfigs({
+        format: 'esm.browser'
+      })[0];
+  
+      expect( rollupConfig.output.format ).is.equals('esm');
+    }
+    // 6
+    {
+      const isExit = await proxyProcessExit( async () => {
+        const stdout = await proxyLog( async () => {
+          await compilerRollupConfigs({
             format: 'iife'
           }, true);
         });
@@ -153,7 +174,7 @@ describe( 'config', function(){
 
       expect( isExit ).is.false;
     }
-    // 6
+    // 7
     {
       const isExit = await proxyProcessExit( async () => {
         const stdout = await proxyLog( async () => {

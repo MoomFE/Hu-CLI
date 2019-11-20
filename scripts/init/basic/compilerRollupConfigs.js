@@ -43,6 +43,10 @@ function getDefaultRollupConfig( config ){
     }
   };
 
+  if( config.format === 'esm.browser' ){
+    rollupConfig.output.format = 'esm';
+  }
+
   // 处理外部依赖项
   if( config.externals && Object.$isEmptyObject( config.externals ) === false ){
     Object.entries( config.externals ).forEach(([ id, variableName ]) => {
