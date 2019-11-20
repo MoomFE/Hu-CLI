@@ -1,4 +1,6 @@
   - 💄 新增 `pluginOptions.templateMinifier` 选项, 用于配置传递给内部使用的 `@moomfe/hu-template-minifier` 插件的配置
+  - 💄 为 `plugins`, `configureRollup` 选项内传入的 `config` 参数添加 `_originConfig` 选项, 为原始配置
+  - 💄 为 `plugins`, `configureRollup` 选项内传入的 `config` 参数添加 `_mergedConfig` 选项, 为原始配置项与默认配置合并后的配置
 
 # 1.5.0
   - 📅 2019-11-12
