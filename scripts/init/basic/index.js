@@ -2,9 +2,9 @@ require('@moomfe/zenjs');
 const { yellow, bgBlackBright } = require('chalk');
 const { pathExists } = require('fs-extra');
 const print = require('../../utils/print.js');
-const getConfigFile = require('./util/getConfigFile.js');
-const compilerConfigs = require('./util/compilerConfigs.js');
-const compilerRollupConfigs = require('./util/compilerRollupConfigs.js');
+const getConfigFile = require('./getConfigFile.js');
+const compilerConfigs = require('./compilerConfigs.js');
+const compilerRollupConfigs = require('./compilerRollupConfigs.js');
 
 
 
