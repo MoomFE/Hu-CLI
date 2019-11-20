@@ -581,9 +581,22 @@ describe( 'config', function(){
     compilerRollupConfigs({
       xxx: 123,
       plugins: _config => config = _config
-    })[0];
+    });
 
     expect( config.xxx ).is.equals( 123 );
+  });
+
+  it( '使用 externals 选项可以定义外部依赖', () => {
+    const rollupConfig = compilerRollupConfigs({
+      externals: {
+        '@moomfe/hu': 'Hu'
+      }
+    })[0];
+
+    expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/hu' ]);
+    expect( rollupConfig.output.globals ).is.deep.equals({
+      '@moomfe/hu': 'Hu'
+    });
   });
 
 });
