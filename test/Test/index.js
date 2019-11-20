@@ -1,8 +1,3 @@
-require('../../node_modules/@moomfe/zenjs');
-require('chai/register-expect');
-require('chai/register-should');
-
-
 const { root } = require('../Lib/const');
 
 
