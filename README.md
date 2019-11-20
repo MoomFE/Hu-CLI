@@ -65,6 +65,12 @@ Hu-CLI 是一个基于 rollup 的打包工具
       // { from: /aaa(?=-)/, to: 'AAA' }
     ],
 
+    // 外部依赖
+    externals: {
+      // jquery: 'jQuery',
+      // lodash: '_'
+    },
+
     /**
      * 提供给 rollup 的插件列表
      *  - 可以自行安装一些其他的 rollup 插件
