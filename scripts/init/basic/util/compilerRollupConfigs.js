@@ -14,8 +14,19 @@ module.exports = ( configs ) => {
 
   // 生成 rollup 的配置
   for( const config of configs ){
-    const rollupDefaultConfig = getDefaultRollupConfig( config );
-    const rollupConfig = getConfiguredRollupConfig( config, rollupDefaultConfig );
+    const rollupConfigPlugins = getUserPlugins( config );
+    const rollupConfig = getConfiguredRollupConfig( config, {
+      config,
+      input: {
+        input: config.input,
+        plugins: rollupConfigPlugins
+      },
+      output: {
+        file: config.output,
+        format: config.format,
+        name: config.name
+      }
+    });
 
     rollupConfigs.push(
       mergeDefaultPlugins( config, rollupConfig )
@@ -26,38 +37,6 @@ module.exports = ( configs ) => {
 }
 
 
-function getDefaultRollupConfig( config ){
-  const rollupConfigPlugins = getUserPlugins( config );
-  const rollupConfig = {
-    config,
-    input: {
-      input: config.input,
-      plugins: rollupConfigPlugins,
-      external: []
-    },
-    output: {
-      file: config.output,
-      format: config.format,
-      name: config.name,
-      globals: {}
-    }
-  };
-
-  // 处理外部依赖项
-  if( config.externals && Object.$isEmptyObject( config.externals ) === false ){
-    Object.entries( config.externals ).forEach(([ id, variableName ]) => {
-      rollupConfig.input.external.push( id );
-      rollupConfig.output.globals[ id ] = variableName;
-    });
-  }
-
-  return rollupConfig;
-}
-
-/**
- * 执行 plugins 选项方法,
- * 获取用户返回的插件
- */
 function getUserPlugins( config ){
   const userPluginsFn = ZenJS.isFunction( config.plugins ) ? config.plugins : defaultConfig.plugins;
   const userPluginsFnResult = userPluginsFn( config );
@@ -67,10 +46,6 @@ function getUserPlugins( config ){
            : [];
 }
 
-/**
- * 执行 configureRollup 选项方法,
- * 获取用户返回的新配置或使用修改的配置
- */
 function getConfiguredRollupConfig( config, rollupConfig ){
   const configureRollupFn = ZenJS.isFunction( config.configureRollup ) ? config.configureRollup : defaultConfig.configureRollup;
   const configureRollupFnResult = configureRollupFn( rollupConfig, config );
@@ -79,9 +54,6 @@ function getConfiguredRollupConfig( config, rollupConfig ){
          rollupConfig;
 }
 
-/**
- * 将用户插件和内置插件进行合并
- */
 function mergeDefaultPlugins( config, rollupConfig ){
   const plugins = rollupConfig.input.plugins;
 

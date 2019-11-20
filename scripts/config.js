@@ -28,9 +28,6 @@ module.exports = {
   // 将代码中指定文本进行替换
   replace: {},
 
-  // 外部依赖
-  externals: {},
-
   // 提供给 rollup 的插件列表
   plugins: ( config ) => {
 
