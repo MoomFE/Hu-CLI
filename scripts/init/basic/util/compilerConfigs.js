@@ -13,7 +13,7 @@ module.exports = function compilerConfigs( originConfigs, parentConfig, configs 
     const childConfigs = config.pipe;
 
     config._mergedConfig = Object.$assign( null, config );
-    config._originConfig = originConfig;
+    config._originConfig = Object.$assign( null, originConfig );
     config.inputDir = inputDir;
     config.outputDir = outputDir;
     config.input = resolve( inputDir, config.input );
