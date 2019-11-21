@@ -46,7 +46,7 @@ Hu-CLI 是一个基于 rollup 的打包工具
     // 打包输出目录
     outputDir: './dist',
 
-    // 输出的文件类型 ( amd, cjs, system, esm, iife, umd )
+    // 输出的文件类型 ( amd, cjs, system, esm, esm.browser, iife, umd )
     format: 'iife',
     // 生成 UMD 和 LIFE 模块的名字
     name: '',
@@ -67,8 +67,12 @@ Hu-CLI 是一个基于 rollup 的打包工具
 
     // 外部依赖
     externals: {
-      // jquery: 'jQuery',
-      // lodash: '_'
+      // 'jquery': 'jQuery',
+      // '@moomfe/hu': {
+      //   'esm': '@moomfe/hu',
+      //   'esm.browser': 'https://cdn.jsdelivr.net/npm/@moomfe/hu',
+      //   'default': 'Hu'
+      // }
     },
 
     /**
