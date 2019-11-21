@@ -20,9 +20,16 @@ module.exports = async ( _configs ) => {
     if( [ 'development', 'production', true, false ].includes( config.mode ) === false ){
       errors.add(`${ bgBlackBright(' mode ') } : 选项必须为 'development', 'production', true, false 中的一个, 请检查您的配置文件 !`);
     }
-    // 未定义 format 选项
+    // 选项 format 未定义或值不合法
     if( [ 'amd', 'cjs', 'system', 'esm', 'esm.browser', 'iife', 'umd' ].includes( config.format ) === false ){
       errors.add(`${ bgBlackBright(' format ') } : 选项必须为 'amd', 'cjs', 'system', 'esm', 'esm.browser', 'iife', 'umd' 中的一个, 请检查您的配置文件 !`);
+    }
+    // 选项 externals 取值错误
+    else{
+      // 选项 externals 并非是一个纯粹的对象
+      if( Object.$isPlainObject( config.externals ) === false ){
+        errors.add(`${ bgBlackBright(' externals ') } : 选项必须为一个纯粹的对象, 请检查您的配置文件 !`);
+      }
     }
     // 选项 pluginOptions 并非是一个纯粹的对象
     if( Object.$isPlainObject( config.pluginOptions ) === false ){
