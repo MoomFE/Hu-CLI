@@ -31,7 +31,7 @@ describe( 'config', function(){
           }, true);
         });
 
-        expect( stdout ).is.includes(`选项必须为 'development', 'production', true, false 中的一个, 请检查您的配置文件`);
+        expect( stdout ).is.includes(`选项必须为 "development", "production", true, false 中的一个, 请检查您的配置文件`);
       });
 
       expect( isExit ).is.true;
@@ -45,7 +45,7 @@ describe( 'config', function(){
           }, true);
         });
 
-        expect( stdout ).is.includes(`选项必须为 'development', 'production', true, false 中的一个, 请检查您的配置文件`);
+        expect( stdout ).is.includes(`选项必须为 "development", "production", true, false 中的一个, 请检查您的配置文件`);
       });
 
       expect( isExit ).is.true;
@@ -59,7 +59,7 @@ describe( 'config', function(){
           }, true);
         });
 
-        expect( stdout ).is.includes(`选项必须为 'development', 'production', true, false 中的一个, 请检查您的配置文件`);
+        expect( stdout ).is.includes(`选项必须为 "development", "production", true, false 中的一个, 请检查您的配置文件`);
       });
 
       expect( isExit ).is.true;
@@ -137,7 +137,7 @@ describe( 'config', function(){
           }, true);
         });
 
-        expect( stdout ).is.includes(`选项必须为 'amd', 'cjs', 'system', 'esm', 'esm.browser', 'iife', 'umd' 中的一个, 请检查您的配置文件`);
+        expect( stdout ).is.includes(`选项必须为 "amd", "cjs", "system", "esm", "esm.browser", "iife", "umd" 中的一个, 请检查您的配置文件`);
       });
 
       expect( isExit ).is.true;
@@ -151,7 +151,7 @@ describe( 'config', function(){
           }, true);
         });
 
-        expect( stdout ).is.includes(`选项必须为 'amd', 'cjs', 'system', 'esm', 'esm.browser', 'iife', 'umd' 中的一个, 请检查您的配置文件`);
+        expect( stdout ).is.includes(`选项必须为 "amd", "cjs", "system", "esm", "esm.browser", "iife", "umd" 中的一个, 请检查您的配置文件`);
       });
 
       expect( isExit ).is.true;
@@ -165,7 +165,7 @@ describe( 'config', function(){
           }, true);
         });
 
-        expect( stdout ).is.includes(`选项必须为 'amd', 'cjs', 'system', 'esm', 'esm.browser', 'iife', 'umd' 中的一个, 请检查您的配置文件`);
+        expect( stdout ).is.includes(`选项必须为 "amd", "cjs", "system", "esm", "esm.browser", "iife", "umd" 中的一个, 请检查您的配置文件`);
       });
 
       expect( isExit ).is.true;
@@ -179,7 +179,7 @@ describe( 'config', function(){
           }, true);
         });
 
-        expect( stdout ).is.includes(`选项必须为 'amd', 'cjs', 'system', 'esm', 'esm.browser', 'iife', 'umd' 中的一个, 请检查您的配置文件`);
+        expect( stdout ).is.includes(`选项必须为 "amd", "cjs", "system", "esm", "esm.browser", "iife", "umd" 中的一个, 请检查您的配置文件`);
       });
 
       expect( isExit ).is.true;
@@ -373,7 +373,7 @@ describe( 'config', function(){
           }, true);
         });
 
-        expect( stdout ).is.includes('选项必须为一个函数并且函数返回 plugins 数组, 请检查您的配置文件');
+        expect( stdout ).is.includes('选项必须为一个函数, 请检查您的配置文件');
       });
 
       expect( isExit ).is.true;
