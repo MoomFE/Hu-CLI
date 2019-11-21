@@ -51,7 +51,7 @@ function getDefaultRollupConfig( config ){
   if( config.externals && Object.$isEmptyObject( config.externals ) === false ){
     Object.entries( config.externals ).forEach(([ id, variableName ]) => {
       rollupConfig.input.external.push( id );
-      rollupConfig.output.globals[ id ] = variableName;
+      rollupConfig.output.globals[ id ] = variableName[ config.format ] || variableName.default || variableName;
     });
   }
 

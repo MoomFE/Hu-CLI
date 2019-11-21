@@ -157,7 +157,7 @@ describe( 'config', function(){
       const rollupConfig = compilerRollupConfigs({
         format: 'esm.browser'
       })[0];
-  
+
       expect( rollupConfig.output.format ).is.equals('esm');
     }
     // 6
@@ -495,7 +495,7 @@ describe( 'config', function(){
       const rollupConfig = compilerRollupConfigs({
         mode: 'production'
       })[0];
-  
+
       expect(
         rollupConfig.input.plugins.$find({ name: 'hu-template-minifier' })
       ).is.not.undefined;
@@ -505,7 +505,7 @@ describe( 'config', function(){
       const rollupConfig = compilerRollupConfigs({
         mode: true
       })[0];
-  
+
       expect(
         rollupConfig.input.plugins.$find({ name: 'hu-template-minifier' })
       ).is.not.undefined;
@@ -520,7 +520,7 @@ describe( 'config', function(){
       const rollupConfig = compilerRollupConfigs({
         mode: 'development'
       })[0];
-  
+
       expect(
         rollupConfig.input.plugins.$find({ name: 'hu-template-minifier' })
       ).is.undefined;
@@ -530,7 +530,7 @@ describe( 'config', function(){
       const rollupConfig = compilerRollupConfigs({
         mode: false
       })[0];
-  
+
       expect(
         rollupConfig.input.plugins.$find({ name: 'hu-template-minifier' })
       ).is.undefined;
@@ -543,7 +543,7 @@ describe( 'config', function(){
       const rollupConfig = compilerRollupConfigs({
         mode: 'production'
       })[0];
-  
+
       expect(
         rollupConfig.input.plugins.$find({ name: 'terser' })
       ).is.not.undefined;
@@ -553,7 +553,7 @@ describe( 'config', function(){
       const rollupConfig = compilerRollupConfigs({
         mode: true
       })[0];
-  
+
       expect(
         rollupConfig.input.plugins.$find({ name: 'terser' })
       ).is.not.undefined;
@@ -568,7 +568,7 @@ describe( 'config', function(){
       const rollupConfig = compilerRollupConfigs({
         mode: 'development'
       })[0];
-  
+
       expect(
         rollupConfig.input.plugins.$find({ name: 'terser' })
       ).is.undefined;
@@ -578,7 +578,7 @@ describe( 'config', function(){
       const rollupConfig = compilerRollupConfigs({
         mode: false
       })[0];
-  
+
       expect(
         rollupConfig.input.plugins.$find({ name: 'terser' })
       ).is.undefined;
@@ -610,16 +610,513 @@ describe( 'config', function(){
   });
 
   it( '使用 externals 选项可以定义外部依赖', () => {
-    const rollupConfig = compilerRollupConfigs({
-      externals: {
-        '@moomfe/hu': 'Hu'
-      }
-    })[0];
+    // 单个外部依赖
+    {
+      const rollupConfig = compilerRollupConfigs({
+        externals: {
+          '@moomfe/hu': 'Hu'
+        }
+      })[0];
 
-    expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/hu' ]);
-    expect( rollupConfig.output.globals ).is.deep.equals({
-      '@moomfe/hu': 'Hu'
-    });
+      expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/hu' ]);
+      expect( rollupConfig.output.globals ).is.deep.equals({
+        '@moomfe/hu': 'Hu'
+      });
+    }
+    // 多个外部依赖
+    {
+      const rollupConfig = compilerRollupConfigs({
+        externals: {
+          '@moomfe/hu': 'Hu',
+          '@moomfe/zenjs': 'ZenJS'
+        }
+      })[0];
+
+      expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/hu', '@moomfe/zenjs' ]);
+      expect( rollupConfig.output.globals ).is.deep.equals({
+        '@moomfe/hu': 'Hu',
+        '@moomfe/zenjs': 'ZenJS'
+      });
+    }
+  });
+
+  it( '使用 externals 选项可以定义外部依赖, 值可以传入 JSON 以适配不同打包场景的外部依赖来源', () => {
+    // amd
+    {
+      // 单个外部依赖
+      {
+        const rollupConfig = compilerRollupConfigs({
+          format: 'amd',
+          externals: {
+            '@moomfe/hu': {
+              amd: 'Hu'
+            }
+          }
+        })[0];
+
+        expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/hu' ]);
+        expect( rollupConfig.output.globals ).is.deep.equals({
+          '@moomfe/hu': 'Hu'
+        });
+      }
+      // 多个外部依赖
+      {
+        const rollupConfig = compilerRollupConfigs({
+          format: 'amd',
+          externals: {
+            '@moomfe/zenjs': 'ZenJS',
+            '@moomfe/hu': {
+              amd: 'Hu'
+            }
+          }
+        })[0];
+
+        expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/zenjs', '@moomfe/hu' ]);
+        expect( rollupConfig.output.globals ).is.deep.equals({
+          '@moomfe/hu': 'Hu',
+          '@moomfe/zenjs': 'ZenJS'
+        });
+      }
+    }
+    // cjs
+    {
+      // 单个外部依赖
+      {
+        const rollupConfig = compilerRollupConfigs({
+          format: 'cjs',
+          externals: {
+            '@moomfe/hu': {
+              cjs: '@moomfe/hu'
+            }
+          }
+        })[0];
+
+        expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/hu' ]);
+        expect( rollupConfig.output.globals ).is.deep.equals({
+          '@moomfe/hu': '@moomfe/hu'
+        });
+      }
+      // 多个外部依赖
+      {
+        const rollupConfig = compilerRollupConfigs({
+          format: 'cjs',
+          externals: {
+            '@moomfe/zenjs': 'ZenJS',
+            '@moomfe/hu': {
+              cjs: '@moomfe/hu'
+            }
+          }
+        })[0];
+
+        expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/zenjs', '@moomfe/hu' ]);
+        expect( rollupConfig.output.globals ).is.deep.equals({
+          '@moomfe/hu': '@moomfe/hu',
+          '@moomfe/zenjs': 'ZenJS'
+        });
+      }
+    }
+    // system
+    {
+      // 单个外部依赖
+      {
+        const rollupConfig = compilerRollupConfigs({
+          format: 'system',
+          externals: {
+            '@moomfe/hu': {
+              system: 'Hu'
+            }
+          }
+        })[0];
+
+        expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/hu' ]);
+        expect( rollupConfig.output.globals ).is.deep.equals({
+          '@moomfe/hu': 'Hu'
+        });
+      }
+      // 多个外部依赖
+      {
+        const rollupConfig = compilerRollupConfigs({
+          format: 'system',
+          externals: {
+            '@moomfe/zenjs': 'ZenJS',
+            '@moomfe/hu': {
+              system: 'Hu'
+            }
+          }
+        })[0];
+
+        expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/zenjs', '@moomfe/hu' ]);
+        expect( rollupConfig.output.globals ).is.deep.equals({
+          '@moomfe/hu': 'Hu',
+          '@moomfe/zenjs': 'ZenJS'
+        });
+      }
+    }
+    // esm
+    {
+      // 单个外部依赖
+      {
+        const rollupConfig = compilerRollupConfigs({
+          format: 'esm',
+          externals: {
+            '@moomfe/hu': {
+              esm: '@moomfe/hu'
+            }
+          }
+        })[0];
+
+        expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/hu' ]);
+        expect( rollupConfig.output.globals ).is.deep.equals({
+          '@moomfe/hu': '@moomfe/hu'
+        });
+      }
+      // 多个外部依赖
+      {
+        const rollupConfig = compilerRollupConfigs({
+          format: 'esm',
+          externals: {
+            '@moomfe/zenjs': 'ZenJS',
+            '@moomfe/hu': {
+              esm: '@moomfe/hu'
+            }
+          }
+        })[0];
+
+        expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/zenjs', '@moomfe/hu' ]);
+        expect( rollupConfig.output.globals ).is.deep.equals({
+          '@moomfe/hu': '@moomfe/hu',
+          '@moomfe/zenjs': 'ZenJS'
+        });
+      }
+    }
+    // esm.browser
+    {
+      // 单个外部依赖
+      {
+        const rollupConfig = compilerRollupConfigs({
+          format: 'esm.browser',
+          externals: {
+            '@moomfe/hu': {
+              'esm.browser': 'https://cdn.jsdelivr.net/npm/@moomfe/hu'
+            }
+          }
+        })[0];
+
+        expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/hu' ]);
+        expect( rollupConfig.output.globals ).is.deep.equals({
+          '@moomfe/hu': 'https://cdn.jsdelivr.net/npm/@moomfe/hu'
+        });
+      }
+      // 多个外部依赖
+      {
+        const rollupConfig = compilerRollupConfigs({
+          format: 'esm.browser',
+          externals: {
+            '@moomfe/zenjs': 'ZenJS',
+            '@moomfe/hu': {
+              'esm.browser': 'https://cdn.jsdelivr.net/npm/@moomfe/hu'
+            }
+          }
+        })[0];
+
+        expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/zenjs', '@moomfe/hu' ]);
+        expect( rollupConfig.output.globals ).is.deep.equals({
+          '@moomfe/hu': 'https://cdn.jsdelivr.net/npm/@moomfe/hu',
+          '@moomfe/zenjs': 'ZenJS'
+        });
+      }
+    }
+    // iife
+    {
+      // 单个外部依赖
+      {
+        const rollupConfig = compilerRollupConfigs({
+          format: 'iife',
+          externals: {
+            '@moomfe/hu': {
+              iife: 'Hu'
+            }
+          }
+        })[0];
+
+        expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/hu' ]);
+        expect( rollupConfig.output.globals ).is.deep.equals({
+          '@moomfe/hu': 'Hu'
+        });
+      }
+      // 多个外部依赖
+      {
+        const rollupConfig = compilerRollupConfigs({
+          format: 'iife',
+          externals: {
+            '@moomfe/zenjs': 'ZenJS',
+            '@moomfe/hu': {
+              iife: 'Hu'
+            }
+          }
+        })[0];
+
+        expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/zenjs', '@moomfe/hu' ]);
+        expect( rollupConfig.output.globals ).is.deep.equals({
+          '@moomfe/hu': 'Hu',
+          '@moomfe/zenjs': 'ZenJS'
+        });
+      }
+    }
+    // umd
+    {
+      // 单个外部依赖
+      {
+        const rollupConfig = compilerRollupConfigs({
+          format: 'umd',
+          externals: {
+            '@moomfe/hu': {
+              umd: 'Hu'
+            }
+          }
+        })[0];
+
+        expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/hu' ]);
+        expect( rollupConfig.output.globals ).is.deep.equals({
+          '@moomfe/hu': 'Hu'
+        });
+      }
+      // 多个外部依赖
+      {
+        const rollupConfig = compilerRollupConfigs({
+          format: 'umd',
+          externals: {
+            '@moomfe/zenjs': 'ZenJS',
+            '@moomfe/hu': {
+              umd: 'Hu'
+            }
+          }
+        })[0];
+
+        expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/zenjs', '@moomfe/hu' ]);
+        expect( rollupConfig.output.globals ).is.deep.equals({
+          '@moomfe/hu': 'Hu',
+          '@moomfe/zenjs': 'ZenJS'
+        });
+      }
+    }
+  });
+
+  it( '使用 externals 选项可以定义外部依赖, 值可以传入 JSON 以适配不同打包场景的外部依赖来源, 定义 default 选项可以定义其他打包场景下默认值', () => {
+    const externals = {
+      '@moomfe/hu': {
+        'cjs': '@moomfe/hu',
+        'esm': '@moomfe/hu',
+        'esm.browser': 'https://cdn.jsdelivr.net/npm/@moomfe/hu',
+        'default': 'Hu'
+      }
+    };
+    const externalsMore = {
+      '@moomfe/zenjs': 'ZenJS',
+      '@moomfe/hu': {
+        'cjs': '@moomfe/hu',
+        'esm': '@moomfe/hu',
+        'esm.browser': 'https://cdn.jsdelivr.net/npm/@moomfe/hu',
+        'default': 'Hu'
+      }
+    };
+
+    // amd
+    {
+      // 单个外部依赖
+      {
+        const rollupConfig = compilerRollupConfigs({
+          format: 'amd',
+          externals
+        })[0];
+
+        expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/hu' ]);
+        expect( rollupConfig.output.globals ).is.deep.equals({
+          '@moomfe/hu': 'Hu'
+        });
+      }
+      // 多个外部依赖
+      {
+        const rollupConfig = compilerRollupConfigs({
+          format: 'amd',
+          externals: externalsMore
+        })[0];
+
+        expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/zenjs', '@moomfe/hu' ]);
+        expect( rollupConfig.output.globals ).is.deep.equals({
+          '@moomfe/hu': 'Hu',
+          '@moomfe/zenjs': 'ZenJS'
+        });
+      }
+    }
+    // cjs
+    {
+      // 单个外部依赖
+      {
+        const rollupConfig = compilerRollupConfigs({
+          format: 'cjs',
+          externals
+        })[0];
+
+        expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/hu' ]);
+        expect( rollupConfig.output.globals ).is.deep.equals({
+          '@moomfe/hu': '@moomfe/hu'
+        });
+      }
+      // 多个外部依赖
+      {
+        const rollupConfig = compilerRollupConfigs({
+          format: 'cjs',
+          externals: externalsMore
+        })[0];
+
+        expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/zenjs', '@moomfe/hu' ]);
+        expect( rollupConfig.output.globals ).is.deep.equals({
+          '@moomfe/hu': '@moomfe/hu',
+          '@moomfe/zenjs': 'ZenJS'
+        });
+      }
+    }
+    // system
+    {
+      // 单个外部依赖
+      {
+        const rollupConfig = compilerRollupConfigs({
+          format: 'system',
+          externals
+        })[0];
+
+        expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/hu' ]);
+        expect( rollupConfig.output.globals ).is.deep.equals({
+          '@moomfe/hu': 'Hu'
+        });
+      }
+      // 多个外部依赖
+      {
+        const rollupConfig = compilerRollupConfigs({
+          format: 'system',
+          externals: externalsMore
+        })[0];
+
+        expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/zenjs', '@moomfe/hu' ]);
+        expect( rollupConfig.output.globals ).is.deep.equals({
+          '@moomfe/hu': 'Hu',
+          '@moomfe/zenjs': 'ZenJS'
+        });
+      }
+    }
+    // esm
+    {
+      // 单个外部依赖
+      {
+        const rollupConfig = compilerRollupConfigs({
+          format: 'esm',
+          externals
+        })[0];
+
+        expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/hu' ]);
+        expect( rollupConfig.output.globals ).is.deep.equals({
+          '@moomfe/hu': '@moomfe/hu'
+        });
+      }
+      // 多个外部依赖
+      {
+        const rollupConfig = compilerRollupConfigs({
+          format: 'esm',
+          externals: externalsMore
+        })[0];
+
+        expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/zenjs', '@moomfe/hu' ]);
+        expect( rollupConfig.output.globals ).is.deep.equals({
+          '@moomfe/hu': '@moomfe/hu',
+          '@moomfe/zenjs': 'ZenJS'
+        });
+      }
+    }
+    // esm.browser
+    {
+      // 单个外部依赖
+      {
+        const rollupConfig = compilerRollupConfigs({
+          format: 'esm.browser',
+          externals
+        })[0];
+
+        expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/hu' ]);
+        expect( rollupConfig.output.globals ).is.deep.equals({
+          '@moomfe/hu': 'https://cdn.jsdelivr.net/npm/@moomfe/hu'
+        });
+      }
+      // 多个外部依赖
+      {
+        const rollupConfig = compilerRollupConfigs({
+          format: 'esm.browser',
+          externals: externalsMore
+        })[0];
+
+        expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/zenjs', '@moomfe/hu' ]);
+        expect( rollupConfig.output.globals ).is.deep.equals({
+          '@moomfe/hu': 'https://cdn.jsdelivr.net/npm/@moomfe/hu',
+          '@moomfe/zenjs': 'ZenJS'
+        });
+      }
+    }
+    // iife
+    {
+      // 单个外部依赖
+      {
+        const rollupConfig = compilerRollupConfigs({
+          format: 'iife',
+          externals
+        })[0];
+
+        expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/hu' ]);
+        expect( rollupConfig.output.globals ).is.deep.equals({
+          '@moomfe/hu': 'Hu'
+        });
+      }
+      // 多个外部依赖
+      {
+        const rollupConfig = compilerRollupConfigs({
+          format: 'iife',
+          externals: externalsMore
+        })[0];
+
+        expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/zenjs', '@moomfe/hu' ]);
+        expect( rollupConfig.output.globals ).is.deep.equals({
+          '@moomfe/hu': 'Hu',
+          '@moomfe/zenjs': 'ZenJS'
+        });
+      }
+    }
+    // umd
+    {
+      // 单个外部依赖
+      {
+        const rollupConfig = compilerRollupConfigs({
+          format: 'amd',
+          externals
+        })[0];
+
+        expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/hu' ]);
+        expect( rollupConfig.output.globals ).is.deep.equals({
+          '@moomfe/hu': 'Hu'
+        });
+      }
+      // 多个外部依赖
+      {
+        const rollupConfig = compilerRollupConfigs({
+          format: 'amd',
+          externals: externalsMore
+        })[0];
+
+        expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/zenjs', '@moomfe/hu' ]);
+        expect( rollupConfig.output.globals ).is.deep.equals({
+          '@moomfe/hu': 'Hu',
+          '@moomfe/zenjs': 'ZenJS'
+        });
+      }
+    }
   });
 
 });
