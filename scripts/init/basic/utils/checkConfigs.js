@@ -42,7 +42,7 @@ module.exports = async ( configs, errors, options ) => {
       const state = Object.$isPlainObject( validatorResult ) ? !validatorResult.state : !validatorResult;
 
       if( state ){
-        const message = isFunction( check.message ) ? check.message( value, validatorResult ) : check.message;
+        const message = isFunction( check.message ) ? check.message( value, validatorResult, config ) : check.message;
         errors.add( message );
         stateResult = false;
       }
@@ -64,7 +64,10 @@ async function each( configs, options, callback ){
     for( const [ key, checks ] of optionsEntries ){
       // 选项的检测定义可以是一个数组
       if( isArray( checks ) ){
-        for( const check of checks ) await run( states, caches, callback, config, key, check )
+        for( const check of checks ){
+          // 如果是数组格式的检测定义, 如果前面的未通过, 后面的也不执行
+          if( await run( states, caches, callback, config, key, check ) === false ) break;
+        }
       }else{
         await run( states, caches, callback, config, key, checks );
       }
@@ -86,7 +89,9 @@ async function run( states, caches, callback, config, key, check, value = config
 
     // 如果缓存中有把当前选项当做依赖的, 立即执行
     if( caches[ key ] ){
-      for( const args of caches[ key ] ) await run( ...args );
+      if( state ){
+        for( const args of caches[ key ] ) await run( ...args );
+      }
       delete caches[ key ];
     }
 

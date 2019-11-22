@@ -1,5 +1,5 @@
-require('@moomfe/zenjs');
-const { yellow } = require('chalk');
+const { isString } = require('@moomfe/zenjs');
+const { yellow, bgBlackBright } = require('chalk');
 const { pathExists } = require('fs-extra');
 const print = require('../../utils/print.js');
 const checkConfigs = require('./utils/checkConfigs.js');
@@ -23,9 +23,21 @@ module.exports = async ( _configs ) => {
     format: {
       options: [ 'amd', 'cjs', 'system', 'esm', 'esm.browser', 'iife', 'umd' ]
     },
-    externals: {
-      type: 'isPlainObject'
-    },
+    externals: [
+      { type: 'isPlainObject' },
+      {
+        dependency: 'format',
+        message: ( value, result, config ) => {
+          return `${ bgBlackBright(` externals `) } : 选项在 ${ yellow( 'format: ' + config.format ) } 下取值不正确, 请检查您的配置文件 !`
+        },
+        validator: async ( value, config ) => {
+          if( Object.$isEmptyObject( value ) === false ){
+            return isString( value[ config.format ] || value.default || value );
+          }
+          return true;
+        }
+      }
+    ],
     pluginOptions: {
       type: 'isPlainObject'
     },
