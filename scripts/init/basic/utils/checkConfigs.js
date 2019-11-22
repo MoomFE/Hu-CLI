@@ -1,4 +1,4 @@
-const { isFunction } =  require('@moomfe/zenjs');
+const { isFunction, isArray } =  require('@moomfe/zenjs');
 const { bgBlackBright } = require('chalk');
 
 
@@ -32,12 +32,13 @@ module.exports = async ( configs, errors, options ) => {
 
     // 自定义校验器
     if( check.validator ){
-      let result = check.validator( value );
+      const validator = check.validator( value, config );
+      const validatorResult = validator instanceof Promise ? await validator : validator;
+      const state = Object.$isPlainObject( validatorResult ) ? !validatorResult.state : !validatorResult;
 
-      if( result instanceof Promise ? await result : result ){
-        errors.add(
-          isFunction( check.message ) ? check.message( value ) : check.message
-        );
+      if( state ){
+        const message = isFunction( check.message ) ? check.message( value, validatorResult ) : check.message;
+        errors.add( message );
       }
     }
 
@@ -49,8 +50,14 @@ async function each( configs, options, callback ){
   for( const config of configs ){
     const optionsEntries = Object.entries( options );
 
-    for( const [ key, check ] of optionsEntries ){
-      await callback( config, key, check, config[ key ] );
+    for( const [ key, checks ] of optionsEntries ){
+      if( isArray( checks ) ){
+        for( const check of checks ){
+          await callback( config, key, check, config[ key ] );
+        }
+      }else{
+        await callback( config, key, checks, config[ key ] );
+      }
     }
   }
 }

@@ -15,6 +15,7 @@ module.exports = async ( _configs ) => {
     await getConfigFile()
   );
 
+  // 配置格式检测
   await checkConfigs( configs, errors, {
     mode: {
       options: [ 'development', 'production', true, false ]
@@ -36,10 +37,10 @@ module.exports = async ( _configs ) => {
     },
     input: {
       message: value => {
-        return `未找到需要打包的入口文件 ( ${ yellow( value ) } ), 请确认后重试 !`
+        return `未找到需要打包的入口文件 ( ${ yellow( value ) } ), 请确认后重试 !`;
       },
       validator: async value => {
-        return await pathExists( value ) === false;
+        return await pathExists( value );
       }
     }
   });
