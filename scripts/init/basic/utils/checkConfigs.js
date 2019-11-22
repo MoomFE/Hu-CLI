@@ -1,9 +1,10 @@
-require('@moomfe/zenjs');
+const { isFunction } =  require('@moomfe/zenjs');
 const { bgBlackBright } = require('chalk');
 
 
 module.exports = async ( configs, errors, options ) => {
   await each( configs, options, async ( config, key, check, value ) => {
+
     // 可选项验证
     if( check.options ){
       if( check.options.includes( value ) === false ){
@@ -21,7 +22,7 @@ module.exports = async ( configs, errors, options ) => {
           break;
         };
         case 'isFunction': {
-          if( ZenJS.isFunction( value ) === false ){
+          if( isFunction( value ) === false ){
             errors.add(`${ bgBlackBright(` ${ key } `) } : 选项必须为一个函数, 请检查您的配置文件 !`);
           }
           break;
@@ -35,7 +36,7 @@ module.exports = async ( configs, errors, options ) => {
 
       if( result instanceof Promise ? await result : result ){
         errors.add(
-          typeof check.message === 'function' ? check.message( value ) : check.message
+          isFunction( check.message ) ? check.message( value ) : check.message
         );
       }
     }
