@@ -28,13 +28,15 @@ module.exports = async ( _configs ) => {
       {
         dependency: 'format',
         message: ( value, result, { format } ) => {
-          return `${ bgBlackBright(` externals `) } : 选项在 ${ yellow( 'format: ' + config.format ) } 下取值不正确, 请检查您的配置文件 !`
+          return `${ bgBlackBright(` externals `) } : 选项在 ${ yellow( 'format: ' + format ) } 下取值不正确, 请检查您的配置文件 !`
         },
         validator: async ( value, { format } ) => {
           for( let [ id, variableName ] of Object.entries( value ) ){
-            if( !isString( variableName ) && ( variableName == null || ( variableName = variableName[ format ] || variableName.default ) == null ) ){
-              delete value[ id ];
-              continue;
+            if( !isString( variableName ) ){
+              if( variableName == null || ( variableName = isString( variableName[ format ] ) ? variableName[ format ] : variableName.default ) == null ){
+                delete value[ id ];
+                continue;
+              }
             }
 
             if( !( isString( variableName ) && variableName !== '' ) ) return false;

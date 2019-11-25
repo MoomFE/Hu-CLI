@@ -50,8 +50,10 @@ function getDefaultRollupConfig( config ){
   // 处理外部依赖项
   if( Object.$isEmptyObject( config.externals ) === false ){
     Object.entries( config.externals ).forEach(([ id, variableName ]) => {
-      if( !isString( variableName ) && ( variableName == null || ( variableName = variableName[ config.format ] || variableName.default ) == null ) ){
-        return;
+      if( !isString( variableName ) ){
+        if( variableName == null || ( variableName = isString( variableName[ config.format ] ) ? variableName[ config.format ] : variableName.default ) == null ){
+          return;
+        }
       }
 
       rollupConfig.input.external.push( id );
