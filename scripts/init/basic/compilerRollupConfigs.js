@@ -1,4 +1,4 @@
-require('@moomfe/zenjs');
+const { isString } = require('@moomfe/zenjs');
 const defaultConfig = require('../../config.js');
 const pluginCommonjs = require('rollup-plugin-commonjs');
 const pluginNodeResolve = require('rollup-plugin-node-resolve');
@@ -48,10 +48,14 @@ function getDefaultRollupConfig( config ){
   }
 
   // 处理外部依赖项
-  if( config.externals && Object.$isEmptyObject( config.externals ) === false ){
+  if( Object.$isEmptyObject( config.externals ) === false ){
     Object.entries( config.externals ).forEach(([ id, variableName ]) => {
+      if( !isString( variableName ) && ( variableName == null || ( variableName = variableName[ config.format ] || variableName.default ) == null ) ){
+        return;
+      }
+
       rollupConfig.input.external.push( id );
-      rollupConfig.output.globals[ id ] = variableName[ config.format ] || variableName.default || variableName;
+      rollupConfig.output.globals[ id ] = variableName;
     });
   }
 
