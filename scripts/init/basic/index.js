@@ -24,7 +24,7 @@ module.exports = async ( _configs ) => {
       options: [ 'amd', 'cjs', 'system', 'esm', 'esm.browser', 'iife', 'umd' ]
     },
     externals: [
-      { type: 'isPlainObject' },
+      { type: 'isPlainObject', translate: translateByJSON },
       {
         dependency: 'format',
         message: ( value, result, config ) => {
@@ -69,3 +69,12 @@ module.exports = async ( _configs ) => {
 
   return compilerRollupConfigs( configs );
 };
+
+
+
+
+
+
+function translateByJSON( value ){
+  return value == null ? {} : value;
+}
