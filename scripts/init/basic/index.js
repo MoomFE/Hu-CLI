@@ -1,10 +1,11 @@
-require('@moomfe/zenjs');
+const { isString } = require('@moomfe/zenjs');
 const { yellow, bgBlackBright } = require('chalk');
 const { pathExists } = require('fs-extra');
 const print = require('../../utils/print.js');
-const getConfigFile = require('./util/getConfigFile.js');
-const compilerConfigs = require('./util/compilerConfigs.js');
-const compilerRollupConfigs = require('./util/compilerRollupConfigs.js');
+const checkConfigs = require('./utils/checkConfigs.js');
+const getConfigFile = require('./utils/getConfigFile.js');
+const compilerConfigs = require('./compilerConfigs.js');
+const compilerRollupConfigs = require('./compilerRollupConfigs.js');
 
 
 
@@ -14,33 +15,54 @@ module.exports = async ( _configs ) => {
     await getConfigFile()
   );
 
-  // 规避一些小问题
-  for( const config of configs ){
-    // 不合法的 mode 选项
-    if( [ 'development', 'production', true, false ].includes( config.mode ) === false ){
-      errors.add(`${ bgBlackBright(' mode ') } : 选项必须为 'development', 'production', true, false 中的一个, 请检查您的配置文件 !`);
+  // 配置格式检测
+  await checkConfigs( configs, errors, {
+    mode: {
+      options: [ 'development', 'production', true, false ]
+    },
+    format: {
+      options: [ 'amd', 'cjs', 'system', 'esm', 'esm.browser', 'iife', 'umd' ]
+    },
+    externals: [
+      { type: 'isPlainObject', translate: translateByJSON },
+      {
+        dependency: 'format',
+        message: ( value, result, { format } ) => {
+          return `${ bgBlackBright(` externals `) } : 选项在 ${ yellow( 'format: ' + format ) } 下取值不正确, 请检查您的配置文件 !`
+        },
+        validator: async ( value, { format } ) => {
+          for( let [ id, variableName ] of Object.entries( value ) ){
+            if( !isString( variableName ) ){
+              if( variableName == null || ( variableName = isString( variableName[ format ] ) ? variableName[ format ] : variableName.default ) == null ){
+                delete value[ id ];
+                continue;
+              }
+            }
+
+            if( !( isString( variableName ) && variableName !== '' ) ) return false;
+          }
+          return true;
+        }
+      }
+    ],
+    pluginOptions: {
+      type: 'isPlainObject'
+    },
+    plugins: {
+      type: 'isFunction'
+    },
+    configureRollup: {
+      type: 'isFunction'
+    },
+    input: {
+      message: value => {
+        return `未找到需要打包的入口文件 ( ${ yellow( value ) } ), 请确认后重试 !`;
+      },
+      validator: async value => {
+        return await pathExists( value );
+      }
     }
-    // 未定义 format 选项
-    if( [ 'amd', 'cjs', 'system', 'esm', 'iife', 'umd' ].includes( config.format ) === false ){
-      errors.add(`${ bgBlackBright(' format ') } : 选项必须为 'amd', 'cjs', 'system', 'esm', 'iife', 'umd' 中的一个, 请检查您的配置文件 !`);
-    }
-    // 选项 pluginOptions 并非是一个纯粹的对象
-    if( Object.$isPlainObject( config.pluginOptions ) === false ){
-      errors.add(`${ bgBlackBright(' pluginOptions ') } : 选项必须为一个纯粹的对象, 请检查您的配置文件 !`);
-    }
-    // 选项 plugins 并非是一个函数
-    if( ZenJS.isFunction( config.plugins ) === false ){
-      errors.add(`${ bgBlackBright(' plugins ') } : 选项必须为一个函数并且函数返回 plugins 数组, 请检查您的配置文件 !`);
-    }
-    // 选项 configureRollup 并非是一个函数
-    if( ZenJS.isFunction( config.configureRollup ) === false ){
-      errors.add(`${ bgBlackBright(' configureRollup ') } : 选项必须为一个函数, 请检查您的配置文件 !`);
-    }
-    // 未找到入口文件
-    if( await pathExists( config.input ) === false ){
-      errors.add(`未找到需要打包的入口文件 ( ${ yellow( config.input ) } ), 请确认后重试 !`);
-    }
-  }
+  });
 
   // 统一输出错误提示
   if( errors.size ){
@@ -54,3 +76,12 @@ module.exports = async ( _configs ) => {
 
   return compilerRollupConfigs( configs );
 };
+
+
+
+
+
+
+function translateByJSON( value ){
+  return value == null ? {} : value;
+}

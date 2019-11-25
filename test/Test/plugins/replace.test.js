@@ -1,3 +1,5 @@
+require('@moomfe/zenjs');
+const expect = require('chai').expect;
 const compilerRollupConfigs = require('../../Lib/compilerRollupConfigs');
 const runBuild = require('../../Lib/runBuild');
 
