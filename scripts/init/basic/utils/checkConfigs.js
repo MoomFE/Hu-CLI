@@ -9,7 +9,7 @@ module.exports = async ( configs, errors, options ) => {
 
     // 值的预处理
     if( check.translate ){
-      value = check.translate( value, config ) || value;
+      value = config[ key ] = check.translate( value, config ) || value;
     }
 
     // 可选项验证
