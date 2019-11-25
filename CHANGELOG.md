@@ -1,3 +1,5 @@
+# 1.6.0
+  - 📅 2019-11-25
   - 🌟 新增 `externals` 选项, 用于标识外部依赖
   - 💄 选项 `format` 新增可选值 `esm.browser`, 表现和 `esm` 完全一致, 只用作 `externals` 的区分上
 
