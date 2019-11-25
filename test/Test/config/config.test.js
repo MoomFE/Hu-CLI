@@ -315,11 +315,26 @@ describe( 'config', function(){
     // - 反向测试
     // -------------------------------------------
 
+    // 1
     {
       const isExit = await proxyProcessExit( async () => {
         const stdout = await proxyLog( async () => {
           await compilerRollupConfigs({
             externals: {}
+          }, true);
+        });
+
+        expect( stdout ).is.includes('');
+      });
+
+      expect( isExit ).is.false;
+    }
+    // 2
+    {
+      const isExit = await proxyProcessExit( async () => {
+        const stdout = await proxyLog( async () => {
+          await compilerRollupConfigs({
+            externals: null
           }, true);
         });
 
