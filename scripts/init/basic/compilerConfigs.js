@@ -21,6 +21,7 @@ module.exports = function compilerConfigs( originConfigs, parentConfig, configs 
 
     if( config.externals == null ) config.externals = {};
     if( config.pluginOptions == null ) config.pluginOptions = {};
+    if( config.plugins == null ) config.plugins = defaultConfig.plugins;
 
     if( Array.isArray( childConfigs ) && childConfigs.length ){
       delete config.pipe;
