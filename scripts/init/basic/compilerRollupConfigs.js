@@ -28,12 +28,10 @@ module.exports = ( configs ) => {
 
 
 function getDefaultRollupConfig( config ){
-  const rollupConfigPlugins = getUserPlugins( config );
   const rollupConfig = {
     config,
     input: {
       input: config.input,
-      plugins: rollupConfigPlugins,
       external: []
     },
     output: {
@@ -50,19 +48,6 @@ function getDefaultRollupConfig( config ){
   });
 
   return rollupConfig;
-}
-
-/**
- * 执行 plugins 选项方法,
- * 获取用户返回的插件
- */
-function getUserPlugins( config ){
-  const userPluginsFn = ZenJS.isFunction( config.plugins ) ? config.plugins : defaultConfig.plugins;
-  const userPluginsFnResult = userPluginsFn( config );
-
-  return Array.isArray( userPluginsFnResult )
-           ? userPluginsFnResult
-           : [];
 }
 
 /**
