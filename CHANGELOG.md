@@ -1,4 +1,5 @@
-  - 💄 选项 `pluginOptions` 支持传入 `null` 以完全不使用从父级继承的配置
+  - 💄 选项 `pluginOptions` 支持传入 `null` 从而完全不使用从父级继承的配置
+  - 💄 选项 `plugins` 支持传入 `null` 从而完全不使用从父级继承的配置
 
 
 # 1.6.0
