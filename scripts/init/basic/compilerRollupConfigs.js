@@ -1,5 +1,6 @@
-const { isString } = require('@moomfe/zenjs');
+require('@moomfe/zenjs');
 const defaultConfig = require('../../config.js');
+const optionsHandler = require('../../options/index.js');
 const pluginCommonjs = require('rollup-plugin-commonjs');
 const pluginNodeResolve = require('rollup-plugin-node-resolve');
 const pluginConsole = require('../../plugins/console/index.js');
@@ -43,23 +44,10 @@ function getDefaultRollupConfig( config ){
     }
   };
 
-  if( config.format === 'esm.browser' ){
-    rollupConfig.output.format = 'esm';
-  }
-
-  // 处理外部依赖项
-  if( Object.$isEmptyObject( config.externals ) === false ){
-    Object.entries( config.externals ).forEach(([ id, variableName ]) => {
-      if( !isString( variableName ) ){
-        if( variableName == null || ( variableName = isString( variableName[ config.format ] ) ? variableName[ config.format ] : variableName.default ) == null ){
-          return;
-        }
-      }
-
-      rollupConfig.input.external.push( id );
-      rollupConfig.output.globals[ id ] = variableName;
-    });
-  }
+  // 处理 config 选项配置
+  optionsHandler.forEach( fn => {
+    fn( config, rollupConfig );
+  });
 
   return rollupConfig;
 }
