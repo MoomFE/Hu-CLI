@@ -7,11 +7,6 @@ module.exports = async ( configs, errors, options ) => {
     /** 当前配置项是否检测通过 */
     let stateResult = true;
 
-    // 值的预处理
-    if( check.translate ){
-      value = config[ key ] = check.translate( value, config ) || value;
-    }
-
     // 可选项验证
     if( check.options ){
       if( check.options.includes( value ) === false ){
