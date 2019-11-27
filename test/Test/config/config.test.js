@@ -457,6 +457,20 @@ describe( 'config', function(){
 
       expect( isExit ).is.false;
     }
+
+    {
+      const isExit = await proxyProcessExit( async () => {
+        const stdout = await proxyLog( async () => {
+          await compilerRollupConfigs({
+            pluginOptions: null
+          }, true);
+        });
+
+        expect( stdout ).is.equals('');
+      });
+
+      expect( isExit ).is.false;
+    }
   });
 
   it( '对配置进行解析时, 若配置不合法, 将会退出打包程序 ( plugins )', async () => {
