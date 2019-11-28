@@ -87,12 +87,17 @@ Hu-CLI 是一个基于 rollup 的打包工具
 
     // 传递给内置插件选项的配置
     pluginOptions: {
-      // 传递给 banner 选项相关的配置
+      // 传递给 banner 插件的配置
       banner: {
         // 需要在打包后插入 banner 的文件类型
         extensions: [ '.js', '.css' ],
         // 当前 banner 是否需要自动转换为注释插入
         isComment: true
+      },
+      // 传递给 json 插件的配置
+      json: {
+        // 导入 JSON 的缩进
+        indent: '  '
       },
       // 传递给 rollup-plugin-terser 插件的配置
       //  - 以下是默认情况下的配置
