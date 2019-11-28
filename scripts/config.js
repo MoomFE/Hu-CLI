@@ -39,10 +39,14 @@ module.exports = {
 
   // 传递给内置插件选项的配置
   pluginOptions: {
-    // 传递给 banner 选项相关的配置
+    // 传递给 banner 插件的配置
     banner: {
       extensions: [ '.js', '.css' ],
       isComment: true
+    },
+    // 传递给 json 插件的配置
+    json: {
+      indent: '  '
     },
     // 传递给 rollup-plugin-terser 插件的配置
     terser: {
