@@ -1,5 +1,6 @@
 const { extname } = require('path');
 const { dataToEsm } = require('rollup-pluginutils');
+const json5 = require('json5');
 
 const defaultOptions = {
   compact: false,
@@ -22,8 +23,8 @@ module.exports = ( config ) => {
     transform( json, id ){
       const ext = extname( id );
 
-      if( ext === '.json' ){
-        return dataToEsm( JSON.parse( json ), {
+      if( ext === '.json' || ext === '.json5' ){
+        return dataToEsm( json5.parse( json ), {
           indent,
           ...defaultOptions
         });
