@@ -31,10 +31,10 @@ describe( 'plugins.json', function(){
   it( '可以正常导入 .json5 文件', () => {
     return runBuild({
       _code: `
-        export { default } from './index.json';
+        export { default } from './index.json5';
       `,
       _files: {
-        "index.json": `
+        "index.json5": `
           // comments
           { "asd": 123 }
         `
