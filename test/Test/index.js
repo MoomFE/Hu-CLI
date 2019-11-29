@@ -11,3 +11,4 @@ require('./config/config.test');
 require('./command/build.test');
 require('./plugins/banner.test');
 require('./plugins/replace.test');
+require('./plugins/json.test');

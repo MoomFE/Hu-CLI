@@ -1,4 +1,5 @@
 const { remove, outputFile } = require('fs-extra');
+const { resolve, dirname } = require('path');
 const { defaultInput } = require('../const');
 const outputConfig = require('./outputConfig');
 
@@ -17,7 +18,9 @@ module.exports = async ( rollupConfigs, config ) => {
         config._code === null
           ? remove( config.input )
           : outputFile( config.input, config._code || defaultInput )
-      )
+      ),
+      // 输出打包所需的其他文件
+      outputFiles( config )
     ]);
     // 删除无用属性
     delete config._code;
@@ -28,4 +31,19 @@ module.exports = async ( rollupConfigs, config ) => {
 
   // 输出配置文件
   await outputConfig( config );
+}
+
+
+async function outputFiles({ _files, input }){
+  if( _files ){
+    const fileEntries = Object.entries( _files );
+    const dir = dirname( input );
+
+    for( const [ file, content ] of fileEntries ){
+      await outputFile(
+        resolve( dir, file ),
+        content
+      );
+    }
+  }
 }
