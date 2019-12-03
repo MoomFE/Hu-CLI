@@ -21,7 +21,7 @@ module.exports = async ( _configs ) => {
       options: [ 'development', 'production', true, false ]
     },
     format: {
-      options: [ 'amd', 'cjs', 'system', 'esm', 'esm.browser', 'iife', 'umd' ]
+      options: [ 'amd', 'cjs', 'system', 'esm', 'iife', 'umd' ]
     },
     externals: [
       { type: 'isPlainObject' },

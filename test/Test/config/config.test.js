@@ -137,7 +137,7 @@ describe( 'config', function(){
           }, true);
         });
 
-        expect( stdout ).is.includes(`选项必须为 "amd", "cjs", "system", "esm", "esm.browser", "iife", "umd" 中的一个, 请检查您的配置文件`);
+        expect( stdout ).is.includes(`选项必须为 "amd", "cjs", "system", "esm", "iife", "umd" 中的一个, 请检查您的配置文件`);
       });
 
       expect( isExit ).is.true;
@@ -151,7 +151,7 @@ describe( 'config', function(){
           }, true);
         });
 
-        expect( stdout ).is.includes(`选项必须为 "amd", "cjs", "system", "esm", "esm.browser", "iife", "umd" 中的一个, 请检查您的配置文件`);
+        expect( stdout ).is.includes(`选项必须为 "amd", "cjs", "system", "esm", "iife", "umd" 中的一个, 请检查您的配置文件`);
       });
 
       expect( isExit ).is.true;
@@ -165,7 +165,7 @@ describe( 'config', function(){
           }, true);
         });
 
-        expect( stdout ).is.includes(`选项必须为 "amd", "cjs", "system", "esm", "esm.browser", "iife", "umd" 中的一个, 请检查您的配置文件`);
+        expect( stdout ).is.includes(`选项必须为 "amd", "cjs", "system", "esm", "iife", "umd" 中的一个, 请检查您的配置文件`);
       });
 
       expect( isExit ).is.true;
@@ -179,7 +179,7 @@ describe( 'config', function(){
           }, true);
         });
 
-        expect( stdout ).is.includes(`选项必须为 "amd", "cjs", "system", "esm", "esm.browser", "iife", "umd" 中的一个, 请检查您的配置文件`);
+        expect( stdout ).is.includes(`选项必须为 "amd", "cjs", "system", "esm", "iife", "umd" 中的一个, 请检查您的配置文件`);
       });
 
       expect( isExit ).is.true;
@@ -250,27 +250,6 @@ describe( 'config', function(){
       const isExit = await proxyProcessExit( async () => {
         const stdout = await proxyLog( async () => {
           await compilerRollupConfigs({
-            format: 'esm.browser'
-          }, true);
-        });
-
-        expect( stdout ).is.equals('');
-      });
-
-      expect( isExit ).is.false;
-
-      // 'esm.browser' 格式其实也是 'esm'
-      const rollupConfig = compilerRollupConfigs({
-        format: 'esm.browser'
-      })[0];
-
-      expect( rollupConfig.output.format ).is.equals('esm');
-    }
-    // 6
-    {
-      const isExit = await proxyProcessExit( async () => {
-        const stdout = await proxyLog( async () => {
-          await compilerRollupConfigs({
             format: 'iife'
           }, true);
         });
@@ -280,7 +259,7 @@ describe( 'config', function(){
 
       expect( isExit ).is.false;
     }
-    // 7
+    // 6
     {
       const isExit = await proxyProcessExit( async () => {
         const stdout = await proxyLog( async () => {
@@ -946,43 +925,6 @@ describe( 'config', function(){
         });
       }
     }
-    // esm.browser
-    {
-      // 单个外部依赖
-      {
-        const rollupConfig = compilerRollupConfigs({
-          format: 'esm.browser',
-          externals: {
-            '@moomfe/hu': {
-              'esm.browser': 'https://cdn.jsdelivr.net/npm/@moomfe/hu'
-            }
-          }
-        })[0];
-
-        expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/hu' ]);
-        expect( rollupConfig.output.globals ).is.deep.equals({
-          '@moomfe/hu': 'https://cdn.jsdelivr.net/npm/@moomfe/hu'
-        });
-      }
-      // 多个外部依赖
-      {
-        const rollupConfig = compilerRollupConfigs({
-          format: 'esm.browser',
-          externals: {
-            '@moomfe/zenjs': 'ZenJS',
-            '@moomfe/hu': {
-              'esm.browser': 'https://cdn.jsdelivr.net/npm/@moomfe/hu'
-            }
-          }
-        })[0];
-
-        expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/zenjs', '@moomfe/hu' ]);
-        expect( rollupConfig.output.globals ).is.deep.equals({
-          '@moomfe/hu': 'https://cdn.jsdelivr.net/npm/@moomfe/hu',
-          '@moomfe/zenjs': 'ZenJS'
-        });
-      }
-    }
     // iife
     {
       // 单个外部依赖
@@ -1064,7 +1006,6 @@ describe( 'config', function(){
       '@moomfe/hu': {
         'cjs': '@moomfe/hu',
         'esm': '@moomfe/hu',
-        'esm.browser': 'https://cdn.jsdelivr.net/npm/@moomfe/hu',
         'default': 'Hu'
       }
     };
@@ -1073,7 +1014,6 @@ describe( 'config', function(){
       '@moomfe/hu': {
         'cjs': '@moomfe/hu',
         'esm': '@moomfe/hu',
-        'esm.browser': 'https://cdn.jsdelivr.net/npm/@moomfe/hu',
         'default': 'Hu'
       }
     };
@@ -1186,34 +1126,6 @@ describe( 'config', function(){
         expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/zenjs', '@moomfe/hu' ]);
         expect( rollupConfig.output.globals ).is.deep.equals({
           '@moomfe/hu': '@moomfe/hu',
-          '@moomfe/zenjs': 'ZenJS'
-        });
-      }
-    }
-    // esm.browser
-    {
-      // 单个外部依赖
-      {
-        const rollupConfig = compilerRollupConfigs({
-          format: 'esm.browser',
-          externals
-        })[0];
-
-        expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/hu' ]);
-        expect( rollupConfig.output.globals ).is.deep.equals({
-          '@moomfe/hu': 'https://cdn.jsdelivr.net/npm/@moomfe/hu'
-        });
-      }
-      // 多个外部依赖
-      {
-        const rollupConfig = compilerRollupConfigs({
-          format: 'esm.browser',
-          externals: externalsMore
-        })[0];
-
-        expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/zenjs', '@moomfe/hu' ]);
-        expect( rollupConfig.output.globals ).is.deep.equals({
-          '@moomfe/hu': 'https://cdn.jsdelivr.net/npm/@moomfe/hu',
           '@moomfe/zenjs': 'ZenJS'
         });
       }
@@ -1280,16 +1192,14 @@ describe( 'config', function(){
     const externals = {
       '@moomfe/hu': {
         'cjs': '@moomfe/hu',
-        'esm': '@moomfe/hu',
-        'esm.browser': 'https://cdn.jsdelivr.net/npm/@moomfe/hu'
+        'esm': '@moomfe/hu'
       }
     };
     const externalsMore = {
       '@moomfe/zenjs': 'ZenJS',
       '@moomfe/hu': {
         'cjs': '@moomfe/hu',
-        'esm': '@moomfe/hu',
-        'esm.browser': 'https://cdn.jsdelivr.net/npm/@moomfe/hu'
+        'esm': '@moomfe/hu'
       }
     };
 
@@ -1395,34 +1305,6 @@ describe( 'config', function(){
         expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/zenjs', '@moomfe/hu' ]);
         expect( rollupConfig.output.globals ).is.deep.equals({
           '@moomfe/hu': '@moomfe/hu',
-          '@moomfe/zenjs': 'ZenJS'
-        });
-      }
-    }
-    // esm.browser
-    {
-      // 单个外部依赖
-      {
-        const rollupConfig = compilerRollupConfigs({
-          format: 'esm.browser',
-          externals
-        })[0];
-
-        expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/hu' ]);
-        expect( rollupConfig.output.globals ).is.deep.equals({
-          '@moomfe/hu': 'https://cdn.jsdelivr.net/npm/@moomfe/hu'
-        });
-      }
-      // 多个外部依赖
-      {
-        const rollupConfig = compilerRollupConfigs({
-          format: 'esm.browser',
-          externals: externalsMore
-        })[0];
-
-        expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/zenjs', '@moomfe/hu' ]);
-        expect( rollupConfig.output.globals ).is.deep.equals({
-          '@moomfe/hu': 'https://cdn.jsdelivr.net/npm/@moomfe/hu',
           '@moomfe/zenjs': 'ZenJS'
         });
       }
