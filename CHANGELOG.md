@@ -2,12 +2,13 @@
   - 🌟 增加对 `.json5` 文件的支持
   - 💄 选项 `pluginOptions` 支持传入 `null` 从而完全不使用从父级继承的配置
   - 💄 选项 `plugins` 支持传入 `null` 从而完全不使用从父级继承的配置
+  - ⚠️ 移除选项 `format` 的可选值 `esm.browser`
 
 
 # 1.6.0
   - 📅 2019-11-25
   - 🌟 新增 `externals` 选项, 用于标识外部依赖
-  - 💄 选项 `format` 新增可选值 `esm.browser`, 表现和 `esm` 完全一致, 只用作 `externals` 的区分上
+  - 💄 <s>选项 `format` 新增可选值 `esm.browser`, 表现和 `esm` 完全一致, 只用作 `externals` 的区分上</s> ( 1.7.0 移除 )
 
 # 1.5.1
   - 📅 2019-11-20
