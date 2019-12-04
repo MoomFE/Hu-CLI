@@ -24,10 +24,12 @@ module.exports = async ( rollupConfigs, config ) => {
     ]);
     // 删除无用属性
     delete config._code;
+    delete config._files;
   }
 
   // 删除无用属性
   delete config._code;
+  delete config._files;
 
   // 输出配置文件
   await outputConfig( config );
