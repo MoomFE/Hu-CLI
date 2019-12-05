@@ -48,7 +48,7 @@ Hu-CLI 是一个基于 rollup 的打包工具
 
     // 输出的文件类型 ( amd, cjs, system, esm, iife, umd )
     format: 'iife',
-    // 生成 UMD 和 LIFE 模块的名字
+    // 生成 UMD 和 IIFE 模块的名字
     name: '',
 
     // 在打包好的文件最顶部插入一段内容
