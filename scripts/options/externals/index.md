@@ -2,7 +2,7 @@
 
 - 若 `externals` 选项是数组格式
 - 始终视为外部模块
-- 添加进 external, 不添加进 globals, 不添加进 paths
+- 添加进 `external`, 不添加进 `globals`, 不添加进 `paths`
 ``` js
   {
     externals: [
@@ -38,7 +38,7 @@
 
 - 若定义的模块的值为字符串类型
 - 对应模块始终视为外部模块
-- 且在 iife 和 umd 模式下, 对应模块的值视为 `globals` 选项的内容
+- 且在 `iife` 和 `umd` 模式下, 对应模块的值视为 `globals` 选项的内容
 - 添加进 `external` 和 `globals`, 不添加进 `paths`
 ``` js
   {
@@ -97,6 +97,59 @@
           'root': 'Hu',
           'path': '@moomfe/huuu'
         },
+        'default': {
+          'path': '@moomfe/huuuu'
+        }
+      }
+    }
+  }
+
+  // 补充 1
+  {
+    externals: {
+      '@moomfe/hu': {
+        // 在值被定义为对象时, 对象内没有的参数会从 default 继承
+        // 比如此时, umd 在被解析时, 实际是:
+        // 
+        // 'umd': {
+        //   'root': 'Hu',
+        //   'path': '@moomfe/huuuu'
+        // }
+        'umd': {
+          'root': 'Hu'
+        },
+        'default': {
+          'path': '@moomfe/huuuu'
+        }
+      }
+    }
+  }
+
+  // 补充 2
+  {
+    externals: {
+      '@moomfe/hu': {
+        // 在值被定义为对象时, 对象内没有的参数会从 default 继承
+        // 比如此时, umd 在被解析时, 实际是:
+        // 
+        // 'umd': {
+        //   'root': 'Hu',
+        //   'path': '@moomfe/huuuu'
+        // }
+        'umd': {
+          'path': '@moomfe/huuuu'
+        },
+        'default': 'Hu'
+      }
+    }
+  }
+
+  // 补充 3
+  {
+    externals: {
+      '@moomfe/hu': {
+        // 在值被定义为字符串时, 不会从 default 继承参数
+        'umd': 'Hu',
         'default': {
           'path': '@moomfe/huuuu'
         }
