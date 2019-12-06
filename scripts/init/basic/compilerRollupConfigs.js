@@ -39,7 +39,8 @@ function getDefaultRollupConfig( config ){
       file: config.output,
       format: config.format,
       name: config.name,
-      globals: {}
+      globals: {},
+      paths: {}
     }
   };
 
