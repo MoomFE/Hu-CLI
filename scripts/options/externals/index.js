@@ -37,7 +37,7 @@ module.exports = ( config, rollupConfig ) => {
             rootHandler( input, output, format, id, rootObj.root );
             pathHandler( output, id, rootObj.path );
           }
-        }else{
+        }else if( 'default' in root ){
           const defaultObj = getDefaultObj( root );
           rootHandler( input, output, format, id, defaultObj.root );
           pathHandler( output, id, defaultObj.path );
