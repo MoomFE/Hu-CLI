@@ -15,5 +15,7 @@
   "keywords": [],
   "author": "Wei Zhang",
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {
+    "@moomfe/hu": "^1.0.0-bata.19"
+  }
 }
