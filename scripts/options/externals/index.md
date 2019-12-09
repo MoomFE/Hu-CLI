@@ -149,7 +149,7 @@
     externals: {
       '@moomfe/hu': {
         // 在值被定义为字符串时, 不会从 default 继承参数
-        'umd': 'Hu',
+        'umd': 'Huu',
         'default': {
           'path': '@moomfe/huuuu'
         }
