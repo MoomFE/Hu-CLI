@@ -57,7 +57,7 @@
   {
     externals: {
       '@moomfe/hu': {
-        'iife': 'Hu',
+        'iife': 'Huu',
         'cjs': ''
       }
     }
