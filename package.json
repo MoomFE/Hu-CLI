@@ -9,7 +9,7 @@
     "hu": "bin/hu.js"
   },
   "scripts": {
-    "test": "node_modules\\.bin\\mocha test/Test/index.js"
+    "test": "node test/Test/install.js && node_modules\\.bin\\mocha test/Test/index.js"
   },
   "repository": {
     "type": "git",
