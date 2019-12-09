@@ -43,7 +43,7 @@
 ``` js
   {
     externals: {
-      '@moomfe/hu': 'Hu'
+      '@moomfe/hu': 'Huu'
     }
   }
 ```
