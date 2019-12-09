@@ -1187,4 +1187,254 @@ describe( 'config', function(){
     });
   });
 
+  it( '使用 externals 选项可以定义外部依赖, 详细测试 ( 2.4 ) ( amd )', async () => {
+    const config = {
+      format: 'amd',
+      externals: {
+        '@moomfe/hu': {
+          'cjs': {
+            'path': '@moomfe/huu'
+          },
+          'umd': {
+            'root': 'Huuu',
+            'path': '@moomfe/huuu'
+          },
+          'default': {
+            'path': '@moomfe/huuuu'
+          }
+        }
+      }
+    };
+
+    // 配置检查
+    const rollupConfig = compilerRollupConfigs( config )[0];
+
+    expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/hu' ]);
+    expect( rollupConfig.output.paths ).is.deep.equals({
+      '@moomfe/hu': '@moomfe/huuuu'
+    });
+    expect( rollupConfig.output.globals ).is.deep.equals({});
+
+    // 构建检查
+    await runBuild({
+      _code: `
+        import Hu from '@moomfe/hu';
+        console.log( Hu );
+      `,
+      ...config
+    }).then(({ codes: [ code ], logs }) => {
+      expect( code.length < 1000 ).is.true;
+      expect( code ).is.includes(`define(['@moomfe/huuuu']`);
+    });
+  });
+
+  it( '使用 externals 选项可以定义外部依赖, 详细测试 ( 2.4 ) ( cjs )', async () => {
+    const config = {
+      format: 'cjs',
+      externals: {
+        '@moomfe/hu': {
+          'cjs': {
+            'path': '@moomfe/huu'
+          },
+          'umd': {
+            'root': 'Huuu',
+            'path': '@moomfe/huuu'
+          },
+          'default': {
+            'path': '@moomfe/huuuu'
+          }
+        }
+      }
+    };
+
+    // 配置检查
+    const rollupConfig = compilerRollupConfigs( config )[0];
+
+    expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/hu' ]);
+    expect( rollupConfig.output.paths ).is.deep.equals({
+      '@moomfe/hu': '@moomfe/huu'
+    });
+    expect( rollupConfig.output.globals ).is.deep.equals({});
+
+    // 构建检查
+    await runBuild({
+      _code: `
+        import Hu from '@moomfe/hu';
+        console.log( Hu );
+      `,
+      ...config
+    }).then(({ codes: [ code ], logs }) => {
+      expect( code.length < 1000 ).is.true;
+      expect( code ).is.includes(`require('@moomfe/huu')`);
+    });
+  });
+
+  it( '使用 externals 选项可以定义外部依赖, 详细测试 ( 2.4 ) ( system )', async () => {
+    const config = {
+      format: 'system',
+      externals: {
+        '@moomfe/hu': {
+          'cjs': {
+            'path': '@moomfe/huu'
+          },
+          'umd': {
+            'root': 'Huuu',
+            'path': '@moomfe/huuu'
+          },
+          'default': {
+            'path': '@moomfe/huuuu'
+          }
+        }
+      }
+    };
+
+    // 配置检查
+    const rollupConfig = compilerRollupConfigs( config )[0];
+
+    expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/hu' ]);
+    expect( rollupConfig.output.paths ).is.deep.equals({
+      '@moomfe/hu': '@moomfe/huuuu'
+    });
+    expect( rollupConfig.output.globals ).is.deep.equals({});
+
+    // 构建检查
+    await runBuild({
+      _code: `
+        import Hu from '@moomfe/hu';
+        console.log( Hu );
+      `,
+      ...config
+    }).then(({ codes: [ code ], logs }) => {
+      expect( code.length < 1000 ).is.true;
+      expect( code ).is.includes(`System.register(['@moomfe/huuuu']`);
+    });
+  });
+
+  it( '使用 externals 选项可以定义外部依赖, 详细测试 ( 2.4 ) ( esm )', async () => {
+    const config = {
+      format: 'esm',
+      externals: {
+        '@moomfe/hu': {
+          'cjs': {
+            'path': '@moomfe/huu'
+          },
+          'umd': {
+            'root': 'Huuu',
+            'path': '@moomfe/huuu'
+          },
+          'default': {
+            'path': '@moomfe/huuuu'
+          }
+        }
+      }
+    };
+
+    // 配置检查
+    const rollupConfig = compilerRollupConfigs( config )[0];
+
+    expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/hu' ]);
+    expect( rollupConfig.output.paths ).is.deep.equals({
+      '@moomfe/hu': '@moomfe/huuuu'
+    });
+    expect( rollupConfig.output.globals ).is.deep.equals({});
+
+    // 构建检查
+    await runBuild({
+      _code: `
+        import Hu from '@moomfe/hu';
+        console.log( Hu );
+      `,
+      ...config
+    }).then(({ codes: [ code ], logs }) => {
+      expect( code.length < 1000 ).is.true;
+      expect( code ).is.includes(`import Hu from '@moomfe/huuuu'`);
+    });
+  });
+
+  it( '使用 externals 选项可以定义外部依赖, 详细测试 ( 2.4 ) ( iife )', async () => {
+    const config = {
+      format: 'iife',
+      externals: {
+        '@moomfe/hu': {
+          'cjs': {
+            'path': '@moomfe/huu'
+          },
+          'umd': {
+            'root': 'Huuu',
+            'path': '@moomfe/huuu'
+          },
+          'default': {
+            'path': '@moomfe/huuuu'
+          }
+        }
+      }
+    };
+
+    // 配置检查
+    const rollupConfig = compilerRollupConfigs( config )[0];
+
+    expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/hu' ]);
+    expect( rollupConfig.output.paths ).is.deep.equals({});
+    expect( rollupConfig.output.globals ).is.deep.equals({});
+
+    // 构建检查
+    await runBuild({
+      _code: `
+        import Hu from '@moomfe/hu';
+        console.log( Hu );
+      `,
+      ...config
+    }).then(({ codes: [ code ], logs }) => {
+      expect( code.length < 1000 ).is.true;
+      expect( code ).is.includes(`(Hu));`);
+      expect( code ).is.includes(`Hu.hasOwnProperty('default') ? Hu['default'] : Hu`);
+    });
+  });
+
+  it( '使用 externals 选项可以定义外部依赖, 详细测试 ( 2.4 ) ( umd )', async () => {
+    const config = {
+      format: 'umd',
+      externals: {
+        '@moomfe/hu': {
+          'cjs': {
+            'path': '@moomfe/huu'
+          },
+          'umd': {
+            'root': 'Huuu',
+            'path': '@moomfe/huuu'
+          },
+          'default': {
+            'path': '@moomfe/huuuu'
+          }
+        }
+      }
+    };
+
+    // 配置检查
+    const rollupConfig = compilerRollupConfigs( config )[0];
+
+    expect( rollupConfig.input.external ).is.deep.equals([ '@moomfe/hu' ]);
+    expect( rollupConfig.output.paths ).is.deep.equals({
+      '@moomfe/hu': '@moomfe/huuu'
+    });
+    expect( rollupConfig.output.globals ).is.deep.equals({
+      '@moomfe/hu': 'Huuu'
+    });
+
+    // 构建检查
+    await runBuild({
+      _code: `
+        import Hu from '@moomfe/hu';
+        console.log( Hu );
+      `,
+      ...config
+    }).then(({ codes: [ code ], logs }) => {
+      expect( code.length < 1000 ).is.true;
+      expect( code ).is.includes(`factory(global.Huuu)`);
+      expect( code ).is.includes(`require('@moomfe/huuu')`);
+      expect( code ).is.includes(`define(['@moomfe/huuu']`);
+      expect( code ).is.includes(`Hu.hasOwnProperty('default') ? Hu['default'] : Hu`);
+    });
+  });
+
 });
