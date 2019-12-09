@@ -35,12 +35,12 @@ module.exports = ( config, rollupConfig ) => {
           if( Object.$isPlainObject( root[ format ] ) ){
             const rootObj = Object.$assign( null, getDefaultObj( root ), root[ format ] );
             rootHandler( input, output, format, id, rootObj.root );
-            pathHandler( output, id, rootObj.path );
+            pathHandler( output, format, id, rootObj.path );
           }
         }else if( 'default' in root ){
           const defaultObj = getDefaultObj( root );
           rootHandler( input, output, format, id, defaultObj.root );
-          pathHandler( output, id, defaultObj.path );
+          pathHandler( output, format, id, defaultObj.path );
         }
       }
     });
@@ -65,9 +65,11 @@ function rootHandler( input, output, format, id, root ){
   }
 }
 
-function pathHandler( output, id, path ){
+function pathHandler( output, format, id, path ){
   if( path && typeof path === 'string' ){
-    output.paths[ id ] = path;
+    if( format !== 'iife' ){
+      output.paths[ id ] = path;
+    }
   }
 }
 
