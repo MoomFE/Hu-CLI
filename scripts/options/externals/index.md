@@ -74,7 +74,7 @@
     externals: {
       '@moomfe/hu': {
         'iife': 'Hu',
-        'default': 'Huui'
+        'default': 'Huuu'
       }
     }
   }
