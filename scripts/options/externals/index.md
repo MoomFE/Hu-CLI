@@ -94,7 +94,7 @@
           'path': '@moomfe/huu'
         },
         'umd': {
-          'root': 'Hu',
+          'root': 'Huuu',
           'path': '@moomfe/huuu'
         },
         'default': {
