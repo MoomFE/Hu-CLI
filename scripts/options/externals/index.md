@@ -139,7 +139,7 @@
         'umd': {
           'path': '@moomfe/huuuu'
         },
-        'default': 'Hu'
+        'default': 'Huu'
       }
     }
   }
