@@ -34,13 +34,23 @@ module.exports = ( config, rollupConfig ) => {
         if( format in root ){
           if( Object.$isPlainObject( root[ format ] ) ){
             const rootObj = Object.$assign( null, getDefaultObj( root ), root[ format ] );
-            rootHandler( input, output, format, id, rootObj.root );
-            pathHandler( output, format, id, rootObj.path );
+
+            if( 'root' in rootObj ){
+              rootHandler( input, output, format, id, rootObj.root );
+            }
+            if( 'path' in rootObj ){
+              pathHandler( input, output, format, id, rootObj.path );
+            }
           }
         }else if( 'default' in root ){
           const defaultObj = getDefaultObj( root );
-          rootHandler( input, output, format, id, defaultObj.root );
-          pathHandler( output, format, id, defaultObj.path );
+          
+          if( 'root' in defaultObj ){
+            rootHandler( input, output, format, id, defaultObj.root );
+          }
+          if( 'path' in defaultObj ){
+            pathHandler( input, output, format, id, defaultObj.path );
+          }
         }
       }
     });
@@ -65,9 +75,10 @@ function rootHandler( input, output, format, id, root ){
   }
 }
 
-function pathHandler( output, format, id, path ){
+function pathHandler( input, output, format, id, path ){[]
   if( path && typeof path === 'string' ){
     if( format !== 'iife' ){
+      input.external.includes( id ) || input.external.push( id );
       output.paths[ id ] = path;
     }
   }
@@ -83,8 +94,7 @@ function getDefaultObj( root ){
       defaultObj.root = currentDefault;
     }
     else if( Object.$isPlainObject( currentDefault ) ){
-      defaultObj.root = currentDefault.root;
-      defaultObj.path = currentDefault.path;
+      Object.assign( defaultObj, currentDefault );
     }
   }
 
