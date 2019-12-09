@@ -156,6 +156,23 @@
       }
     }
   }
+
+  // 补充 4
+  {
+    externals: {
+      '@moomfe/hu': {
+        // 使用这种最详细的定义方式
+        // 最终参数中没有 `root` 或 `path` 时
+        // 那么不会被添加到 `external` 或 `globals` 或 `paths`
+        'umd': {
+
+        },
+        'default': {
+
+        }
+      }
+    }
+  }
 ```
 
 
