@@ -8,7 +8,6 @@
   - 💄 选项 `format` 的可选值支持添加自定义命名空间, 如: `esm.browser`, `umd.xxx`
   - ⚠️ 移除选项 `format` 的可选值 `esm.browser`
 
-
 # 1.6.0
   - 📅 2019-11-25
   - 🌟 新增 `externals` 选项, 用于标识外部依赖
