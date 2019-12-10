@@ -273,6 +273,95 @@ describe( 'config', function(){
 
       expect( isExit ).is.false;
     }
+
+    // -------------------------------------------
+    // - 反向测试 - 命名空间
+    // -------------------------------------------
+
+    // 1
+    {
+      const isExit = await proxyProcessExit( async () => {
+        const stdout = await proxyLog( async () => {
+          await compilerRollupConfigs({
+            format: 'amd.xxx'
+          }, true);
+        });
+
+        expect( stdout ).is.equals('');
+      });
+
+      expect( isExit ).is.false;
+    }
+    // 2
+    {
+      const isExit = await proxyProcessExit( async () => {
+        const stdout = await proxyLog( async () => {
+          await compilerRollupConfigs({
+            format: 'cjs.xxx'
+          }, true);
+        });
+
+        expect( stdout ).is.equals('');
+      });
+
+      expect( isExit ).is.false;
+    }
+    // 3
+    {
+      const isExit = await proxyProcessExit( async () => {
+        const stdout = await proxyLog( async () => {
+          await compilerRollupConfigs({
+            format: 'system.xxx'
+          }, true);
+        });
+
+        expect( stdout ).is.equals('');
+      });
+
+      expect( isExit ).is.false;
+    }
+    // 4
+    {
+      const isExit = await proxyProcessExit( async () => {
+        const stdout = await proxyLog( async () => {
+          await compilerRollupConfigs({
+            format: 'esm.xxx'
+          }, true);
+        });
+
+        expect( stdout ).is.equals('');
+      });
+
+      expect( isExit ).is.false;
+    }
+    // 5
+    {
+      const isExit = await proxyProcessExit( async () => {
+        const stdout = await proxyLog( async () => {
+          await compilerRollupConfigs({
+            format: 'iife.xxx'
+          }, true);
+        });
+
+        expect( stdout ).is.equals('');
+      });
+
+      expect( isExit ).is.false;
+    }
+    // 6
+    {
+      const isExit = await proxyProcessExit( async () => {
+        const stdout = await proxyLog( async () => {
+          await compilerRollupConfigs({
+            format: 'umd.xxx'
+          }, true);
+        });
+
+        expect( stdout ).is.equals('');
+      });
+
+      expect( isExit ).is.false;
+    }
   });
 
   it( '对配置进行解析时, 若配置不合法, 将会退出打包程序 ( pluginOptions )', async () => {
@@ -589,6 +678,39 @@ describe( 'config', function(){
       expect(
         rollupConfig.input.plugins.$find({ name: 'terser' })
       ).is.undefined;
+    }
+  });
+
+  it( '使用 format 选项时可添加命名空间, 命名空间在被解析时会被移除', () => {
+    // amd
+    {
+      expect( compilerRollupConfigs({ format: 'amd' })[0].output.format ).is.equals('amd');
+      expect( compilerRollupConfigs({ format: 'amd.xxxx' })[0].output.format ).is.equals('amd');
+    }
+    // cjs
+    {
+      expect( compilerRollupConfigs({ format: 'cjs' })[0].output.format ).is.equals('cjs');
+      expect( compilerRollupConfigs({ format: 'cjs.xxxx' })[0].output.format ).is.equals('cjs');
+    }
+    // system
+    {
+      expect( compilerRollupConfigs({ format: 'system' })[0].output.format ).is.equals('system');
+      expect( compilerRollupConfigs({ format: 'system.xxxx' })[0].output.format ).is.equals('system');
+    }
+    // esm
+    {
+      expect( compilerRollupConfigs({ format: 'esm' })[0].output.format ).is.equals('esm');
+      expect( compilerRollupConfigs({ format: 'esm.xxxx' })[0].output.format ).is.equals('esm');
+    }
+    // iife
+    {
+      expect( compilerRollupConfigs({ format: 'iife' })[0].output.format ).is.equals('iife');
+      expect( compilerRollupConfigs({ format: 'iife.xxxx' })[0].output.format ).is.equals('iife');
+    }
+    // umd
+    {
+      expect( compilerRollupConfigs({ format: 'umd' })[0].output.format ).is.equals('umd');
+      expect( compilerRollupConfigs({ format: 'umd.xxxx' })[0].output.format ).is.equals('umd');
     }
   });
 
