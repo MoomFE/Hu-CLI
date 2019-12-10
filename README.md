@@ -66,13 +66,9 @@ Hu-CLI 是一个基于 rollup 的打包工具
     ],
 
     // 外部依赖
-    externals: {
-      // 'jquery': 'jQuery',
-      // '@moomfe/hu': {
-      //   'esm': '@moomfe/hu',
-      //   'default': 'Hu'
-      // }
-    },
+    //  - 用于定义项目中的外部依赖
+    //  - 完整选项请查看 ( https://github.com/MoomFE/Hu-CLI/blob/master/scripts/options/externals/index.md )
+    externals: {},
 
     /**
      * 提供给 rollup 的插件列表
