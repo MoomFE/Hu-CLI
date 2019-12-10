@@ -21,6 +21,11 @@ module.exports = async ( _configs ) => {
       options: [ 'development', 'production', true, false ]
     },
     format: {
+      translate: format => {
+        if( typeof format === 'string' && format.includes('.') ){
+          return format.split('.')[0];
+        }
+      },
       options: [ 'amd', 'cjs', 'system', 'esm', 'iife', 'umd' ]
     },
     pluginOptions: {
