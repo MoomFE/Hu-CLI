@@ -3,6 +3,7 @@
   - 💄 选项 `pluginOptions` 支持传入 `null` 从而完全不使用从父级继承的配置
   - 💄 选项 `plugins` 支持传入 `null` 从而完全不使用从父级继承的配置
   - 💄 选项 `externals` 的功能完全重构, 功能更加强大
+  - 💄 选项 `format` 的可选值支持添加自定义命名空间, 如: `esm.browser`, `umd.xxx`
   - ⚠️ 移除选项 `format` 的可选值 `esm.browser`
 
 
