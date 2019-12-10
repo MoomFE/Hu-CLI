@@ -23,27 +23,6 @@ module.exports = async ( _configs ) => {
     format: {
       options: [ 'amd', 'cjs', 'system', 'esm', 'iife', 'umd' ]
     },
-    // externals: [
-    //   { type: 'isPlainObject' },
-    //   {
-    //     dependency: 'format',
-    //     message: ( value, result, { format } ) => {
-    //       return `${ bgBlackBright(` externals `) } : 选项在 ${ yellow( 'format: ' + format ) } 下取值不正确, 请检查您的配置文件 !`
-    //     },
-    //     validator: async ( value, { format } ) => {
-    //       for( let [ id, variableName ] of Object.entries( value ) ){
-    //         if( !isString( variableName ) ){
-    //           if( variableName == null || ( variableName = isString( variableName[ format ] ) ? variableName[ format ] : variableName.default ) == null ){
-    //             delete value[ id ];
-    //             continue;
-    //           }
-    //         }
-    //         if( !( isString( variableName ) && variableName !== '' ) ) return false;
-    //       }
-    //       return true;
-    //     }
-    //   }
-    // ],
     pluginOptions: {
       type: 'isPlainObject'
     },
