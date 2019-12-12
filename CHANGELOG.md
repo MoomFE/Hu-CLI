@@ -1,3 +1,5 @@
+# 1.8.0
+  - 📅 2019-12-12
   - 🌟 使用 `watch` / `build` 指令时可以使用 `-c`, `--config` 指定配置文件
   - ⚠️ 移除 `pluginOptions.json` 选项
 
