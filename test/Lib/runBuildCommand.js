@@ -10,9 +10,8 @@ const outputConfigAndInput = require('./utils/outputConfigAndInput');
  * 调用 build 指令对传入配置进行打包,
  * 执行较慢
  */
-module.exports = async ( config ) => {
-  config = initConfig( config );
-
+module.exports = async ( _config ) => {
+  const config = initConfig( _config );
   const rollupConfigs = await module.exports.init( config );
 
   // 执行指令

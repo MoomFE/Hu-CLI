@@ -11,9 +11,8 @@ const compilerRollupConfigs = require('../../scripts/init/basic/compilerRollupCo
  * @param config 需要解析的配置
  * @param useBasic 是否使用 basic/index.js 对代码进行解析
  */
-module.exports = ( config, useBasic ) => {
-  config = initConfig( config );
-
+module.exports = ( _config, useBasic ) => {
+  const config = initConfig( _config );
   let configs = compilerConfigs( config );
   let rollupConfigs = compilerRollupConfigs( configs );
 
