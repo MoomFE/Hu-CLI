@@ -1,31 +1,19 @@
 #!/usr/bin/env node
 
 const program = require('commander');
+const initCommand = require('./util/initCommand');
 
+
+initCommand('watch');
+initCommand();
 
 program.version(
   require('../package.json').version,
   '-v, --version'
 );
 
-program
-  .command( 'watch' )
-  .action(() => {
-    process.env.HU_RUNNING_COMMAND = 'watch';
-
-    require('../scripts/init/watch.js')();
-  });
-
-program
-  .command( 'build' )
-  .action(() => {
-    process.env.HU_RUNNING_COMMAND = 'build';
-
-    require('../scripts/init/build.js')();
-  });
-
 program.on('--help', function(){
-  
+
 });
 
 

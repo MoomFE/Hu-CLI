@@ -5,6 +5,7 @@ const print = require('../utils/print.js');
 const pluginConsole = require('../plugins/console/index.js');
 
 
+const HU_RUNNING_CONFIG = process.env.HU_RUNNING_CONFIG;
 let rollupWatcher = null;
 
 
@@ -26,7 +27,7 @@ module.exports = async () => {
 
 {
   const root = process.cwd();
-  const configFile = resolve( root, 'hu.config.js' );
+  const configFile = resolve( root, HU_RUNNING_CONFIG );
 
   chokidar.watch( configFile ).on( 'change', ( path, stats ) => {
     if( rollupWatcher ){
