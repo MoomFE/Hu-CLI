@@ -11,10 +11,10 @@ const outputConfigAndInput = require('./utils/outputConfigAndInput');
  * 执行较慢
  */
 module.exports = async (
-  _config,
+  userConfig,
   command = 'npm run build'
 ) => {
-  const config = initConfig( _config );
+  const config = initConfig( userConfig );
   const rollupConfigs = await module.exports.init( config );
 
   // 执行指令

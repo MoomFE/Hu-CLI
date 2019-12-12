@@ -9,8 +9,8 @@ const initConfig = require('./utils/initConfig');
  * 调用 build.js 对传入配置进行打包,
  * 执行较快
  */
-module.exports = async ( _config ) => {
-  const config = initConfig( _config );
+module.exports = async ( userConfig ) => {
+  const config = initConfig( userConfig );
   const rollupConfigs = await init( config );
 
   // 执行指令
