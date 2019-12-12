@@ -1,10 +1,20 @@
 require('@moomfe/zenjs');
-const { resolve } = require('path');
+const { resolve, dirname } = require('path');
 const defaultConfig = require('../../config.js');
 
 
+const HU_RUNNING_CONFIG = process.env.HU_RUNNING_CONFIG;
+
+
 module.exports = function compilerConfigs( originConfigs, parentConfig, configs = [] ){
-  const rootPath = process.cwd();
+  let rootPath = process.cwd();
+
+  // 当使用 `-c, --config` 指定了配置文件, 则按照配置文件的层级作为根目录
+  if( HU_RUNNING_CONFIG && HU_RUNNING_CONFIG !== 'hu.config.js' ){
+    rootPath = dirname(
+      resolve( rootPath, HU_RUNNING_CONFIG )
+    );
+  }
 
   for( const originConfig of originConfigs ){
     const config = Object.$assign( null, parentConfig || defaultConfig, originConfig );
