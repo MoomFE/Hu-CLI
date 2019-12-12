@@ -10,13 +10,16 @@ const outputConfigAndInput = require('./utils/outputConfigAndInput');
  * 调用 build 指令对传入配置进行打包,
  * 执行较慢
  */
-module.exports = async ( _config ) => {
+module.exports = async (
+  _config,
+  command = 'npm run build'
+) => {
   const config = initConfig( _config );
   const rollupConfigs = await module.exports.init( config );
 
   // 执行指令
   return new Promise(( resolve, reject ) => {
-    exec( `npm run build`, { cwd: root }, async ( error, stdout, stderr ) => {
+    exec( command, { cwd: root }, async ( error, stdout, stderr ) => {
       if( error ){
         reject({ error, stdout, stderr });
       }else{
