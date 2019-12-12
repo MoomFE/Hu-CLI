@@ -5,12 +5,11 @@ const { pathExists } = require('fs-extra');
 const print = require('../../../utils/print.js');
 
 
-const HU_RUNNING_CONFIG = process.env.HU_RUNNING_CONFIG;
 
 
 module.exports = async () => {
   const root = process.cwd();
-  const configFile = resolve( root, HU_RUNNING_CONFIG );
+  const configFile = resolve( root, process.env.HU_RUNNING_CONFIG );
   const isConfigFileExists = await pathExists( configFile );
   let config;
 

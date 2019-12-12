@@ -3,10 +3,8 @@ const { resolve, dirname } = require('path');
 const defaultConfig = require('../../config.js');
 
 
-const HU_RUNNING_CONFIG = process.env.HU_RUNNING_CONFIG;
-
-
 module.exports = function compilerConfigs( originConfigs, parentConfig, configs = [] ){
+  const HU_RUNNING_CONFIG = process.env.HU_RUNNING_CONFIG;
   let rootPath = process.cwd();
 
   // 当使用 `-c, --config` 指定了配置文件, 则按照配置文件的层级作为根目录
