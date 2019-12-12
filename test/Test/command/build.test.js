@@ -28,7 +28,7 @@ describe( 'command.build', function(){
     expect( isExit ).is.false;
   });
 
-  it( '使用 build 指令时带上 -c, --config 参数', async () => {
+  it( '使用 build 指令时带上 -c 参数', async () => {
     let isRun = false;
     const isExit = await proxyProcessExit( async () => {
       const configPath = path.resolve( root, 'other.config.js' );
@@ -44,6 +44,33 @@ describe( 'command.build', function(){
           _code: `console.log(123)`
         },
         'bin\\hu build -c other.config.js'
+      ).then(({ codes: [ code ], logs }) => {
+        isRun = true;
+        expect( code ).is.not.includes(`console.log(123)`);
+        expect( code ).is.includes(`alert(456)`);
+      });
+    });
+
+    expect( isRun ).is.true;
+    expect( isExit ).is.false;
+  });
+
+  it( '使用 build 指令时带上 --config 参数', async () => {
+    let isRun = false;
+    const isExit = await proxyProcessExit( async () => {
+      const configPath = path.resolve( root, 'other.config.js' );
+      const code = `module.exports = {
+        replace: {
+          'console.log(123)': 'alert(456)'
+        }
+      }`;
+
+      await fs.outputFile( configPath, code )
+      await runBuildCommand(
+        {
+          _code: `console.log(123)`
+        },
+        'bin\\hu build --config other.config.js'
       ).then(({ codes: [ code ], logs }) => {
         isRun = true;
         expect( code ).is.not.includes(`console.log(123)`);
