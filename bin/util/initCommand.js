@@ -9,6 +9,6 @@ module.exports = function initCommand( command = 'build' ){
       process.env.HU_RUNNING_COMMAND = command;
       process.env.HU_RUNNING_CONFIG = cmd.config || 'hu.config.js';
 
-      require(`../scripts/init/${ command }.js`)();
+      require(`../../scripts/init/${ command }.js`)();
     });
 }
