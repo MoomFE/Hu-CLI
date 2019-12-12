@@ -1,5 +1,6 @@
 require('../../node_modules/@moomfe/zenjs');
 const outputConfigAndInput = require('./utils/outputConfigAndInput');
+const initConfig = require('./utils/initConfig');
 const compilerRollupConfigsUseBasic = require('../../scripts/init/basic/index');
 const compilerConfigs = require('../../scripts/init/basic/compilerConfigs');
 const compilerRollupConfigs = require('../../scripts/init/basic/compilerRollupConfigs');
@@ -11,16 +12,7 @@ const compilerRollupConfigs = require('../../scripts/init/basic/compilerRollupCo
  * @param useBasic 是否使用 basic/index.js 对代码进行解析
  */
 module.exports = ( config, useBasic ) => {
-  // 未传入配置文件
-  if( config == null ) config = [{}];
-  // 传入了正常配置文件
-  else if( Object.$isPlainObject( config ) ) config = [ config ];
-  // 数组格式的配置文件
-  else if( Array.isArray( config ) ){
-    if( !config.length ) config.push({});
-  }
-  // 非正常配置文件
-  else throw "???";
+  config = initConfig( config );
 
   let configs = compilerConfigs( config );
   let rollupConfigs = compilerRollupConfigs( configs );

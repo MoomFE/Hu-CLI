@@ -2,6 +2,7 @@ const { readFile } = require('fs-extra');
 const { init } = require('./runBuildCommand');
 const build = require('../../scripts/init/build');
 const proxyLog = require('../Lib/utils/proxyLog');
+const initConfig = require('./utils/initConfig');
 
 
 /**
@@ -9,6 +10,8 @@ const proxyLog = require('../Lib/utils/proxyLog');
  * 执行较快
  */
 module.exports = async ( config ) => {
+  config = initConfig( config );
+
   // 解析为最终配置
   const rollupConfigs = await init( config );
 

@@ -1,6 +1,7 @@
 const { readFile } = require('fs-extra');
 const { exec } = require('child_process');
 const { root } = require('./const');
+const initConfig = require('./utils/initConfig');
 const compilerRollupConfigs = require('./compilerRollupConfigs');
 const outputConfigAndInput = require('./utils/outputConfigAndInput');
 
@@ -10,6 +11,8 @@ const outputConfigAndInput = require('./utils/outputConfigAndInput');
  * 执行较慢
  */
 module.exports = async ( config ) => {
+  config = initConfig( config );
+
   const rollupConfigs = await module.exports.init( config );
 
   // 执行指令
