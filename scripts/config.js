@@ -44,10 +44,6 @@ module.exports = {
       extensions: [ '.js', '.css' ],
       isComment: true
     },
-    // 传递给 json 插件的配置
-    json: {
-      indent: '  '
-    },
     // 传递给 rollup-plugin-terser 插件的配置
     terser: {
       sourcemap: false,

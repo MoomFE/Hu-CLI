@@ -3,6 +3,7 @@ const { dataToEsm } = require('rollup-pluginutils');
 const json5 = require('json5');
 
 const defaultOptions = {
+  indent: '  ',
   compact: false,
   preferConst: false,
   objectShorthand: false,
@@ -11,23 +12,13 @@ const defaultOptions = {
 
 
 module.exports = ( config ) => {
-  const options = config.pluginOptions.json || {};
-  let indent = options.indent;
-
-  if( typeof indent !== 'string' ){
-    indent = '  ';
-  }
-
   return {
     name: 'json',
     transform( json, id ){
       const ext = extname( id );
 
       if( ext === '.json' || ext === '.json5' ){
-        return dataToEsm( json5.parse( json ), {
-          indent,
-          ...defaultOptions
-        });
+        return dataToEsm( json5.parse( json ), defaultOptions );
       }
     }
   };

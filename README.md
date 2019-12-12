@@ -89,11 +89,6 @@ Hu-CLI 是一个基于 rollup 的打包工具
         // 当前 banner 是否需要自动转换为注释插入
         isComment: true
       },
-      // 传递给 json 插件的配置
-      json: {
-        // 导入 JSON 的缩进
-        indent: '  '
-      },
       // 传递给 rollup-plugin-terser 插件的配置
       //  - 以下是默认情况下的配置
       //  - 完整选项请查看插件官网 ( https://github.com/TrySound/rollup-plugin-terser )
