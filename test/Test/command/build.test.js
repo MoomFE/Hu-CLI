@@ -38,7 +38,7 @@ describe( 'command.build', function(){
         }
       }`;
 
-      await fs.outputFile( configPath, code )
+      await fs.outputFile( configPath, code );
       await runBuildCommand(
         {
           _code: `console.log(123)`
@@ -65,12 +65,41 @@ describe( 'command.build', function(){
         }
       }`;
 
-      await fs.outputFile( configPath, code )
+      await fs.outputFile( configPath, code );
       await runBuildCommand(
         {
           _code: `console.log(123)`
         },
         'bin\\hu build --config other.config.js'
+      ).then(({ codes: [ code ], logs }) => {
+        isRun = true;
+        expect( code ).is.not.includes(`console.log(123)`);
+        expect( code ).is.includes(`alert(456)`);
+      });
+    });
+
+    expect( isRun ).is.true;
+    expect( isExit ).is.false;
+  });
+
+  it( '使用 build 指令时使用了 `-c, --config` 参数时, 将按照指定的配置文件目录作为根目录', async () => {
+    let isRun = false;
+    const isExit = await proxyProcessExit( async () => {
+      const configPath = path.resolve( root, 'aaa/bbb/other.config.js' );
+      const code = `module.exports = {
+        replace: {
+          'console.log(123)': 'alert(456)'
+        }
+      }`;
+
+      await fs.outputFile( configPath, code );
+      await runBuildCommand(
+        {
+          _code: `console.log(123)`
+        },
+        `bin\\hu build -c ${
+          process.env.HU_RUNNING_CONFIG = './aaa/bbb/other.config.js'
+        }`
       ).then(({ codes: [ code ], logs }) => {
         isRun = true;
         expect( code ).is.not.includes(`console.log(123)`);
