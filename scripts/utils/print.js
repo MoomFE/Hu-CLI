@@ -4,9 +4,8 @@ const packageData = require('../../package.json');
 
 
 const hr = `------------------------------------------------------------------------------------------------------------`;
-const hr2 = `${ hr }\n`;
 const cliName = `Hu-CLI v${ packageData.version }`;
-const cliInfo = hr.split('').$splice( 6, cliName.length + 2, ` ${ green( cliName ) } ` ).join('');
+const cliInfo = `\n${ hr.split('').$splice( 6, cliName.length + 2, ` ${ green( cliName ) } ` ).join('') }`;
 let lastLog = packageData;
 
 
@@ -23,14 +22,14 @@ module.exports = {
   },
 
   start(){
-    lastLog !== packageData && lastLog !== hr2 && console.log( hr2 );
+    lastLog !== packageData && lastLog !== hr && console.log( hr );
     this._log( cliInfo );
     Reflect.apply( this.log, this, arguments );
   },
 
   end(){
     Reflect.apply( this.log, this, arguments );
-    this._log( hr2 );
+    this._log( hr );
   },
 
   error( ...args ){
