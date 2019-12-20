@@ -4,6 +4,7 @@ const optionsHandler = require('../../options/index.js');
 const pluginCommonjs = require('rollup-plugin-commonjs');
 const pluginNodeResolve = require('rollup-plugin-node-resolve');
 const pluginConsole = require('../../plugins/console/index.js');
+const pluginConsoleTransform = require('../../plugins/console/index.js').transform;
 const pluginBanner = require('../../plugins/banner/index.js');
 const pluginReplace = require('../../plugins/replace/index.js');
 const pluginTerser = require('../../plugins/terser/index.js');
@@ -72,6 +73,7 @@ function mergeDefaultPlugins( config, rollupConfig ){
 
   if( Array.isArray( plugins ) ){
     rollupConfig.input.plugins = [
+      pluginConsoleTransform( config, rollupConfig ),
       pluginCommonjs( config.pluginOptions.commonjs ),
       pluginNodeResolve( config.pluginOptions.nodeResolve ),
       pluginJson( config, rollupConfig ),

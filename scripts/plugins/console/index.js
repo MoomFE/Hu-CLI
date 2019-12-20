@@ -8,7 +8,6 @@ const getSize = require('../../utils/getSize');
 
 
 module.exports = ( config, rollupConfig ) => {
-  let progress = 0;
   let startTime = new Date;
   let warnSet = new Set;
 
@@ -32,19 +31,10 @@ module.exports = ( config, rollupConfig ) => {
      * 输出开始部分的信息
      */
     buildStart( inputOptions ){
-      progress = 0;
       startTime = new Date;
       warnSet.clear();
 
       print.start(`Input   : ${ green( inputOptions.input ) }`);
-    },
-
-    /**
-     * 解析文件时
-     * 输出正在解析的文件路径
-     */
-    transform( code, id ){
-      print.stdout(`Transform ( ${ ++progress } ): ${ green( id ) }`);
     },
 
     /**
@@ -102,6 +92,33 @@ module.exports = ( config, rollupConfig ) => {
       }
 
       print.end();
+    }
+
+  };
+};
+
+
+module.exports.transform = ( config, rollupConfig ) => {
+  let progress = 0;
+
+  return {
+
+    name: 'console.transform',
+
+    /**
+     * 构建开始时
+     * 重置变量
+     */
+    buildStart( inputOptions ){
+      progress = 0;
+    },
+
+    /**
+     * 解析文件时
+     * 输出正在解析的文件路径
+     */
+    transform( code, id ){
+      print.stdout(`Transform ( ${ ++progress } ): ${ green( id ) }`);
     }
 
   };
