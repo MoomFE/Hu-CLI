@@ -23,16 +23,16 @@
     "@moomfe/hu-template-minifier": "^1.3.1",
     "@moomfe/zenjs": "^5.0.0-beta.5",
     "chalk": "^2.4.2",
-    "chokidar": "^3.3.0",
+    "chokidar": "^3.3.1",
     "commander": "^3.0.2",
     "fs-extra": "^8.1.0",
     "json5": "^2.1.1",
-    "rollup": "^1.27.13",
+    "rollup": "^1.27.14",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-terser": "^5.1.3",
     "rollup-pluginutils": "^2.8.2",
-    "terser": "^4.4.0"
+    "terser": "^4.4.3"
   },
   "devDependencies": {
     "chai": "^4.2.0",
