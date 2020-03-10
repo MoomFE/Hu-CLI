@@ -12,10 +12,7 @@ module.exports = async () => {
   const configs = await require('./basic/index.js')();
   const rollupConfigs = configs.map( config => {
     return Object.assign( {}, config.input, {
-      output: config.output,
-      watch: {
-        chokidar: true
-      }
+      output: config.output
     });
   });
 
