@@ -37,6 +37,15 @@ module.exports = {
       ignoreRegExpLiterals: true,
       ignoreStrings: true,
       ignoreTemplateLiterals: true,
+    }],
+    // 禁止未使用过的表达式
+    "no-unused-expressions": [ "error", {
+      // 是否允许在表达式中使用逻辑短路求值
+      "allowShortCircuit": true,
+      // 是否允许在表达式中使用类似逻辑短路求值的三元运算符
+      "allowTernary": false,
+      // 是否允许在表达式中使用带标签的模板字面量
+      "allowTaggedTemplates": false
     }]
   }
 
