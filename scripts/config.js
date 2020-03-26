@@ -1,5 +1,4 @@
 
-
 module.exports = {
 
   // 打包模式
@@ -32,8 +31,7 @@ module.exports = {
   externals: {},
 
   // 提供给 rollup 的插件列表
-  plugins: ( config ) => {
-
+  plugins: (config) => {
     return [];
   },
 
@@ -41,7 +39,7 @@ module.exports = {
   pluginOptions: {
     // 传递给 banner 插件的配置
     banner: {
-      extensions: [ '.js', '.css' ],
+      extensions: ['.js', '.css'],
       isComment: true
     },
     // 传递给 rollup-plugin-terser 插件的配置
@@ -70,7 +68,7 @@ module.exports = {
   },
 
   // 方法会接收被解析的 rollup 配置作为参数, 可直接对传入配置进行修改或返回一个新的配置
-  configureRollup: ( rollupConfig, config ) => {
+  configureRollup: (rollupConfig, config) => {
 
     // return newRollupConfig;
   },
@@ -94,11 +92,9 @@ module.exports = {
 };
 
 
-
 /* ------------------------------------ ------------------------------------ ------------------------------------ */
 /* ------------------------------------ ------------------------------------ ------------------------------------ */
 /* ------------------------------------ ------------------------------------ ------------------------------------ */
-
 
 
 /**
