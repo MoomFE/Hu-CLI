@@ -4,6 +4,9 @@ module.exports = {
   extends: [
     "airbnb-base"
   ],
+  globals: {
+    ZenJS: "readonly"
+  },
   rules: {
     // 强制在模块顶部调用 require()
     "global-require": "off",
