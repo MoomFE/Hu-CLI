@@ -11,6 +11,8 @@
     }
   ],
   "settings": {
+    "breadcrumbs.enabled": false,
+    "files.eol": "\n",
     "files.exclude": {
       "bin": true,
       "test": true,
@@ -24,6 +26,8 @@
     },
     "editor.tabSize": 2,
     "editor.detectIndentation": false,
-    "breadcrumbs.enabled": false
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    }
   }
 }
