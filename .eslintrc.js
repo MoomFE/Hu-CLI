@@ -29,7 +29,15 @@ module.exports = {
     // 要求使用一致的 return 语句
     "consistent-return": "off",
     // 禁止对函数参数再赋值
-    "no-param-reassign": "off"
+    "no-param-reassign": "off",
+    // 强制行的最大长度
+    "max-len": [ "error", 180, 2, {
+      ignoreUrls: true,
+      ignoreComments: false,
+      ignoreRegExpLiterals: true,
+      ignoreStrings: true,
+      ignoreTemplateLiterals: true,
+    }]
   }
 
 };
