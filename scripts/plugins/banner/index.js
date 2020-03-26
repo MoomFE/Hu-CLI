@@ -1,35 +1,35 @@
 const { extname } = require('path');
 
 
-module.exports = ( config ) => {
+module.exports = (config) => {
   let banner = config.banner;
 
-  if( banner && typeof banner === 'string' ){
-    const options = config.pluginOptions.banner || {};
-    const extensions = options.extensions || [];
+  if (banner && typeof banner === 'string') {
+    const bannerOptions = config.pluginOptions.banner || {};
+    const extensions = bannerOptions.extensions || [];
 
-    if( extensions.length === 0 ){
+    if (extensions.length === 0) {
       return;
     }
 
-    if( options.isComment ){
-      banner = banner.replace( /\*\//, '*\\/' );
-      banner = banner.split( /\r\n|\r|\n/ );
-      banner = banner.map( line => ' * ' + line );
-      banner = [ '/*!', ...banner, ' */\n\n' ].join('\n');;
+    if (bannerOptions.isComment) {
+      banner = banner.replace(/\*\//, '*\\/');
+      banner = banner.split(/\r\n|\r|\n/);
+      banner = banner.map((line) => ` * ${line}`);
+      banner = ['/*!', ...banner, ' */\n\n'].join('\n');
     }
 
     return {
       name: 'banner',
-      generateBundle: async function( outputOptions, bundle, isWrite ){
-        Object.entries( bundle ).forEach(([ name, options ]) => {
-          const ext = extname( options.fileName );
+      async generateBundle(outputOptions, bundle, isWrite) {
+        Object.entries(bundle).forEach(([name, options]) => {
+          const ext = extname(options.fileName);
 
-          if( extensions.includes( ext ) ){
+          if (extensions.includes(ext)) {
             options.code = banner + options.code;
           }
         });
       }
     };
   }
-}
+};

@@ -3,57 +3,57 @@ const { green, red } = require('chalk');
 const packageData = require('../../package.json');
 
 
-const hr = `------------------------------------------------------------------------------------------------------------`;
-const cliName = `Hu-CLI v${ packageData.version }`;
-const cliInfo = `\n${ hr.split('').$splice( 6, cliName.length + 2, ` ${ green( cliName ) } ` ).join('') }`;
+const hr = '------------------------------------------------------------------------------------------------------------';
+const cliName = `Hu-CLI v${packageData.version}`;
+const cliInfo = `\n${hr.split('').$splice(6, cliName.length + 2, ` ${green(cliName)} `).join('')}`;
 let lastLog = packageData;
 
 
 module.exports = {
 
-  _log( message ){
-    console.log( lastLog = message );
+  _log(message) {
+    console.log(lastLog = message);
   },
 
-  log( ...args ){
-    for( const message of args ){
-      this._log( `- ${ message }` );
+  log(...args) {
+    for (const message of args) {
+      this._log(`- ${message}`);
     }
   },
 
-  start(){
-    lastLog !== packageData && lastLog !== hr && console.log( hr );
-    this._log( cliInfo );
-    Reflect.apply( this.log, this, arguments );
+  start(...args) {
+    lastLog !== packageData && lastLog !== hr && console.log(hr);
+    this._log(cliInfo);
+    Reflect.apply(this.log, this, args);
   },
 
-  end(){
-    Reflect.apply( this.log, this, arguments );
-    this._log( hr );
+  end(...args) {
+    Reflect.apply(this.log, this, args);
+    this._log(hr);
   },
 
-  error( ...args ){
+  error(...args) {
     this.log(
-      args.map( message => {
-        return red( message );
+      args.map((message) => {
+        return red(message);
       })
     );
   },
 
-  stdout( message ){
-    if( process.stdout.isTTY ){
+  stdout(message) {
+    if (process.stdout.isTTY) {
       process.stdout.clearLine();
-      process.stdout.cursorTo( 0 );
-      process.stdout.write( '- ' + message );
-    }else{
-      this.log( message );
+      process.stdout.cursorTo(0);
+      process.stdout.write(`- ${message}`);
+    } else {
+      this.log(message);
     }
   },
 
-  stdoutClear(){
-    if( process.stdout.isTTY ){
+  stdoutClear() {
+    if (process.stdout.isTTY) {
       process.stdout.clearLine();
-      process.stdout.cursorTo( 0 );
+      process.stdout.cursorTo(0);
     }
   }
 

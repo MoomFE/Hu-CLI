@@ -11,15 +11,15 @@ const defaultOptions = {
 };
 
 
-module.exports = ( config ) => {
+module.exports = (config) => {
   return {
     name: 'json',
-    transform( json, id ){
-      const ext = extname( id );
+    transform(json, id) {
+      const ext = extname(id);
 
-      if( ext === '.json' || ext === '.json5' ){
-        return dataToEsm( json5.parse( json ), defaultOptions );
+      if (ext === '.json' || ext === '.json5') {
+        return dataToEsm(json5.parse(json), defaultOptions);
       }
     }
   };
-}
+};
