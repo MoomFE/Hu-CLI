@@ -1,8 +1,11 @@
+/* eslint-disable no-use-before-define */
+
+
 require('@moomfe/zenjs');
-const defaultConfig = require('../../config.js');
-const optionsHandler = require('../../options/index.js');
 const pluginCommonjs = require('rollup-plugin-commonjs');
 const pluginNodeResolve = require('rollup-plugin-node-resolve');
+const defaultConfig = require('../../config.js');
+const optionsHandler = require('../../options/index.js');
 const pluginConsole = require('../../plugins/console/index.js');
 const pluginConsoleTransform = require('../../plugins/console/index.js').transform;
 const pluginBanner = require('../../plugins/banner/index.js');
@@ -12,24 +15,24 @@ const pluginTemplateMinifier = require('../../plugins/template-minifier/index.js
 const pluginJson = require('../../plugins/json/index.js');
 
 
-module.exports = ( configs ) => {
+module.exports = (configs) => {
   const rollupConfigs = [];
 
   // 生成 rollup 的配置
-  for( const config of configs ){
-    const rollupDefaultConfig = getDefaultRollupConfig( config );
-    const rollupConfig = getConfiguredRollupConfig( config, rollupDefaultConfig );
+  for (const config of configs) {
+    const rollupDefaultConfig = getDefaultRollupConfig(config);
+    const rollupConfig = getConfiguredRollupConfig(config, rollupDefaultConfig);
 
     rollupConfigs.push(
-      mergeDefaultPlugins( config, rollupConfig )
+      mergeDefaultPlugins(config, rollupConfig)
     );
   }
 
   return rollupConfigs;
-}
+};
 
 
-function getDefaultRollupConfig( config ){
+function getDefaultRollupConfig(config) {
   const rollupConfig = {
     config,
     input: {
@@ -46,8 +49,8 @@ function getDefaultRollupConfig( config ){
   };
 
   // 处理 config 选项配置
-  optionsHandler.forEach( fn => {
-    fn( config, rollupConfig );
+  optionsHandler.forEach((fn) => {
+    fn(config, rollupConfig);
   });
 
   return rollupConfig;
@@ -57,35 +60,35 @@ function getDefaultRollupConfig( config ){
  * 执行 configureRollup 选项方法,
  * 获取用户返回的新配置或使用修改的配置
  */
-function getConfiguredRollupConfig( config, rollupConfig ){
-  const configureRollupFn = ZenJS.isFunction( config.configureRollup ) ? config.configureRollup : defaultConfig.configureRollup;
-  const configureRollupFnResult = configureRollupFn( rollupConfig, config );
+function getConfiguredRollupConfig(config, rollupConfig) {
+  const configureRollupFn = ZenJS.isFunction(config.configureRollup) ? config.configureRollup : defaultConfig.configureRollup;
+  const configureRollupFnResult = configureRollupFn(rollupConfig, config);
 
-  return configureRollupFnResult ||
-         rollupConfig;
+  return configureRollupFnResult
+         || rollupConfig;
 }
 
 /**
  * 将用户插件和内置插件进行合并
  */
-function mergeDefaultPlugins( config, rollupConfig ){
+function mergeDefaultPlugins(config, rollupConfig) {
   const plugins = rollupConfig.input.plugins;
 
-  if( Array.isArray( plugins ) ){
+  if (Array.isArray(plugins)) {
     rollupConfig.input.plugins = [
-      pluginConsoleTransform( config, rollupConfig ),
-      pluginCommonjs( config.pluginOptions.commonjs ),
-      pluginNodeResolve( config.pluginOptions.nodeResolve ),
-      pluginJson( config, rollupConfig ),
-      pluginReplace( config, rollupConfig ),
-      pluginBanner( config, rollupConfig ),
+      pluginConsoleTransform(config, rollupConfig),
+      pluginCommonjs(config.pluginOptions.commonjs),
+      pluginNodeResolve(config.pluginOptions.nodeResolve),
+      pluginJson(config, rollupConfig),
+      pluginReplace(config, rollupConfig),
+      pluginBanner(config, rollupConfig),
       ...plugins,
-      pluginTemplateMinifier( config, rollupConfig ),
-      pluginTerser( config, rollupConfig ),
-      pluginConsole( config, rollupConfig )
+      pluginTemplateMinifier(config, rollupConfig),
+      pluginTerser(config, rollupConfig),
+      pluginConsole(config, rollupConfig)
     ];
     rollupConfig.input.plugins.$deleteValue()
-                              .$deleteValue( false );
+      .$deleteValue(false);
   }
 
   return rollupConfig;

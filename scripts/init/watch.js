@@ -10,23 +10,24 @@ let rollupWatcher = null;
 
 module.exports = async () => {
   const configs = await require('./basic/index.js')();
-  const rollupConfigs = configs.map( config => {
-    return Object.assign( {}, config.input, {
+  const rollupConfigs = configs.map((config) => {
+    return {
+      ...config.input,
       output: config.output
-    });
+    };
   });
 
-  rollupWatcher = rollup.watch( rollupConfigs );
-  pluginConsole.watch( rollupWatcher );
-}
+  rollupWatcher = rollup.watch(rollupConfigs);
+  pluginConsole.watch(rollupWatcher);
+};
 
 
 {
   const root = process.cwd();
-  const configFile = resolve( root, process.env.HU_RUNNING_CONFIG );
+  const configFile = resolve(root, process.env.HU_RUNNING_CONFIG);
 
-  chokidar.watch( configFile ).on( 'change', ( path, stats ) => {
-    if( rollupWatcher ){
+  chokidar.watch(configFile).on('change', (path, stats) => {
+    if (rollupWatcher) {
       console.log('\n');
       print.start('配置文件发生更改, 正在重启打包程序 ...');
       print.end();
