@@ -49,7 +49,9 @@ module.exports = {
       "allowTernary": false,
       // 是否允许在表达式中使用带标签的模板字面量
       "allowTaggedTemplates": false
-    }]
+    }],
+    // 禁止使用一元操作符 ++ 和 --
+    "no-plusplus": "off"
   }
 
 };
