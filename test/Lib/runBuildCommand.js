@@ -14,21 +14,23 @@ module.exports = async (
   userConfig,
   command = 'npm run build'
 ) => {
-  const config = initConfig( userConfig );
-  const rollupConfigs = await module.exports.init( config );
+  const config = initConfig(userConfig);
+  const rollupConfigs = await module.exports.init(config);
 
   // 执行指令
-  return new Promise(( resolve, reject ) => {
-    exec( command, { cwd: root }, async ( error, stdout, stderr ) => {
-      if( error ){
+  return new Promise((resolve, reject) => {
+    exec(command, { cwd: root }, async (error, stdout, stderr) => {
+      if (error) {
+        // eslint-disable-next-line prefer-promise-reject-errors
         reject({ error, stdout, stderr });
-      }else{
+      } else {
         const codes = [];
 
         // 读取所有输出文件内容
-        for( const { config } of rollupConfigs ){
+        for (const { config: rollupConfig } of rollupConfigs) {
           codes.push(
-            await readFile( config.output, 'utf-8' )
+            // eslint-disable-next-line no-await-in-loop
+            await readFile(rollupConfig.output, 'utf-8')
           );
         }
 
@@ -41,12 +43,12 @@ module.exports = async (
 /**
  * 在执行打包前的一些预处理
  */
-module.exports.init = async ( config ) => {
+module.exports.init = async (config) => {
   // 解析为最终配置
-  const rollupConfigs = compilerRollupConfigs( config );
+  const rollupConfigs = compilerRollupConfigs(config);
 
   // 输出打包相关文件
-  await outputConfigAndInput( rollupConfigs, config );
+  await outputConfigAndInput(rollupConfigs, config);
 
   return rollupConfigs;
 };

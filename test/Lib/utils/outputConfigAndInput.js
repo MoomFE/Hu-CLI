@@ -7,24 +7,26 @@ const outputConfig = require('./outputConfig');
 /**
  * 输出配置及相关文件
  */
-module.exports = async ( rollupConfigs, config ) => {
+module.exports = async (rollupConfigs, config) => {
   // 确保打包入口和出口被删除
-  for( const { config } of rollupConfigs ){
+  for (const { config: rollupConfig } of rollupConfigs) {
+    // eslint-disable-next-line no-await-in-loop
     await Promise.all([
       // 删除打包出口
-      remove( config.output ),
+      remove(rollupConfig.output),
       // 输出打包入口内容或删除打包入口文件
       (
-        config._code === null
-          ? remove( config.input )
-          : outputFile( config.input, config._code || defaultInput )
+        rollupConfig._code === null
+          ? remove(rollupConfig.input)
+          : outputFile(rollupConfig.input, rollupConfig._code || defaultInput)
       ),
       // 输出打包所需的其他文件
-      outputFiles( config )
+      // eslint-disable-next-line no-use-before-define
+      outputFiles(rollupConfig)
     ]);
     // 删除无用属性
-    delete config._code;
-    delete config._files;
+    delete rollupConfig._code;
+    delete rollupConfig._files;
   }
 
   // 删除无用属性
@@ -32,18 +34,19 @@ module.exports = async ( rollupConfigs, config ) => {
   delete config._files;
 
   // 输出配置文件
-  await outputConfig( config );
-}
+  await outputConfig(config);
+};
 
 
-async function outputFiles({ _files, input }){
-  if( _files ){
-    const fileEntries = Object.entries( _files );
-    const dir = dirname( input );
+async function outputFiles({ _files, input }) {
+  if (_files) {
+    const fileEntries = Object.entries(_files);
+    const dir = dirname(input);
 
-    for( const [ file, content ] of fileEntries ){
+    for (const [file, content] of fileEntries) {
+      // eslint-disable-next-line no-await-in-loop
       await outputFile(
-        resolve( dir, file ),
+        resolve(dir, file),
         content
       );
     }
