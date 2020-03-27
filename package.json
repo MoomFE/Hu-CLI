@@ -10,7 +10,7 @@
   },
   "scripts": {
     "test": "node test/Test/install.js && node_modules\\.bin\\mocha test/Test/index.js",
-    "lint": "eslint scripts test"
+    "lint": "eslint bin scripts test/Lib test/Test"
   },
   "repository": {
     "type": "git",
