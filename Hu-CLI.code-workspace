@@ -14,15 +14,16 @@
     "breadcrumbs.enabled": false,
     "files.eol": "\n",
     "files.exclude": {
+      ".eslintrc.js": true,
+      ".gitignore": true,
       "bin": true,
-      "test": true,
-      "scripts": true,
-      "typings": true,
+      "Hu-CLI.code-workspace": true,
       "LICENSE": true,
       "node_modules": true,
       "package-lock.json": true,
-      "Hu-CLI.code-workspace": true,
-      ".gitignore": true
+      "scripts": true,
+      "test": true,
+      "typings": true
     },
     "editor.tabSize": 2,
     "editor.detectIndentation": false,
