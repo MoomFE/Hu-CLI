@@ -12,9 +12,9 @@ program.version(
   '-v, --version'
 );
 
-program.on('--help', function(){
+program.on('--help', () => {
 
 });
 
 
-program.parse( process.argv );
+program.parse(process.argv);
