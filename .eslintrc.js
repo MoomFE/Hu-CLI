@@ -73,7 +73,9 @@ module.exports = {
       ExportDeclaration: { minProperties: 6, multiline: true, consistent: true },
     }],
     // 是否禁用 continue
-    'no-continue': 'off'
+    'no-continue': 'off',
+    // 是否只有一个 export 时, 使用 default
+    'import/prefer-default-export': 'off'
   }
 
 };
