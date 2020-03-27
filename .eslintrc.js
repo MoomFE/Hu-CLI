@@ -7,7 +7,8 @@ module.exports = {
   globals: {
     ZenJS: "readonly",
     describe: "readonly",
-    it: "readonly"
+    it: "readonly",
+    afterEach: "readonly"
   },
   rules: {
     // 强制在模块顶部调用 require()
@@ -60,7 +61,10 @@ module.exports = {
     // 禁止使用一元操作符 ++ 和 --
     "no-plusplus": "off",
     // 要求或禁止命名的 function 表达式
-    "func-names": "off"
+    "func-names": "off",
+    // 禁止在返回语句中赋值
+    //   - 除非使用括号把它们括起来
+    "no-return-assign": [ "error", "except-parens" ]
   }
 
 };
