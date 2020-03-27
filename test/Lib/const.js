@@ -3,7 +3,7 @@ const { resolve } = require('path');
 
 module.exports = {
   // 测试环境根目录
-  root: resolve( __dirname, '../' ),
+  root: resolve(__dirname, '../'),
   // 测试环境清理文件白名单
   whitelist: [
     'Lib',

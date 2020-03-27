@@ -11,23 +11,23 @@ const compilerRollupConfigs = require('../../scripts/init/basic/compilerRollupCo
  * @param config 需要解析的配置
  * @param useBasic 是否使用 basic/index.js 对代码进行解析
  */
-module.exports = ( userConfig, useBasic ) => {
-  const config = initConfig( userConfig );
-  let configs = compilerConfigs( config );
-  let rollupConfigs = compilerRollupConfigs( configs );
+module.exports = (userConfig, useBasic) => {
+  const config = initConfig(userConfig);
+  const configs = compilerConfigs(config);
+  const rollupConfigs = compilerRollupConfigs(configs);
 
   // 若要使用 basic/index.js 对代码进行解析
   // 则会对配置文件进行检查
-  if( useBasic ){
-    return new Promise( async resolve => {
+  if (useBasic) {
+    return (async () => {
       // 输出相关文件
-      await outputConfigAndInput( rollupConfigs, config );
+      await outputConfigAndInput(rollupConfigs, config);
       // 执行解析
-      await compilerRollupConfigsUseBasic( configs );
+      await compilerRollupConfigsUseBasic(configs);
       // 执行完成
-      resolve( rollupConfigs );
-    });
+      return rollupConfigs;
+    })();
   }
 
   return rollupConfigs;
-}
+};
