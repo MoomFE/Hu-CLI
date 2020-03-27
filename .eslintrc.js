@@ -5,7 +5,9 @@ module.exports = {
     "airbnb-base"
   ],
   globals: {
-    ZenJS: "readonly"
+    ZenJS: "readonly",
+    describe: "readonly",
+    it: "readonly"
   },
   rules: {
     // 强制在模块顶部调用 require()
@@ -56,7 +58,9 @@ module.exports = {
       "allowTaggedTemplates": false
     }],
     // 禁止使用一元操作符 ++ 和 --
-    "no-plusplus": "off"
+    "no-plusplus": "off",
+    // 要求或禁止命名的 function 表达式
+    "func-names": "off"
   }
 
 };
