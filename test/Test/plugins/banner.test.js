@@ -1,13 +1,16 @@
+/* eslint-disable no-unused-expressions */
+
+
 require('@moomfe/zenjs');
 const expect = require('chai').expect;
 const compilerRollupConfigs = require('../../Lib/compilerRollupConfigs');
 const runBuild = require('../../Lib/runBuild');
 
 
-describe( 'plugins.banner', function(){
-  this.timeout( Infinity );
+describe('plugins.banner', function () {
+  this.timeout(Infinity);
 
-  it( '不使用 banner 选项时, 在生成打包配置时不会加载相关插件', () => {
+  it('不使用 banner 选项时, 在生成打包配置时不会加载相关插件', () => {
     const rollupConfig = compilerRollupConfigs()[0];
 
     expect(
@@ -15,9 +18,9 @@ describe( 'plugins.banner', function(){
     ).is.undefined;
   });
 
-  it( '在使用 banner 选项时, 在生成打包配置时会加载相关插件', () => {
+  it('在使用 banner 选项时, 在生成打包配置时会加载相关插件', () => {
     const rollupConfig = compilerRollupConfigs({
-      banner: ` `
+      banner: ' '
     })[0];
 
     expect(
@@ -25,15 +28,15 @@ describe( 'plugins.banner', function(){
     ).is.not.undefined;
   });
 
-  it( '在使用 banner 选项进行打包时, 默认会将传入的 banner 转为注释', () => {
+  it('在使用 banner 选项进行打包时, 默认会将传入的 banner 转为注释', () => {
     return runBuild({ banner: '123' }).then(({ codes, logs }) => {
       expect(
-        codes[0].startsWith(`/*!\n * 123\n */`)
+        codes[0].startsWith('/*!\n * 123\n */')
       ).is.true;
     });
   });
 
-  it( '在使用 banner 选项进行打包时, 默认会将传入的 banner 转为注释, 多行测试', () => {
+  it('在使用 banner 选项进行打包时, 默认会将传入的 banner 转为注释, 多行测试', () => {
     return runBuild({
       banner: `
         1
@@ -45,12 +48,12 @@ describe( 'plugins.banner', function(){
       `
     }).then(({ codes, logs }) => {
       expect(
-        codes[0].startsWith(`/*!\n * \n *         1\n *         2\n *         3\n *         4\n *         5\n *         6\n *       \n */`)
+        codes[0].startsWith('/*!\n * \n *         1\n *         2\n *         3\n *         4\n *         5\n *         6\n *       \n */')
       ).is.true;
     });
   });
 
-  it( '在使用 banner 选项进行打包时, 设置 isComment: false 可以不将传入的 banner 转为注释', () => {
+  it('在使用 banner 选项进行打包时, 设置 isComment: false 可以不将传入的 banner 转为注释', () => {
     return runBuild({
       banner: '123',
       pluginOptions: {
@@ -60,71 +63,70 @@ describe( 'plugins.banner', function(){
       }
     }).then(({ codes, logs }) => {
       expect(
-        codes[0].startsWith(`123`)
+        codes[0].startsWith('123')
       ).is.true;
     });
   });
 
-  it( '在使用 banner 选项进行打包时, 设置 extensions 可以约定需要输出 banner 的文件格式 ( js -> .js )', () => {
+  it('在使用 banner 选项进行打包时, 设置 extensions 可以约定需要输出 banner 的文件格式 ( js -> .js )', () => {
     return runBuild({
       banner: '123',
       pluginOptions: {
         banner: {
-          extensions: [ '.js' ]
+          extensions: ['.js']
         }
       }
     }).then(({ codes, logs }) => {
       expect(
-        codes[0].startsWith(`/*!\n * 123\n */`)
+        codes[0].startsWith('/*!\n * 123\n */')
       ).is.true;
     });
   });
 
-  it( '在使用 banner 选项进行打包时, 设置 extensions 可以约定需要输出 banner 的文件格式 ( js -> .css ) ( 二 )', () => {
+  it('在使用 banner 选项进行打包时, 设置 extensions 可以约定需要输出 banner 的文件格式 ( js -> .css ) ( 二 )', () => {
     return runBuild({
       banner: '123',
       pluginOptions: {
         banner: {
-          extensions: [ '.css' ]
+          extensions: ['.css']
         }
       }
     }).then(({ codes, logs }) => {
       expect(
-        codes[0].startsWith(`/*!\n * 123\n */`)
+        codes[0].startsWith('/*!\n * 123\n */')
       ).is.false;
     });
   });
 
-  it( '综合测试 ( js -> .js )', () => {
+  it('综合测试 ( js -> .js )', () => {
     return runBuild({
       banner: '123',
       pluginOptions: {
         banner: {
-          extensions: [ '.js' ],
+          extensions: ['.js'],
           isComment: true
         }
       }
     }).then(({ codes, logs }) => {
       expect(
-        codes[0].startsWith(`/*!\n * 123\n */`)
+        codes[0].startsWith('/*!\n * 123\n */')
       ).is.true;
     });
   });
 
-  it( '综合测试 ( js -> .js ) ( 二 )', () => {
+  it('综合测试 ( js -> .js ) ( 二 )', () => {
     return runBuild({
       banner: '123',
       pluginOptions: {
         banner: {
-          extensions: [ '.js' ],
+          extensions: ['.js'],
           isComment: false
         }
       }
     }).then(({ codes, logs }) => {
       expect(
-        codes[0].startsWith(`123`)
+        codes[0].startsWith('123')
       ).is.true;
     });
   });
-
 });

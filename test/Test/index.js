@@ -9,13 +9,14 @@ process.cwd = () => {
 };
 
 // 清理单元测试产生无用数据
-afterEach( async () => {
-  const files = await readdir( root );
+afterEach(async () => {
+  const files = await readdir(root);
 
   // 清理单元测试产生的文件
-  for( const file of files ){
-    if( whitelist.includes( file ) === false ){
-      await remove( resolve( root, file ) );
+  for (const file of files) {
+    if (whitelist.includes(file) === false) {
+      // eslint-disable-next-line no-await-in-loop
+      await remove(resolve(root, file));
     }
   }
 

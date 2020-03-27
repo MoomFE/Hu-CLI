@@ -1,13 +1,16 @@
+/* eslint-disable no-unused-expressions */
+
+
 require('@moomfe/zenjs');
 const expect = require('chai').expect;
 const compilerRollupConfigs = require('../../Lib/compilerRollupConfigs');
 const runBuild = require('../../Lib/runBuild');
 
 
-describe( 'plugins.replace', function(){
-  this.timeout( Infinity );
+describe('plugins.replace', function () {
+  this.timeout(Infinity);
 
-  it( '不使用 replace 选项时, 在生成打包配置时不会加载相关插件', () => {
+  it('不使用 replace 选项时, 在生成打包配置时不会加载相关插件', () => {
     const rollupConfig = compilerRollupConfigs()[0];
 
     expect(
@@ -15,7 +18,7 @@ describe( 'plugins.replace', function(){
     ).is.undefined;
   });
 
-  it( '在使用 replace 选项时, 如果选项内没有内容, 在生成打包配置时不会加载相关插件', () => {
+  it('在使用 replace 选项时, 如果选项内没有内容, 在生成打包配置时不会加载相关插件', () => {
     const rollupConfig = compilerRollupConfigs({
       replace: {}
     })[0];
@@ -25,7 +28,7 @@ describe( 'plugins.replace', function(){
     ).is.undefined;
   });
 
-  it( '在使用 replace 选项时, 且选项内有内容, 在生成打包配置时会加载相关插件', () => {
+  it('在使用 replace 选项时, 且选项内有内容, 在生成打包配置时会加载相关插件', () => {
     const rollupConfig = compilerRollupConfigs({
       replace: {
         a: 'b'
@@ -37,7 +40,7 @@ describe( 'plugins.replace', function(){
     ).is.not.undefined;
   });
 
-  it( '在使用 replace 选项进行打包时, 会按照传入的 key: value 进行全部替换', () => {
+  it('在使用 replace 选项进行打包时, 会按照传入的 key: value 进行全部替换', () => {
     return runBuild({
       _code: `
         console.log("aaa-BBB-aaa")
@@ -52,7 +55,7 @@ describe( 'plugins.replace', function(){
     });
   });
 
-  it( '在使用 replace 选项进行打包时, 会按照传入的 key: value 进行依次替换', () => {
+  it('在使用 replace 选项进行打包时, 会按照传入的 key: value 进行依次替换', () => {
     return runBuild({
       _code: `
         console.log("aaa-BBB-aaa")
@@ -69,46 +72,46 @@ describe( 'plugins.replace', function(){
     });
   });
 
-  it( '在使用 replace 选项进行打包时, 可以对各种字符进行替换', () => {
+  it('在使用 replace 选项进行打包时, 可以对各种字符进行替换', () => {
     return runBuild({
       _code: `
         console.log(\`-=~!@#$%^&*()_+[]\\\\{}|;':",./<>?\`)
       `,
       replace: {
-        "-": "",
-        "=": "",
-        "~": "",
-        "!": "",
-        "@": "",
-        "#": "",
-        "$": "",
-        "%": "",
-        "^": "",
-        "&": "",
-        "*": "",
-        "(": "",
-        ")": "",
-        "_": "",
-        "+": "",
-        "[": "",
-        "]": "",
-        "\\\\": "",
-        "{": "",
-        "}": "",
-        "|": "",
-        ";": "",
-        "'": "",
-        ":": "",
-        "\"": "",
-        ",": "",
-        ".": "",
-        "/": "",
-        "<": "",
-        ">": "",
-        "?": "",
-        " ": "",
-        "`": "\"",
-        "consolelog\"\"": "console.log(\"\")"
+        '-': '',
+        '=': '',
+        '~': '',
+        '!': '',
+        '@': '',
+        '#': '',
+        $: '',
+        '%': '',
+        '^': '',
+        '&': '',
+        '*': '',
+        '(': '',
+        ')': '',
+        _: '',
+        '+': '',
+        '[': '',
+        ']': '',
+        '\\\\': '',
+        '{': '',
+        '}': '',
+        '|': '',
+        ';': '',
+        "'": '',
+        ':': '',
+        '"': '',
+        ',': '',
+        '.': '',
+        '/': '',
+        '<': '',
+        '>': '',
+        '?': '',
+        ' ': '',
+        '`': '"',
+        'consolelog""': 'console.log("")'
       }
     }).then(({ codes, logs }) => {
       expect(
@@ -117,7 +120,7 @@ describe( 'plugins.replace', function(){
     });
   });
 
-  it( '在使用 replace 选项进行打包时, 可以传入数组类型的选项, 可以自定义正则表达式进行替换', () => {
+  it('在使用 replace 选项进行打包时, 可以传入数组类型的选项, 可以自定义正则表达式进行替换', () => {
     return runBuild({
       _code: `
         console.log("aaa-BBB-aaa-DDD")
@@ -133,5 +136,4 @@ describe( 'plugins.replace', function(){
       ).is.true;
     });
   });
-
 });
