@@ -21,7 +21,6 @@ module.exports = async (rollupConfigs, config) => {
           : outputFile(rollupConfig.input, rollupConfig._code || defaultInput)
       ),
       // 输出打包所需的其他文件
-      // eslint-disable-next-line no-use-before-define
       outputFiles(rollupConfig)
     ]);
     // 删除无用属性

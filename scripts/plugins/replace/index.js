@@ -2,7 +2,6 @@ require('@moomfe/zenjs');
 
 
 module.exports = (config) => {
-  // eslint-disable-next-line no-use-before-define
   const replaceArray = parseReplaceOptions(config.replace, []);
 
   if (replaceArray && replaceArray.length) {

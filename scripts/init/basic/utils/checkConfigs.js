@@ -1,5 +1,4 @@
 /* eslint-disable no-await-in-loop */
-/* eslint-disable no-use-before-define */
 
 
 const { isFunction, isArray } = require('@moomfe/zenjs');

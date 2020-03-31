@@ -1,5 +1,4 @@
 /* eslint-disable brace-style */
-/* eslint-disable no-use-before-define */
 
 
 require('@moomfe/zenjs');

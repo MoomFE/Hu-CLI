@@ -1,6 +1,3 @@
-/* eslint-disable no-use-before-define */
-
-
 require('@moomfe/zenjs');
 const pluginCommonjs = require('rollup-plugin-commonjs');
 const pluginNodeResolve = require('rollup-plugin-node-resolve');
