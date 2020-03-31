@@ -88,7 +88,11 @@ module.exports = {
       variables: true
     }],
     // 是否禁止在条件语句中出现赋值操作符
-    'no-cond-assign': [ 'error', 'except-parens' ]
+    'no-cond-assign': [ 'error', 'except-parens' ],
+    // 是否需要约束 for-in
+    'guard-for-in': 'off',
+    // 是否强制类方法使用 this
+    'class-methods-use-this': 'off'
   }
 
 };
