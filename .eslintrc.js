@@ -8,6 +8,7 @@ module.exports = {
     ZenJS: 'readonly',
     describe: 'readonly',
     it: 'readonly',
+    beforeEach: 'readonly',
     afterEach: 'readonly'
   },
   rules: {
