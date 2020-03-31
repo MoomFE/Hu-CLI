@@ -86,7 +86,9 @@ module.exports = {
       classes: true,
       // 是否要在上层作用域内检测变量声明
       variables: true
-    }]
+    }],
+    // 是否禁止在条件语句中出现赋值操作符
+    'no-cond-assign': [ 'error', 'except-parens' ]
   }
 
 };
