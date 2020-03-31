@@ -75,7 +75,18 @@ module.exports = {
     // 是否禁用 continue
     'no-continue': 'off',
     // 是否只有一个 export 时, 使用 default
-    'import/prefer-default-export': 'off'
+    'import/prefer-default-export': 'off',
+    // 是否禁止连续赋值
+    'no-multi-assign': 'off',
+    // 是否禁止定义前使用
+    'no-use-before-define': [ 'error', {
+      // 是否要检测函数的声明
+      functions: false,
+      // 是否要检测上层作用域中的类声明
+      classes: true,
+      // 是否要在上层作用域内检测变量声明
+      variables: true
+    }]
   }
 
 };
