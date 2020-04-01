@@ -93,7 +93,9 @@ module.exports = {
     // 是否需要约束 for-in
     'guard-for-in': 'off',
     // 是否强制类方法使用 this
-    'class-methods-use-this': 'off'
+    'class-methods-use-this': 'off',
+    // 是否强制使用一致的换行符风格
+    'linebreak-style': 'off'
   }
 
 };
