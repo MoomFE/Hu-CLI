@@ -12,7 +12,6 @@
   ],
   "settings": {
     "breadcrumbs.enabled": false,
-    "files.eol": "\n",
     "files.exclude": {
       ".eslintrc.js": true,
       ".gitignore": true,
