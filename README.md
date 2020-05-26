@@ -93,7 +93,6 @@ Hu-CLI 是一个基于 rollup 的打包工具
       //  - 以下是默认情况下的配置
       //  - 完整选项请查看插件官网 ( https://github.com/TrySound/rollup-plugin-terser )
       terser: {
-        sourcemap: false,
         numWorkers: 1,
         ecma: 6,
         warnings: true,

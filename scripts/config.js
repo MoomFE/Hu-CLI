@@ -44,7 +44,6 @@ module.exports = {
     },
     // 传递给 rollup-plugin-terser 插件的配置
     terser: {
-      sourcemap: false,
       numWorkers: 1,
       ecma: 6,
       warnings: true,
