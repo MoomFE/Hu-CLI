@@ -28,7 +28,7 @@ module.exports = {
     'arrow-body-style': 'off',
     // 是否禁止未使用过的变量
     //   - 忽略对函数参数的检测
-    'no-unused-vars': [ 'warn', {
+    'no-unused-vars': ['warn', {
       args: 'none'
     }],
     // 是否禁用 console
@@ -38,7 +38,7 @@ module.exports = {
     // 是否禁止对函数参数再赋值
     'no-param-reassign': 'off',
     // 强制行的最大长度
-    'max-len': [ 'error', 180, 2, {
+    'max-len': ['error', 180, 2, {
       // 忽略含有链接的行
       ignoreUrls: true,
       // 忽略所有拖尾注释和行内注释
@@ -51,7 +51,7 @@ module.exports = {
       ignoreTemplateLiterals: true,
     }],
     // 是否禁止未使用过的表达式
-    'no-unused-expressions': [ 'error', {
+    'no-unused-expressions': ['error', {
       // 是否允许在表达式中使用逻辑短路求值
       allowShortCircuit: true,
       // 是否允许在表达式中使用类似逻辑短路求值的三元运算符
@@ -65,9 +65,9 @@ module.exports = {
     'func-names': 'off',
     // 是否禁止在返回语句中赋值
     //   - 除非使用括号把它们括起来
-    'no-return-assign': [ 'error', 'except-parens' ],
+    'no-return-assign': ['error', 'except-parens'],
     // 是否强制在花括号内使用一致的换行符
-    'object-curly-newline': [ 'error', {
+    'object-curly-newline': ['error', {
       ObjectExpression: { minProperties: 6, multiline: true, consistent: true },
       ObjectPattern: { minProperties: 6, multiline: true, consistent: true },
       ImportDeclaration: { minProperties: 6, multiline: true, consistent: true },
@@ -80,7 +80,7 @@ module.exports = {
     // 是否禁止连续赋值
     'no-multi-assign': 'off',
     // 是否禁止定义前使用
-    'no-use-before-define': [ 'error', {
+    'no-use-before-define': ['error', {
       // 是否要检测函数的声明
       functions: false,
       // 是否要检测上层作用域中的类声明
@@ -89,13 +89,15 @@ module.exports = {
       variables: true
     }],
     // 是否禁止在条件语句中出现赋值操作符
-    'no-cond-assign': [ 'error', 'except-parens' ],
+    'no-cond-assign': ['error', 'except-parens'],
     // 是否需要约束 for-in
     'guard-for-in': 'off',
     // 是否强制类方法使用 this
     'class-methods-use-this': 'off',
     // 是否强制使用一致的换行符风格
-    'linebreak-style': 'off'
+    'linebreak-style': 'off',
+    // 禁止空块语句
+    'no-empty': 'off'
   }
 
 };
