@@ -1,3 +1,5 @@
+# 1.9.0
+  - 📅 2020-06-09
   - 🌟 添加 `babel` 相关类库以处理兼容性
   - 🌟 新增 `pluginOptions.babel` 选项, 用于配置传递给内部使用的 `@rollup/plugin-babel` 插件的配置
   - 💄 更换 `rollup-plugin-commonjs` 为 `@rollup/plugin-commonjs`
