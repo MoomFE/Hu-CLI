@@ -60,7 +60,7 @@ module.exports = {
     },
     // 传递给 @rollup/plugin-commonjs 插件的配置
     commonjs: {},
-    // 传递给 rollup-plugin-node-resolve 插件的配置
+    // 传递给 @rollup/plugin-node-resolve 插件的配置
     nodeResolve: {},
     // 传递给 @moomfe/hu-template-minifier 插件的配置
     templateMinifier: {}

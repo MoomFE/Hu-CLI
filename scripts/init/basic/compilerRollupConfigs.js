@@ -1,6 +1,6 @@
 require('@moomfe/zenjs');
 const pluginCommonjs = require('@rollup/plugin-commonjs');
-const pluginNodeResolve = require('rollup-plugin-node-resolve');
+const pluginNodeResolve = require('@rollup/plugin-node-resolve').nodeResolve;
 const defaultConfig = require('../../config.js');
 const optionsHandler = require('../../options/index.js');
 const pluginConsole = require('../../plugins/console/index.js');
@@ -84,7 +84,8 @@ function mergeDefaultPlugins(config, rollupConfig) {
       pluginTerser(config, rollupConfig),
       pluginConsole(config, rollupConfig)
     ];
-    rollupConfig.input.plugins.$deleteValue()
+    rollupConfig.input.plugins
+      .$deleteValue()
       .$deleteValue(false);
   }
 

@@ -68,7 +68,7 @@
   - 📅 2019-10-31
   - 💄 新增 `pluginOptions.terser` 选项, 用于配置传递给内部使用的 `rollup-plugin-terser` 插件的配置
   - 💄 新增 `pluginOptions.commonjs` 选项, 用于配置传递给内部使用的 `@rollup/plugin-commonjs` 插件的配置
-  - 💄 新增 `pluginOptions.nodeResolve` 选项, 用于配置传递给内部使用的 `rollup-plugin-node-resolve` 插件的配置
+  - 💄 新增 `pluginOptions.nodeResolve` 选项, 用于配置传递给内部使用的 `@rollup/plugin-node-resolve` 插件的配置
 
 # 1.4.2
   - 📅 2019-10-30
