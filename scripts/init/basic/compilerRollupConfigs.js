@@ -1,5 +1,5 @@
 require('@moomfe/zenjs');
-const pluginCommonjs = require('rollup-plugin-commonjs');
+const pluginCommonjs = require('@rollup/plugin-commonjs');
 const pluginNodeResolve = require('rollup-plugin-node-resolve');
 const defaultConfig = require('../../config.js');
 const optionsHandler = require('../../options/index.js');
