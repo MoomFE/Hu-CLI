@@ -1,5 +1,5 @@
 const { extname } = require('path');
-const { dataToEsm } = require('rollup-pluginutils');
+const { dataToEsm } = require('@rollup/pluginutils');
 const json5 = require('json5');
 
 const defaultOptions = {

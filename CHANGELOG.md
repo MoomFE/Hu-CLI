@@ -1,5 +1,6 @@
   - 💄 更换 "rollup-plugin-commonjs" 为 "@rollup/plugin-commonjs"
   - 💄 更换 "rollup-plugin-node-resolve" 为 "@rollup/plugin-node-resolve"
+  - 💄 更换 "rollup-pluginutils" 为 "@rollup/pluginutils"
 
 # 1.8.11
   - 📅 2020-04-01
