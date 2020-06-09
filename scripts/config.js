@@ -1,10 +1,3 @@
-const browserslist = [
-  'Chrome >= 49',
-  'Firefox >= 47',
-  'Safari >= 10',
-  'Edge >= 14'
-];
-
 
 module.exports = {
 
@@ -68,7 +61,7 @@ module.exports = {
       babelrc: false,
       exclude: [/\/node_modules\//],
       presets: [
-        ['@babel/preset-env', { useBuiltIns: 'usage', corejs: 3, targets: browserslist }]
+        ['@babel/preset-env', { useBuiltIns: 'usage', corejs: 3, targets: 'browserslist' }]
       ]
     }
   },
@@ -80,7 +73,12 @@ module.exports = {
   },
 
   // 项目兼容性
-  browserslist,
+  browserslist: [
+    'Chrome >= 49',
+    'Firefox >= 47',
+    'Safari >= 10',
+    'Edge >= 14'
+  ],
 
   // 多项目打包
   pipe: [
