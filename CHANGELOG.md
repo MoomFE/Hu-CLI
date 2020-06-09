@@ -1,6 +1,8 @@
-  - 💄 更换 "rollup-plugin-commonjs" 为 "@rollup/plugin-commonjs"
-  - 💄 更换 "rollup-plugin-node-resolve" 为 "@rollup/plugin-node-resolve"
-  - 💄 更换 "rollup-pluginutils" 为 "@rollup/pluginutils"
+  - 🌟 添加 `babel` 相关类库以处理兼容性
+  - 🌟 新增 `pluginOptions.babel` 选项, 用于配置传递给内部使用的 `@rollup/plugin-babel` 插件的配置
+  - 💄 更换 `rollup-plugin-commonjs` 为 `@rollup/plugin-commonjs`
+  - 💄 更换 `rollup-plugin-node-resolve` 为 `@rollup/plugin-node-resolve`
+  - 💄 更换 `rollup-pluginutils` 为 `@rollup/pluginutils`
 
 # 1.8.11
   - 📅 2020-04-01
@@ -54,7 +56,7 @@
 
 # 1.5.1
   - 📅 2019-11-20
-  - 💄 新增 `pluginOptions.templateMinifier` 选项, 用于配置传递给内部使用的 `@moomfe/hu-template-minifier` 插件的配置
+  - 🌟 新增 `pluginOptions.templateMinifier` 选项, 用于配置传递给内部使用的 `@moomfe/hu-template-minifier` 插件的配置
   - 💄 为 `plugins`, `configureRollup` 选项内传入的 `config` 参数添加 `_originConfig` 选项, 为原始配置
   - 💄 为 `plugins`, `configureRollup` 选项内传入的 `config` 参数添加 `_mergedConfig` 选项, 为原始配置项与默认配置合并后的配置
 
@@ -70,9 +72,9 @@
 
 # 1.4.3
   - 📅 2019-10-31
-  - 💄 新增 `pluginOptions.terser` 选项, 用于配置传递给内部使用的 `rollup-plugin-terser` 插件的配置
-  - 💄 新增 `pluginOptions.commonjs` 选项, 用于配置传递给内部使用的 `@rollup/plugin-commonjs` 插件的配置
-  - 💄 新增 `pluginOptions.nodeResolve` 选项, 用于配置传递给内部使用的 `@rollup/plugin-node-resolve` 插件的配置
+  - 🌟 新增 `pluginOptions.terser` 选项, 用于配置传递给内部使用的 `rollup-plugin-terser` 插件的配置
+  - 🌟 新增 `pluginOptions.commonjs` 选项, 用于配置传递给内部使用的 `@rollup/plugin-commonjs` 插件的配置
+  - 🌟 新增 `pluginOptions.nodeResolve` 选项, 用于配置传递给内部使用的 `@rollup/plugin-node-resolve` 插件的配置
 
 # 1.4.2
   - 📅 2019-10-30

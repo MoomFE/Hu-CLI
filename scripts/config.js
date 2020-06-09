@@ -1,3 +1,10 @@
+const browserslist = [
+  'Chrome >= 49',
+  'Firefox >= 47',
+  'Safari >= 10',
+  'Edge >= 14'
+];
+
 
 module.exports = {
 
@@ -47,23 +54,23 @@ module.exports = {
       numWorkers: 1,
       ecma: 6,
       warnings: true,
-      compress: {
-        passes: 1,
-        unsafe: true,
-        unsafe_proto: true,
-        unsafe_arrows: true,
-        unsafe_methods: true
-      },
-      output: {
-        comments: false
-      }
+      compress: { passes: 1, unsafe: true, unsafe_proto: true, unsafe_arrows: true, unsafe_methods: true },
+      output: { comments: false }
     },
     // 传递给 @rollup/plugin-commonjs 插件的配置
     commonjs: {},
     // 传递给 @rollup/plugin-node-resolve 插件的配置
     nodeResolve: {},
     // 传递给 @moomfe/hu-template-minifier 插件的配置
-    templateMinifier: {}
+    templateMinifier: {},
+    // 传递给 @rollup/plugin-babel 插件的配置
+    babel: {
+      babelrc: false,
+      exclude: [/\/node_modules\//],
+      presets: [
+        ['@babel/preset-env', { useBuiltIns: 'usage', corejs: 3, targets: browserslist }]
+      ]
+    }
   },
 
   // 方法会接收被解析的 rollup 配置作为参数, 可直接对传入配置进行修改或返回一个新的配置
@@ -73,12 +80,7 @@ module.exports = {
   },
 
   // 项目兼容性
-  browserslist: [
-    'Chrome >= 49',
-    'Firefox >= 47',
-    'Safari >= 10',
-    'Edge >= 14'
-  ],
+  browserslist,
 
   // 多项目打包
   pipe: [

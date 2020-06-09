@@ -26,6 +26,14 @@ Hu-CLI 是一个基于 rollup 的打包工具
 
 ## 配置
 ```js
+  // 项目兼容性
+  const browserslist = [
+    'Chrome >= 49',
+    'Firefox >= 47',
+    'Safari >= 10',
+    'Edge >= 14'
+  ];
+
   // hu.config.js
   //  - 此配置表为默认配置
   module.exports = {
@@ -96,16 +104,8 @@ Hu-CLI 是一个基于 rollup 的打包工具
         numWorkers: 1,
         ecma: 6,
         warnings: true,
-        compress: {
-          passes: 1,
-          unsafe: true,
-          unsafe_proto: true,
-          unsafe_arrows: true,
-          unsafe_methods: true
-        },
-        output: {
-          comments: false
-        }
+        compress: { passes: 1, unsafe: true, unsafe_proto: true, unsafe_arrows: true, unsafe_methods: true },
+        output: { comments: false }
       },
       // 传递给 @rollup/plugin-commonjs 插件的配置
       //  - 完整选项请查看插件官网 ( https://github.com/rollup/plugins/tree/master/packages/commonjs )
@@ -115,7 +115,16 @@ Hu-CLI 是一个基于 rollup 的打包工具
       nodeResolve: {},
       // 传递给 @moomfe/hu-template-minifier 插件的配置
       //  - 完整选项请查看插件官网 ( https://github.com/MoomFE/Hu-Template-Minifier )
-      templateMinifier: {}
+      templateMinifier: {},
+      // 传递给 @rollup/plugin-babel 插件的配置
+      //  - 完整选项请查看插件官网 ( https://github.com/rollup/plugins/tree/master/packages/babel )
+      babel: {
+        babelrc: false,
+        exclude: [/\/node_modules\//],
+        presets: [
+          ['@babel/preset-env', { useBuiltIns: 'usage', corejs: 3, targets: browserslist }]
+        ]
+      }
     },
 
     /**
@@ -129,12 +138,7 @@ Hu-CLI 是一个基于 rollup 的打包工具
     },
 
     // 项目兼容性
-    browserslist: [
-      'Chrome >= 49',
-      'Firefox >= 47',
-      'Safari >= 10',
-      'Edge >= 14'
-    ],
+    browserslist,
 
     // 多项目打包
     //  - 在使用了 pipe 选项后, 与 pipe 同级的配置将不再视为一个有效的配置表, 仅用作继承给 pipe 内的打包配置用
