@@ -1,3 +1,6 @@
+/* eslint-disable import/no-extraneous-dependencies */
+
+
 const { readFile } = require('fs-extra');
 const { init } = require('./runBuildCommand');
 const build = require('../../scripts/init/build');

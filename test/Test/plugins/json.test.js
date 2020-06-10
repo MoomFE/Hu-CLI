@@ -1,3 +1,6 @@
+/* eslint-disable import/no-extraneous-dependencies */
+
+
 require('@moomfe/zenjs');
 const expect = require('chai').expect;
 const runBuild = require('../../Lib/runBuild');

@@ -1,3 +1,6 @@
+/* eslint-disable import/no-extraneous-dependencies */
+
+
 const { readFile } = require('fs-extra');
 const { exec } = require('child_process');
 const { root } = require('./const');

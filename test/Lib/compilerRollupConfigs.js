@@ -1,4 +1,7 @@
-require('../../node_modules/@moomfe/zenjs');
+/* eslint-disable import/no-extraneous-dependencies */
+
+
+require('@moomfe/zenjs');
 const outputConfigAndInput = require('./utils/outputConfigAndInput');
 const initConfig = require('./utils/initConfig');
 const compilerRollupConfigsUseBasic = require('../../scripts/init/basic/index');

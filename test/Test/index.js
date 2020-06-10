@@ -1,3 +1,6 @@
+/* eslint-disable import/no-extraneous-dependencies */
+
+
 const { remove, readdir } = require('fs-extra');
 const { resolve } = require('path');
 const { root, whitelist } = require('../Lib/const');

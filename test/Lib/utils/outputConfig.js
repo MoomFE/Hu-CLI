@@ -1,3 +1,6 @@
+/* eslint-disable import/no-extraneous-dependencies */
+
+
 const { outputFile } = require('fs-extra');
 const { resolve } = require('path');
 const { root } = require('../const');
