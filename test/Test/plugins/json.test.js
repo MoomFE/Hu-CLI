@@ -1,4 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable no-new-func */
 
 
 require('@moomfe/zenjs');
@@ -20,7 +21,6 @@ describe('plugins.json', function () {
         `
       }
     }).then(({ codes: [code], logs }) => {
-      // eslint-disable-next-line no-new-func
       const fn = new Function(`return ${
         code
       }`);
@@ -43,7 +43,6 @@ describe('plugins.json', function () {
         `
       }
     }).then(({ codes: [code], logs }) => {
-      // eslint-disable-next-line no-new-func
       const fn = new Function(`return ${
         code
       }`);
