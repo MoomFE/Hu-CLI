@@ -15,7 +15,9 @@ module.exports = (config) => {
     if (bannerOptions.isComment) {
       banner = banner.replace(/\*\//, '*\\/');
       banner = banner.split(/\r\n|\r|\n/);
-      banner = banner.map((line) => ` * ${line}`);
+      banner = banner.map((line) => {
+        return line ? ` * ${line}` : ' *';
+      });
       banner = ['/*!', ...banner, ' */\n\n'].join('\n');
     }
 
