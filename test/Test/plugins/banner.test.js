@@ -15,7 +15,7 @@ describe('plugins.banner', function () {
     const rollupConfig = compilerRollupConfigs()[0];
 
     expect(
-      rollupConfig.input.plugins.$find({ name: 'banner' })
+      rollupConfig.input.plugins.$find({ name: 'hu:banner' })
     ).is.undefined;
   });
 
@@ -25,7 +25,7 @@ describe('plugins.banner', function () {
     })[0];
 
     expect(
-      rollupConfig.input.plugins.$find({ name: 'banner' })
+      rollupConfig.input.plugins.$find({ name: 'hu:banner' })
     ).is.not.undefined;
   });
 

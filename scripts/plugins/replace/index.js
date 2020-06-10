@@ -6,7 +6,7 @@ module.exports = (config) => {
 
   if (replaceArray && replaceArray.length) {
     return {
-      name: 'replace',
+      name: 'hu:replace',
       transform(code, id) {
         replaceArray.forEach(([key, value]) => {
           code = code.replace(key, value);

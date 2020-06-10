@@ -24,7 +24,7 @@ module.exports = (config, rollupConfig) => {
 
   return {
 
-    name: 'console',
+    name: 'hu:console',
 
     /**
      * 构建开始时
@@ -104,7 +104,7 @@ module.exports.transform = (config, rollupConfig) => {
 
   return {
 
-    name: 'console.transform',
+    name: 'hu:console.transform',
 
     /**
      * 构建开始时

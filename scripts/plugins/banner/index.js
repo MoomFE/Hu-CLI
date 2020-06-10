@@ -22,7 +22,7 @@ module.exports = (config) => {
     }
 
     return {
-      name: 'banner',
+      name: 'hu:banner',
       async generateBundle(outputOptions, bundle, isWrite) {
         Object.entries(bundle).forEach(([name, options]) => {
           const ext = extname(options.fileName);

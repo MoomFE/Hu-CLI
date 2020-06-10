@@ -13,7 +13,7 @@ const defaultOptions = {
 
 module.exports = (config) => {
   return {
-    name: 'json',
+    name: 'hu:json',
     transform(json, id) {
       const ext = extname(id);
 

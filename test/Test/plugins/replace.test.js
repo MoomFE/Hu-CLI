@@ -15,7 +15,7 @@ describe('plugins.replace', function () {
     const rollupConfig = compilerRollupConfigs()[0];
 
     expect(
-      rollupConfig.input.plugins.$find({ name: 'replace' })
+      rollupConfig.input.plugins.$find({ name: 'hu:replace' })
     ).is.undefined;
   });
 
@@ -25,7 +25,7 @@ describe('plugins.replace', function () {
     })[0];
 
     expect(
-      rollupConfig.input.plugins.$find({ name: 'replace' })
+      rollupConfig.input.plugins.$find({ name: 'hu:replace' })
     ).is.undefined;
   });
 
@@ -37,7 +37,7 @@ describe('plugins.replace', function () {
     })[0];
 
     expect(
-      rollupConfig.input.plugins.$find({ name: 'replace' })
+      rollupConfig.input.plugins.$find({ name: 'hu:replace' })
     ).is.not.undefined;
   });
 
