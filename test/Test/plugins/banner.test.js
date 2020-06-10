@@ -48,7 +48,24 @@ describe('plugins.banner', function () {
       `
     }).then(({ codes, logs }) => {
       expect(
-        codes[0].startsWith('/*!\n * \n *         1\n *         2\n *         3\n *         4\n *         5\n *         6\n *       \n */')
+        codes[0].startsWith('/*!\n *\n *         1\n *         2\n *         3\n *         4\n *         5\n *         6\n *       \n */')
+      ).is.true;
+    });
+  });
+
+  it('在使用 banner 选项进行打包时, 默认会将传入的 banner 转为注释, 空行时不会生成多余的空格', () => {
+    return runBuild({
+      banner: `
+        1
+        2\n
+        3
+        4
+        5\n
+        6
+      `
+    }).then(({ codes, logs }) => {
+      expect(
+        codes[0].startsWith('/*!\n *\n *         1\n *         2\n *\n *         3\n *         4\n *         5\n *\n *         6\n *       \n */')
       ).is.true;
     });
   });
