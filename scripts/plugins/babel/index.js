@@ -13,9 +13,7 @@ module.exports = (config) => {
   // 当检测到 `babel` 的 `@babel/preset-env` 预设的 `targets` 选项为字符串 `browserslist` 时
   // 替换为当前配置文件的 browserslist 配置
   if (Array.isArray(presets)) {
-    for (let i = 0, len = presets.length; i < len; i++) {
-      const preset = presets[i];
-
+    for (const preset of presets) {
       if (Array.isArray(preset) && preset[0] === '@babel/preset-env') {
         const presetConfig = preset[1];
 
