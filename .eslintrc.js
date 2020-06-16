@@ -1,4 +1,3 @@
-
 module.exports = {
   root: true,
   extends: [
@@ -97,7 +96,9 @@ module.exports = {
     // 是否强制使用一致的换行符风格
     'linebreak-style': 'off',
     // 禁止空块语句
-    'no-empty': 'off'
+    'no-empty': 'off',
+    // 找不到指定模块
+    'import/no-unresolved': 'off'
   }
 
 };
