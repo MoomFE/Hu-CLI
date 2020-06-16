@@ -1,6 +1,8 @@
 require('@moomfe/zenjs');
 const { resolve, dirname, parse } = require('path');
 const { readFile } = require('fs-extra');
+const querystring = require('querystring');
+const compileCSS = require('./compileCSS');
 
 
 /** 支持的 CSS 类型 */
@@ -27,18 +29,36 @@ module.exports = (config) => {
      * 读取 CSS 文件
      */
     load: pluginFnPreprocess('load', async ([id], { url, ext }) => {
-      const code = await readFile(
+      // eslint-disable-next-line no-return-await
+      return await readFile(
         resolve(dirname(id), `${url.name}${ext}`),
         'utf-8'
       );
-      return code;
     }),
 
     /**
      * 解析文件时
      * 对 CSS 进行转义
      */
-    transform: pluginFnPreprocess('transform', async ([code, id], { search }) => {
+    transform: pluginFnPreprocess('transform', async ([code, id], { search, ext }) => {
+      // 对 CSS 进行处理
+      code = await compileCSS(code, ext);
+      // 取出所有参数
+      search = Object.fromEntries(Object.keys(querystring.parse(search)).map((key) => [key, true]));
+
+      // 返回 CSS 字符串
+      if (search.toString) {
+        return `export default ${JSON.stringify(code)}`;
+      }
+
+      // 插入到 DOM 中
+      if (search.insert) {
+        return `
+          document.head.appendChild(document.createElement('style')).innerHTML = ${JSON.stringify(code)};
+          export default '';
+        `;
+      }
+
       return '';
     })
 
