@@ -28,9 +28,10 @@ afterEach(async () => {
 });
 
 // 单元测试
-require('./config/config.test');
-require('./config/config.externals.test');
-require('./command/build.test');
-require('./plugins/banner.test');
-require('./plugins/json.test');
-require('./plugins/replace.test');
+require('./config/config.test.js');
+require('./config/config.externals.test.js');
+require('./command/build.test.js');
+require('./plugins/banner.test.js');
+require('./plugins/json.test.js');
+require('./plugins/replace.test.js');
+require('./plugins/css.test.js');

@@ -44,15 +44,15 @@ module.exports = (config) => {
       // 对 CSS 进行处理
       code = await compileCSS(code, ext);
       // 取出所有参数
-      search = Object.fromEntries(Object.keys(querystring.parse(search)).map((key) => [key, true]));
+      search = Object.keys(querystring.parse(search));
 
       // 返回 CSS 字符串
-      if (search.toString) {
+      if (search.includes('toString')) {
         return `export default ${JSON.stringify(code)}`;
       }
 
       // 插入到 DOM 中
-      if (search.insert) {
+      if (search.includes('insert')) {
         return `
           document.head.appendChild(document.createElement('style')).innerHTML = ${JSON.stringify(code)};
           export default '';
