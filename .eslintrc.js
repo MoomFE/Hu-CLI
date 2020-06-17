@@ -98,7 +98,16 @@ module.exports = {
     // 禁止空块语句
     'no-empty': 'off',
     // 找不到指定模块
-    'import/no-unresolved': 'off'
+    'import/no-unresolved': 'off',
+    // 不允许多个空行
+    'no-multiple-empty-lines': ['error', {
+      // 强制最大连续空行数
+      max: 2,
+      // 强制文件末尾的最大连续空行数
+      maxBOF: 0,
+      // 强制文件开始的最大连续空行数
+      maxEOF: 0
+    }]
   }
 
 };
