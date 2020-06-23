@@ -11,11 +11,13 @@ const runBuild = require('../../Lib/runBuild');
 describe('plugins.css', function () {
   this.timeout(Infinity);
 
-  const backgroundColorToStringReg = /body(\s*?){(\s*?)background-color:(\s*?)#FFF(;?)(\s*?)}/;
+  const backgroundColorToStringReg = /^(\s*?)body(\s*?){(\s*?)background-color:(\s*?)#FFF(;?)(\s*?)}(\s*?)$/;
   const backgroundColorInsertReg = /document\.head\.appendChild\(document\.createElement\('style'\)\)\.innerHTML(\s*?)=(\s*?)"body(\s*?){(\\n)?(\s*?)background-color:(\s*?)#FFF(;?)(\s*?)}(\\n)?";/;
 
-  it('可以正常导入 ".css", ".scss", ".sass" 类型的文件', () => {
-    return runBuild({
+  it('可以正常导入 ".css", ".scss", ".sass" 类型的文件', async () => {
+    let isRun = false;
+
+    await runBuild({
       _code: `
         import './index.css'
         import './index.scss'
@@ -26,7 +28,11 @@ describe('plugins.css', function () {
         'index.scss': '',
         'index.sass': ''
       }
+    }).then(({ codes: [code], logs }) => {
+      isRun = true;
     });
+
+    expect(isRun).is.true;
   });
 
   it('使用 ?toString 后缀导入 CSS 文件时, 可以将获得编译后的 CSS 字符串 - ( .css )', () => {
