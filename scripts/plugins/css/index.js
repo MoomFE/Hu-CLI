@@ -28,12 +28,15 @@ module.exports = (config) => {
      * 加载文件时
      * 读取 CSS 文件
      */
-    load: pluginFnPreprocess('load', async ([id], { url, ext }) => {
-      // eslint-disable-next-line no-return-await
-      return await readFile(
-        resolve(dirname(id), `${url.name}${ext}`),
-        'utf-8'
-      );
+    load: pluginFnPreprocess('load', function ([id], { url, ext }) {
+      /** CSS 文件路径 */
+      const path = resolve(dirname(id), `${url.name}${ext}`);
+
+      // 监听该 CSS 文件更改
+      //  - 导入 CSS 时使用了参数, 某些插件在解析路径时无法识别, 导致不会监听该 CSS 文件更改
+      this.addWatchFile(path);
+      // 返回读取到的 CSS 文件内容
+      return readFile(path, 'utf-8');
     }),
 
     /**
@@ -69,7 +72,7 @@ module.exports = (config) => {
  * 插件预处理方法
  */
 function pluginFnPreprocess(name, callback) {
-  return async (...args) => {
+  return async function (...args) {
     let id;
 
     switch (name) {
@@ -86,11 +89,11 @@ function pluginFnPreprocess(name, callback) {
 
     // 是支持的 CSS 类型
     if (extensions.includes(ext)) {
-      let result = callback(args, {
+      let result = Reflect.apply(callback, this, [args, {
         url,
         ext,
         search
-      });
+      }]);
 
       // 需要等待异步回调执行完
       if (result instanceof Promise) {
