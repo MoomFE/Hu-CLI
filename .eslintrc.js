@@ -107,6 +107,11 @@ module.exports = {
       maxBOF: 0,
       // 强制文件开始的最大连续空行数
       maxEOF: 0
+    }],
+    // 要求对象字面量属性名称使用引号
+    'quote-props': ['error', 'consistent-as-needed', {
+      // 如果关键字作为对象属性名称，要求使用引号
+      keywords: false
     }]
   }
 
