@@ -7,13 +7,13 @@ const { root } = require('../Lib/const');
   const dependencies = require('../package.json').dependencies;
   const dependenciesKey = Object.keys(dependencies);
 
-  for (const dependencieKey of dependenciesKey) {
+  for (const key of dependenciesKey) {
     try {
       // eslint-disable-next-line import/no-dynamic-require
-      require(`../node_modules/${dependencieKey}/package.json`);
+      require(`../node_modules/${key}/package.json`);
     } catch (error) {
       // eslint-disable-next-line no-await-in-loop
-      await promisify(exec)(`npm install ${dependencieKey}`, {
+      await promisify(exec)(`npm install ${key}`, {
         cwd: root
       });
     }
