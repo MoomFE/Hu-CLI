@@ -11,7 +11,10 @@ const extensions = [
 ];
 
 
-module.exports = (config) => {
+module.exports = (config, rollupConfig) => {
+  /** CSS 包含路径 */
+  const INCLUDEPATHS = [rollupConfig.config.inputDir];
+
   return {
 
     name: 'hu:css',
@@ -30,7 +33,7 @@ module.exports = (config) => {
      */
     load: pluginFnPreprocess('load', function ([id], { url, ext }) {
       /** CSS 文件路径 */
-      const path = resolve(dirname(id), `${url.name}${ext}`);
+      const path = resolve(url.dir, `${url.name}${ext}`);
 
       // 监听该 CSS 文件更改
       //  - 导入 CSS 时使用了参数, 某些插件在解析路径时无法识别, 导致不会监听该 CSS 文件更改
@@ -43,11 +46,14 @@ module.exports = (config) => {
      * 解析文件时
      * 对 CSS 进行转义
      */
-    transform: pluginFnPreprocess('transform', async ([code, id], { search, ext }) => {
-      // 对 CSS 进行处理
-      code = await compileCSS(code, ext);
+    transform: pluginFnPreprocess('transform', async ([code, id], { search, ext, url }) => {
       // 取出所有参数
       search = Object.keys(querystring.parse(search));
+      // 对 CSS 进行处理
+      code = await compileCSS(code, ext, {
+        includePaths: [rollupConfig.config.inputDir, url.dir],
+        rollup: this
+      });
 
       // 返回 CSS 字符串
       if (search.includes('toString')) {

@@ -20,7 +20,7 @@ module.exports = async (
 
   // 转译 Sass 代码
   if (['.sass', '.scss'].includes(type)) {
-    code = await compileSassToCSS(code);
+    code = await compileSassToCSS(code, options);
   }
 
   // 使用 PostCSS 进行兼容性处理
