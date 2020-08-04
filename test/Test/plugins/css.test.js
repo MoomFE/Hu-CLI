@@ -14,6 +14,7 @@ describe('plugins.css', function () {
   this.timeout(Infinity);
 
   const backgroundColorToStringReg = /^(\s*?)body(\s*?){(\s*?)background-color:(\s*?)#FFF(;?)(\s*?)}(\s*?)$/;
+  const backgroundColorToStringRegEnd = /(\s*?)body(\s*?){(\s*?)background-color:(\s*?)#FFF(;?)(\s*?)}(\s*?)$/;
   const backgroundColorInsertReg = /document\.head\.appendChild\(document\.createElement\('style'\)\)\.innerHTML(\s*?)=(\s*?)"body(\s*?){(\\n)?(\s*?)background-color:(\s*?)#FFF(;?)(\s*?)}(\\n)?";/;
 
   it('可以正常导入 ".css", ".scss", ".sass" 类型的文件', async () => {
@@ -183,6 +184,38 @@ describe('plugins.css', function () {
 
       expect(
         backgroundColorToStringReg.test(fn())
+      ).is.true;
+    });
+  });
+
+  it('使用 Sass 语言时, 可以使用 @import 导入类库里的样式文件', () => {
+    return runBuild({
+      _code: `
+        export { default } from './index.scss?toString'
+      `,
+      _files: {
+        'theme.scss': '$color: #FFF',
+        'index.scss': `
+          @import "theme.scss";
+          @import "normalize.css";
+          body{ background-color: $color }
+        `
+      }
+    }).then(({ codes: [code], logs }) => {
+      const fn = new Function(`return ${
+        code
+      }`);
+
+      expect(
+        backgroundColorToStringReg.test(fn())
+      ).is.false;
+
+      expect(
+        backgroundColorToStringRegEnd.test(fn())
+      ).is.true;
+
+      expect(
+        /^\/\*! normalize.css/.test(fn())
       ).is.true;
     });
   });
