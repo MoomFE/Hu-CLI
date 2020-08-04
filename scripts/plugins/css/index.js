@@ -46,13 +46,19 @@ module.exports = (config, rollupConfig) => {
      * 解析文件时
      * 对 CSS 进行转义
      */
-    transform: pluginFnPreprocess('transform', async ([code, id], { search, ext, url }) => {
+    transform: pluginFnPreprocess('transform', async function ([code, id], { search, ext, url }) {
+      /** CSS 文件路径 */
+      const path = resolve(url.dir, `${url.name}${ext}`);
+
       // 取出所有参数
       search = Object.keys(querystring.parse(search));
       // 对 CSS 进行处理
       code = await compileCSS(code, ext, {
-        includePaths: [rollupConfig.config.inputDir, url.dir],
-        rollup: this
+        includePaths: [url.dir, rollupConfig.config.inputDir],
+        file: path,
+        importer: (finalPath) => {
+          this.addWatchFile(finalPath);
+        }
       });
 
       // 返回 CSS 字符串

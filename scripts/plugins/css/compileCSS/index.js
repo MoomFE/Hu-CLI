@@ -7,7 +7,7 @@ const compileSassToCSS = require('./compileSassToCSS.js');
 module.exports = async (
   code,
   type,
-  options = {}
+  options
 ) => {
   // 去除头尾空格
   // 如果是无内容, 则直接返回

@@ -1,12 +1,12 @@
 const sass = require('node-sass');
-const { isAbsolute, resolve } = require('path');
+const { isAbsolute, resolve, dirname } = require('path');
 const { access, constants, readFile } = require('fs-extra');
 
 
 /**
- * 获取使用 @import 导入的文件路径
+ * 获取使用 @import 导入的 CSS 文件的路径及文件内容
  * @param {string} url 原有路径
- * @param {string} prev 父级路径
+ * @param {string} prev 导入该 CSS 的父级 CSS 文件路径
  * @param {array} includePaths CSS 包含路径
  */
 async function getImporterFile(url, prev, includePaths) {
@@ -34,7 +34,7 @@ async function getImporterFile(url, prev, includePaths) {
   if (!finalPath) {
     try {
       finalPath = require.resolve(url, {
-        paths: [prev]
+        paths: [dirname(prev)]
       });
     } catch (error) {}
   }
@@ -50,19 +50,20 @@ async function getImporterFile(url, prev, includePaths) {
 }
 
 
-module.exports = (data, options = {}) => {
-  /** CSS 包含路径 */
-  const includePaths = options.includePaths.reverse().filter((value, index, arr) => arr.indexOf(value) === index);
+module.exports = (data, options) => {
+  /** 优先查找导入 CSS 的包含路径 */
+  const includePaths = options.includePaths.filter((value, index, arr) => arr.indexOf(value) === index);
+  /** 查找到导入的 CSS 后, 执行的回调 */
+  const importerCallback = options.importer;
 
   return new Promise((promiseResolve) => {
     sass.render({
+      file: options.file,
       data,
       importer: (url, prev, done) => {
-        prev = prev === 'stdin' ? includePaths[0] : prev;
-
         getImporterFile(url, prev, includePaths)
           .then(([file, contents]) => {
-            options.rollup.addWatchFile(file);
+            importerCallback(file);
             done({ file, contents });
           })
           .catch((error) => done(error));
