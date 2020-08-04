@@ -92,7 +92,7 @@ describe('plugins.css', function () {
     });
   });
 
-  it('使用 ?insert 后缀导入 CSS 文件时, 可以将获得编译后的 CSS 字符串 - ( .css )', () => {
+  it('使用 ?insert 后缀导入 CSS 文件时, 可以将 CSS 插入到 DOM 中 - ( .css )', () => {
     return runBuild({
       _code: `
         export { default } from './index.css?insert'
@@ -107,7 +107,7 @@ describe('plugins.css', function () {
     });
   });
 
-  it('使用 ?insert 后缀导入 CSS 文件时, 可以将获得编译后的 CSS 字符串 - ( .scss )', () => {
+  it('使用 ?insert 后缀导入 CSS 文件时, 可以将 CSS 插入到 DOM 中 - ( .scss )', () => {
     return runBuild({
       _code: `
         export { default } from './index.scss?insert'
@@ -122,7 +122,7 @@ describe('plugins.css', function () {
     });
   });
 
-  it('使用 ?insert 后缀导入 CSS 文件时, 可以将获得编译后的 CSS 字符串 - ( .sass )', () => {
+  it('使用 ?insert 后缀导入 CSS 文件时, 可以将 CSS 插入到 DOM 中 - ( .sass )', () => {
     return runBuild({
       _code: `
         export { default } from './index.sass?insert'
