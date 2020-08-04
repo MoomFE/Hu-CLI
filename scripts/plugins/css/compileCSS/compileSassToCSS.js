@@ -17,8 +17,8 @@ async function getImporterFile(url, prev, includePaths) {
     finalPath = url;
   }
 
+  // 优先在 CSS 包含路径中依次查找导入的文件
   if (!finalPath) {
-    // 优先在 CSS 包含路径中依次查找导入的文件
     for (const includePath of includePaths) {
       finalPath = resolve(includePath, url);
 
