@@ -10,23 +10,25 @@ const { access, constants, readFile } = require('fs-extra');
  * @param {array} includePaths CSS 包含路径
  */
 async function getImporterFile(url, prev, includePaths) {
-  // 使用 @import 导入的文件路径是绝对路径, 那直接返回改路径
-  if (isAbsolute(url)) {
-    return url;
-  }
-
   let finalPath;
 
-  // 优先在 CSS 包含路径中依次查找导入的文件
-  for (const includePath of includePaths) {
-    finalPath = resolve(includePath, url);
+  // 使用 @import 导入的文件路径是绝对路径
+  if (isAbsolute(url)) {
+    finalPath = url;
+  }
 
-    try {
-      await access(finalPath, constants.F_OK); // eslint-disable-line no-await-in-loop
-      break;
-    } catch (error) {
-      finalPath = undefined;
-      continue;
+  if (!finalPath) {
+    // 优先在 CSS 包含路径中依次查找导入的文件
+    for (const includePath of includePaths) {
+      finalPath = resolve(includePath, url);
+
+      try {
+        await access(finalPath, constants.F_OK); // eslint-disable-line no-await-in-loop
+        break;
+      } catch (error) {
+        finalPath = undefined;
+        continue;
+      }
     }
   }
 
