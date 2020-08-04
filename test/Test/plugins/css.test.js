@@ -5,7 +5,9 @@
 
 require('@moomfe/zenjs');
 const expect = require('chai').expect;
+const { resolve } = require('path');
 const runBuild = require('../../Lib/runBuild');
+const { root } = require('../../Lib/const');
 
 
 describe('plugins.css', function () {
@@ -133,6 +135,54 @@ describe('plugins.css', function () {
     }).then(({ codes: [code], logs }) => {
       expect(
         backgroundColorInsertReg.test(code)
+      ).is.true;
+    });
+  });
+
+  it('使用 Sass 语言时, 可以使用 @import 导入其他样式文件 - ( 相对路径 )', () => {
+    return runBuild({
+      _code: `
+        export { default } from './index.scss?toString'
+      `,
+      _files: {
+        'theme.scss': '$color: #FFF',
+        'index.scss': `
+          @import "theme.scss";
+          body{ background-color: $color }
+        `
+      }
+    }).then(({ codes: [code], logs }) => {
+      const fn = new Function(`return ${
+        code
+      }`);
+
+      expect(
+        backgroundColorToStringReg.test(fn())
+      ).is.true;
+    });
+  });
+
+  it('使用 Sass 语言时, 可以使用 @import 导入其他样式文件 - ( 绝对路径 )', () => {
+    const themePath = resolve(root, 'src/theme.scss');
+
+    return runBuild({
+      _code: `
+        export { default } from './index.scss?toString'
+      `,
+      _files: {
+        'theme.scss': '$color: #FFF',
+        'index.scss': `
+          @import ${JSON.stringify(themePath)};
+          body{ background-color: $color }
+        `
+      }
+    }).then(({ codes: [code], logs }) => {
+      const fn = new Function(`return ${
+        code
+      }`);
+
+      expect(
+        backgroundColorToStringReg.test(fn())
       ).is.true;
     });
   });
