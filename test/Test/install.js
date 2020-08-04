@@ -4,11 +4,18 @@ const { root } = require('../Lib/const');
 
 
 (async () => {
-  try {
-    require('../node_modules/@moomfe/hu/package.json');
-  } catch (error) {
-    return promisify(exec)('npm install @moomfe/hu', {
-      cwd: root
-    });
+  const dependencies = require('../package.json').dependencies;
+  const dependenciesKey = Object.keys(dependencies);
+
+  for (const dependencieKey of dependenciesKey) {
+    try {
+      // eslint-disable-next-line import/no-dynamic-require
+      require(`../node_modules/${dependencieKey}/package.json`);
+    } catch (error) {
+      // eslint-disable-next-line no-await-in-loop
+      await promisify(exec)(`npm install ${dependencieKey}`, {
+        cwd: root
+      });
+    }
   }
 })();
