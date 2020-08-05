@@ -140,30 +140,7 @@ describe('plugins.css', function () {
     });
   });
 
-  it('使用 Sass 语言时, 可以使用 @import 导入其他样式文件 - ( 相对路径 )', () => {
-    return runBuild({
-      _code: `
-        export { default } from './index.scss?toString'
-      `,
-      _files: {
-        'theme.scss': '$color: #FFF',
-        'index.scss': `
-          @import "theme.scss";
-          body{ background-color: $color }
-        `
-      }
-    }).then(({ codes: [code], logs }) => {
-      const fn = new Function(`return ${
-        code
-      }`);
-
-      expect(
-        backgroundColorToStringReg.test(fn())
-      ).is.true;
-    });
-  });
-
-  it('使用 Sass 语言时, 可以使用 @import 导入其他样式文件 - ( 绝对路径 )', () => {
+  it('使用 Sass 语言时, 使用 @import 绝对路径的方式导入其他样式文件', () => {
     const themePath = resolve(root, 'src/theme.scss');
 
     return runBuild({
@@ -188,17 +165,61 @@ describe('plugins.css', function () {
     });
   });
 
-  it('使用 Sass 语言时, 可以使用 @import 导入类库里的样式文件', () => {
+  it('使用 Sass 语言时, 使用 @import 相对路径的方式导入其他样式文件 - 导入的样式文件无前缀时, 第一步先查找当前文件夹', () => {
+    return runBuild({
+      _code: `
+        export { default } from './style/index.scss?toString'
+      `,
+      _files: {
+        'style/theme.scss': '$color: #FFF',
+        'style/index.scss': `
+          @import "theme.scss";
+          body{ background-color: $color }
+        `
+      }
+    }).then(({ codes: [code], logs }) => {
+      const fn = new Function(`return ${
+        code
+      }`);
+
+      expect(
+        backgroundColorToStringReg.test(fn())
+      ).is.true;
+    });
+  });
+
+  it('使用 Sass 语言时, 使用 @import 相对路径的方式导入其他样式文件 - 导入的样式文件无前缀时, 第二步会查找打包入口文件夹', () => {
+    return runBuild({
+      _code: `
+        export { default } from './style/index.scss?toString'
+      `,
+      _files: {
+        'theme.scss': '$color: #FFF',
+        'style/index.scss': `
+          @import "theme.scss";
+          body{ background-color: $color }
+        `
+      }
+    }).then(({ codes: [code], logs }) => {
+      const fn = new Function(`return ${
+        code
+      }`);
+
+      expect(
+        backgroundColorToStringReg.test(fn())
+      ).is.true;
+    });
+  });
+
+  it('使用 Sass 语言时, 使用 @import 相对路径的方式导入其他样式文件 - 导入的样式文件无前缀时, 第三步会查找依赖类库', () => {
     return runBuild({
       _code: `
         export { default } from './index.scss?toString'
       `,
       _files: {
-        'theme.scss': '$color: #FFF',
         'index.scss': `
-          @import "theme.scss";
           @import "normalize.css";
-          body{ background-color: $color }
+          body{ background-color: #FFF }
         `
       }
     }).then(({ codes: [code], logs }) => {
@@ -217,6 +238,52 @@ describe('plugins.css', function () {
       expect(
         /^\/\*! normalize.css/.test(fn())
       ).is.true;
+    });
+  });
+
+  it('使用 Sass 语言时, 使用 @import 相对路径的方式导入其他样式文件 - 导入的样式文件使用 ./ 前缀时则导入指定文件', () => {
+    return runBuild({
+      _code: `
+        export { default } from './style/index.scss?toString'
+      `,
+      _files: {
+        'style/theme.scss': '$color: #FFF',
+        'style/index.scss': `
+          @import "./theme.scss";
+          body{ background-color: $color }
+        `
+      }
+    }).then(({ codes: [code], logs }) => {
+      const fn = new Function(`return ${
+        code
+      }`);
+
+      expect(
+        backgroundColorToStringReg.test(fn())
+      ).is.true;
+    });
+  });
+
+  it.skip('使用 Sass 语言时, 使用 @import 相对路径的方式导入其他样式文件 - 导入的样式文件使用 ./ 前缀时则导入指定文件, 不会查找打包入口文件夹', () => {
+    return runBuild({
+      _code: `
+        export { default } from './style/index.scss?toString'
+      `,
+      _files: {
+        'theme.scss': '$color: #FFF',
+        'style/index.scss': `
+          @import "./theme.scss";
+          body{ background-color: $color }
+        `
+      }
+    }).then(({ codes: [code], logs }) => {
+      // const fn = new Function(`return ${
+      //   code
+      // }`);
+
+      // expect(
+      //   backgroundColorToStringReg.test(fn())
+      // ).is.true;
     });
   });
 });
