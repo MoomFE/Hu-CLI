@@ -57,7 +57,9 @@ module.exports = (config, rollupConfig) => {
 
       // 写入文件到磁盘
       for (const [output, code] of outputMap) {
-        print.stdout(`Writing : ${green(output)}`);
+        if (!process.env.HU_RUNNING_TEST) {
+          print.stdout(`Writing : ${green(output)}`);
+        }
 
         const prefix = index++ ? '      ' : 'Output';
         const size = getSize(code.length);
@@ -66,7 +68,6 @@ module.exports = (config, rollupConfig) => {
         // eslint-disable-next-line no-await-in-loop
         await outputFile(output, code);
 
-        print.stdoutClear();
         print.log(`${prefix}  : ${green(output)} - ( ${green(size)} / ${green(gzipSize)} )`);
       }
 
@@ -99,6 +100,9 @@ module.exports = (config, rollupConfig) => {
 };
 
 
+/**
+ * Rollup 解析文件时, 输出正在解析的文件路径
+ */
 module.exports.transform = (config, rollupConfig) => {
   let progress = 0;
 
@@ -119,13 +123,19 @@ module.exports.transform = (config, rollupConfig) => {
      * 输出正在解析的文件路径
      */
     transform(code, id) {
-      print.stdout(`Transform ( ${++progress} ): ${green(id)}`);
+      if (!process.env.HU_RUNNING_TEST) {
+        print.stdout(`Transform ( ${++progress} ): ${green(id)}`);
+      }
     }
 
   };
 };
 
 
+/**
+ * 执行 watch 时
+ * 监听抛出的异常信息
+ */
 module.exports.watch = (rollupWatcher) => {
   rollupWatcher.on('event', (event) => {
     switch (event.code) {

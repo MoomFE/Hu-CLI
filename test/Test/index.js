@@ -6,6 +6,10 @@ const { resolve } = require('path');
 const { root, whitelist } = require('../Lib/const');
 
 
+// 标识当前是测试环境
+process.env.HU_RUNNING_TEST = true;
+
+
 // 重定向指令执行位置
 process.cwd = () => {
   return root;

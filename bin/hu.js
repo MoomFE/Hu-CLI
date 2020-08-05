@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+require('./util/initProxyConsole');
 const program = require('commander');
 const initCommand = require('./util/initCommand');
 

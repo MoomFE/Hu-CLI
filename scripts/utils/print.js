@@ -48,13 +48,6 @@ module.exports = {
     } else {
       this.log(message);
     }
-  },
-
-  stdoutClear() {
-    if (process.stdout.isTTY) {
-      process.stdout.clearLine();
-      process.stdout.cursorTo(0);
-    }
   }
 
 };
