@@ -17,6 +17,17 @@ async function getImporterFile(url, prev, includePaths) {
     finalPath = url;
   }
 
+  // 使用 ./ 和 ../ 作为前缀时
+  // 则只获取指定文件的路径及内容
+  if (!finalPath && (url.startsWith('./') || url.startsWith('../'))) {
+    finalPath = resolve(dirname(prev), url);
+
+    return [
+      finalPath,
+      await readFile(finalPath, 'utf-8')
+    ];
+  }
+
   // 优先在 CSS 包含路径中依次查找导入的文件
   if (!finalPath) {
     for (const includePath of includePaths) {
@@ -32,23 +43,17 @@ async function getImporterFile(url, prev, includePaths) {
     }
   }
 
-  // 再在依赖类库中进行查找
+  // 最后使用 require 的方式, 在依赖类库中进行查找
   if (!finalPath) {
-    try {
-      finalPath = require.resolve(url, {
-        paths: [dirname(prev)]
-      });
-    } catch (error) {}
+    finalPath = require.resolve(url, {
+      paths: [dirname(prev)]
+    });
   }
 
-  if (finalPath) {
-    return [
-      finalPath,
-      await readFile(finalPath, 'utf-8')
-    ];
-  }
-
-  return new Error(`未找到路径: ${url}`);
+  return [
+    finalPath,
+    await readFile(finalPath, 'utf-8')
+  ];
 }
 
 
