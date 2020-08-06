@@ -1,4 +1,4 @@
-const { resolve, relative } = require('path');
+const { resolve } = require('path');
 const { pathExists, outputFile } = require('fs-extra');
 const { yellow } = require('chalk');
 const inquirer = require('inquirer');
@@ -37,7 +37,7 @@ module.exports = async () => {
  */
 function createEslintrcFile(root) {
   const fileName = '.eslintrc.js';
-  const eslintrcRelativePath = JSON.stringify(relative(root, resolve(__dirname, `../../${fileName}`))).replace(/(^")|("$)/g, "'");
+  const eslintrcRelativePath = JSON.stringify(resolve(__dirname, `../../${fileName}`)).replace(/(^")|("$)/g, "'");
   const data = `
     module.exports = {
       root: true,
