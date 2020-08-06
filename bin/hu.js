@@ -2,11 +2,11 @@
 
 require('./util/initProxyConsole');
 const program = require('commander');
-const initCommand = require('./util/initCommand');
+const initBuildCommand = require('./util/initBuildCommand');
 
 
-initCommand('watch');
-initCommand();
+initBuildCommand('watch');
+initBuildCommand();
 
 program.version(
   require('../package.json').version,

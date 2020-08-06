@@ -1,7 +1,7 @@
 const program = require('commander');
 
 
-module.exports = function initCommand(command = 'build') {
+module.exports = function initBuildCommand(command = 'build') {
   program
     .command(command)
     .option('-c, --config <filename>', '使用指定的配置文件 ( 未指定时则默认使用 hu.config.js )')
