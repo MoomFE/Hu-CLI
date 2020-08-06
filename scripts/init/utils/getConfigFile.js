@@ -1,3 +1,6 @@
+/* eslint-disable brace-style */
+
+
 require('@moomfe/zenjs');
 const { yellow } = require('chalk');
 const { resolve } = require('path');
@@ -18,8 +21,7 @@ module.exports = async () => {
   } else {
     // 配置文件报错或无内容导出
     try {
-      // eslint-disable-next-line import/no-dynamic-require
-      config = require(configFile);
+      config = require(configFile); // eslint-disable-line import/no-dynamic-require
     } catch (error) {
       print.start();
       print.log(`配置文件 ( ${yellow(configFile)} ) 执行时发生异常, 请确认无误后重试 !`);
@@ -35,14 +37,12 @@ module.exports = async () => {
   // 正常配置文件
   if (Object.$isPlainObject(config)) {
     config = [config];
-    // eslint-disable-next-line brace-style
   }
   // 数组格式的配置文件
   else if (Array.isArray(config)) {
     if (!config.length) {
       config.push({});
     }
-    // eslint-disable-next-line brace-style
   }
   // 非正常配置文件
   else {
