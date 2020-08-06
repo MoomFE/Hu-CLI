@@ -8,6 +8,12 @@ const initBuildCommand = require('./util/initBuildCommand');
 initBuildCommand('watch');
 initBuildCommand();
 
+program
+  .command('init')
+  .action((cmd) => {
+    require('../scripts/command/init.js')();
+  });
+
 program.version(
   require('../package.json').version,
   '-v, --version'

@@ -10,7 +10,8 @@
     "version": "bin\\hu --version",
     "build": "bin\\hu build",
     "watch": "bin\\hu watch",
-    "test": "cd ../ && npm run test"
+    "test": "cd ../ && npm run test",
+    "init": "bin\\hu init"
   },
   "keywords": [],
   "author": "Wei Zhang",
