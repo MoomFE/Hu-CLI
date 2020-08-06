@@ -26,6 +26,8 @@ module.exports = async () => {
   ]).then((answers) => {
     // 导入 ESLint 规则
     if (answers.importEslintRules) createEslintrcFile(root);
+    // 创建 Hu-CLI 的配置文件
+    createConfigFile(root);
     // 写入 npm 脚本
     writeNpmScripts(packageFile);
   });
@@ -50,9 +52,30 @@ function createEslintrcFile(root) {
     };
   `
     .trimLeft()
-    .replace(/^\s{2,4}/mg, '');
+    .replace(/^[^\S\r\n]{2,4}/mg, '');
 
   outputFile(`${root}/${fileName}`, data);
+}
+
+/**
+ * 创建 Hu-CLI 的配置文件
+ */
+function createConfigFile(root) {
+  const data = `
+    /** 当前执行的指令 */
+    const HU_RUNNING_COMMAND = process.env.HU_RUNNING_COMMAND;
+
+    module.exports = {
+      mode: HU_RUNNING_COMMAND === 'build',
+      replace: {
+        'process.env.NODE_ENV': JSON.stringify(HU_RUNNING_COMMAND === 'build' ? 'production' : 'development')
+      }
+    };
+  `
+    .trimLeft()
+    .replace(/^[^\S\r\n]{2,4}/mg, '');
+
+  outputFile(`${root}/hu.config.js`, data);
 }
 
 /**
