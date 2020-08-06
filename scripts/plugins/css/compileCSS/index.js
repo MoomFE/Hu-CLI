@@ -30,5 +30,13 @@ module.exports = async (
     })
   ).css;
 
+  // 压缩 CSS 代码
+  if (options.minify) {
+    const CleanCSS = require('clean-css');
+    const cleanCSS = new CleanCSS({ level: 2, rebase: false });
+
+    code = cleanCSS.minify(code).styles;
+  }
+
   return code;
 };

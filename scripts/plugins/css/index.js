@@ -12,9 +12,6 @@ const extensions = [
 
 
 module.exports = (config, rollupConfig) => {
-  /** CSS 包含路径 */
-  const INCLUDEPATHS = [rollupConfig.config.inputDir];
-
   return {
 
     name: 'hu:css',
@@ -54,6 +51,7 @@ module.exports = (config, rollupConfig) => {
       search = Object.keys(querystring.parse(search));
       // 对 CSS 进行处理
       code = await compileCSS(code, ext, {
+        minify: config.mode === 'production' || config.mode === true,
         includePaths: [url.dir, rollupConfig.config.inputDir],
         file: path,
         importer: (finalPath) => {
