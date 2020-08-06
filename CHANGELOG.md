@@ -2,6 +2,7 @@
       - 导入 CSS 文件时可使用 `toString` 参数导入解析过后的 CSS 字符串: `import 'index.css?toString'`
       - 导入 CSS 文件时可使用 `insert` 参数将 CSS 插入到 DOM 中: `import 'index.css?insert'`
       - 当 `mode` 选项为生产模式 ( `'production' || true` ) 时, 会自动压缩 CSS 代码
+  - 🌟 新增 `init` 指令用于初始化项目
   - 💄 更新 `banner` 插件将传入的 `banner` 转为注释的细节, 不再生成多余的空格
 
 # 1.9.1
