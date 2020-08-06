@@ -4,9 +4,9 @@
 require('@moomfe/zenjs');
 const outputConfigAndInput = require('./utils/outputConfigAndInput');
 const initConfig = require('./utils/initConfig');
-const compilerRollupConfigsUseBasic = require('../../scripts/init/basic/index');
-const compilerConfigs = require('../../scripts/init/basic/compilerConfigs');
-const compilerRollupConfigs = require('../../scripts/init/basic/compilerRollupConfigs');
+const compilerRollupConfigsUseBasic = require('../../scripts/init/index');
+const compilerConfigs = require('../../scripts/init/compilerConfigs');
+const compilerRollupConfigs = require('../../scripts/init/compilerRollupConfigs');
 
 
 /**

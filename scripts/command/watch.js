@@ -9,7 +9,7 @@ let rollupWatcher = null;
 
 
 module.exports = async () => {
-  const configs = await require('./basic/index.js')();
+  const configs = await require('../init/index.js')();
   const rollupConfigs = configs.map((config) => {
     return {
       ...config.input,

@@ -10,6 +10,6 @@ module.exports = function initBuildCommand(command = 'build') {
       process.env.HU_RUNNING_CONFIG = cmd.config || 'hu.config.js';
 
       // eslint-disable-next-line import/no-dynamic-require
-      require(`../../scripts/init/${command}.js`)();
+      require(`../../scripts/command/${command}.js`)();
     });
 };

@@ -2,7 +2,7 @@ require('@moomfe/zenjs');
 const { yellow } = require('chalk');
 const { resolve } = require('path');
 const { pathExists } = require('fs-extra');
-const print = require('../../../utils/print.js');
+const print = require('../../utils/print.js');
 
 
 module.exports = async () => {

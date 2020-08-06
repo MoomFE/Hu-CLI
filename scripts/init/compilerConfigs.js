@@ -1,6 +1,6 @@
 require('@moomfe/zenjs');
 const { resolve, dirname } = require('path');
-const defaultConfig = require('../../config.js');
+const defaultConfig = require('../config.js');
 
 
 module.exports = function compilerConfigs(originConfigs, parentConfig, configs = []) {

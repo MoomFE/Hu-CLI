@@ -1,6 +1,6 @@
 const { yellow } = require('chalk');
 const { pathExists } = require('fs-extra');
-const print = require('../../utils/print.js');
+const print = require('../utils/print.js');
 const checkConfigs = require('./utils/checkConfigs.js');
 const getConfigFile = require('./utils/getConfigFile.js');
 const compilerConfigs = require('./compilerConfigs.js');

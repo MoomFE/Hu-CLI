@@ -3,7 +3,7 @@
 
 const { readFile } = require('fs-extra');
 const { init } = require('./runBuildCommand');
-const build = require('../../scripts/init/build');
+const build = require('../../scripts/command/build');
 const proxyLog = require('./utils/proxyLog');
 const initConfig = require('./utils/initConfig');
 

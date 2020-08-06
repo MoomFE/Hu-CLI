@@ -1,17 +1,17 @@
 require('@moomfe/zenjs');
 const pluginCommonjs = require('@rollup/plugin-commonjs');
 const pluginNodeResolve = require('@rollup/plugin-node-resolve').nodeResolve;
-const defaultConfig = require('../../config.js');
-const optionsHandler = require('../../options/index.js');
-const pluginConsole = require('../../plugins/console/index.js');
-const pluginConsoleTransform = require('../../plugins/console/index.js').transform;
-const pluginBanner = require('../../plugins/banner/index.js');
-const pluginReplace = require('../../plugins/replace/index.js');
-const pluginTerser = require('../../plugins/terser/index.js');
-const pluginTemplateMinifier = require('../../plugins/template-minifier/index.js');
-const pluginJson = require('../../plugins/json/index.js');
-const pluginBabel = require('../../plugins/babel/index.js');
-const pluginCSS = require('../../plugins/css/index.js');
+const defaultConfig = require('../config.js');
+const optionsHandler = require('../options/index.js');
+const pluginConsole = require('../plugins/console/index.js');
+const pluginConsoleTransform = require('../plugins/console/index.js').transform;
+const pluginBanner = require('../plugins/banner/index.js');
+const pluginReplace = require('../plugins/replace/index.js');
+const pluginTerser = require('../plugins/terser/index.js');
+const pluginTemplateMinifier = require('../plugins/template-minifier/index.js');
+const pluginJson = require('../plugins/json/index.js');
+const pluginBabel = require('../plugins/babel/index.js');
+const pluginCSS = require('../plugins/css/index.js');
 
 
 module.exports = (configs) => {

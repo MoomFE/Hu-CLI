@@ -2,7 +2,7 @@ const rollup = require('rollup');
 
 
 module.exports = async (configsFromTest) => {
-  const configs = configsFromTest || await require('./basic/index.js')();
+  const configs = configsFromTest || await require('../init/index.js')();
 
   for (const config of configs) {
     const bundle = await rollup.rollup(config.input); // eslint-disable-line no-await-in-loop
