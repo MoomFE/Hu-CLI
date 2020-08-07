@@ -1,4 +1,4 @@
-const { resolve } = require('path');
+const path = require('path');
 const { pathExists, outputFile } = require('fs-extra');
 const { yellow } = require('chalk');
 const inquirer = require('inquirer');
@@ -7,7 +7,7 @@ const print = require('../utils/print.js');
 
 module.exports = async () => {
   const root = process.cwd();
-  const packageFile = resolve(root, 'package.json');
+  const packageFile = path.resolve(root, 'package.json');
 
   // 未找到 package.json 文件
   if (await pathExists(packageFile) === false) {
@@ -38,8 +38,17 @@ module.exports = async () => {
  * 创建 .eslintrc.js 规则文件
  */
 function createEslintrcFile(root) {
-  const fileName = '.eslintrc.js';
-  const eslintrcRelativePath = JSON.stringify(resolve(__dirname, `../../${fileName}`)).replace(/(^")|("$)/g, "'");
+  let eslintrcRelativePath = path.posix.join(
+    ...path.relative(root, path.resolve(__dirname, '../../.eslintrc.js')).split(path.sep)
+  );
+
+  if (!path.isAbsolute(eslintrcRelativePath) && !eslintrcRelativePath.startsWith('.')) {
+    eslintrcRelativePath = `./${eslintrcRelativePath}`;
+  }
+
+  eslintrcRelativePath = JSON.stringify(eslintrcRelativePath);
+  eslintrcRelativePath = eslintrcRelativePath.replace(/(^")|("$)/g, "'");
+
   const data = `
     module.exports = {
       root: true,
@@ -54,7 +63,7 @@ function createEslintrcFile(root) {
     .trimLeft()
     .replace(/^[^\S\r\n]{2,4}/mg, '');
 
-  outputFile(`${root}/${fileName}`, data);
+  outputFile(`${root}/.eslintrc.js`, data);
 }
 
 /**
