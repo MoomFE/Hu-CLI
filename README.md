@@ -7,7 +7,7 @@ Hu-CLI 是一个基于 rollup 的打包工具
 ## 安装
 
 ```bash
-  > npm install @moomfe/hu-cli -g
+  > npm install @moomfe/hu-cli
 ```
 
 <br>
