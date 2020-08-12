@@ -63,7 +63,7 @@ module.exports = (data, options) => {
   /** 查找到导入的 CSS 后, 执行的回调 */
   const importerCallback = options.importer;
 
-  return new Promise((promiseResolve) => {
+  return new Promise((promiseResolve, promiseReject) => {
     sass.render({
       file: options.file,
       data,
@@ -76,7 +76,9 @@ module.exports = (data, options) => {
           .catch((error) => done(error));
       }
     }, (error, result) => {
-      error && console.log(error);
+      if (error) {
+        return promiseReject(error);
+      }
       promiseResolve(
         result.css.toString()
       );

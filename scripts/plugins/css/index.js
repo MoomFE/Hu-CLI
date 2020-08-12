@@ -2,7 +2,8 @@ require('@moomfe/zenjs');
 const { resolve, dirname, parse } = require('path');
 const { readFile } = require('fs-extra');
 const querystring = require('querystring');
-const compileCSS = require('./compileCSS');
+const compileCSS = require('./compileCSS/index.js');
+const print = require('../../utils/print.js');
 
 
 /** 支持的 CSS 类型 */
@@ -50,14 +51,19 @@ module.exports = (config, rollupConfig) => {
       // 取出所有参数
       search = Object.keys(querystring.parse(search));
       // 对 CSS 进行处理
-      code = await compileCSS(code, ext, {
-        minify: config.mode === 'production' || config.mode === true,
-        includePaths: [url.dir, rollupConfig.config.inputDir],
-        file: path,
-        importer: (finalPath) => {
-          this.addWatchFile(finalPath);
-        }
-      });
+      try {
+        code = await compileCSS(code, ext, {
+          minify: config.mode === 'production' || config.mode === true,
+          includePaths: [url.dir, rollupConfig.config.inputDir],
+          file: path,
+          importer: (finalPath) => {
+            this.addWatchFile(finalPath);
+          }
+        });
+      } catch (error) {
+        print.error(error.formatted);
+        throw new Error();
+      }
 
       // 返回 CSS 字符串
       if (search.includes('toString')) {
