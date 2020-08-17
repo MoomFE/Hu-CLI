@@ -2,62 +2,57 @@ require('@moomfe/zenjs');
 
 
 module.exports = (config) => {
-  const replaceArray = parseReplaceOptions(config.replace, []);
+  const replaceArray = parseReplaceOptions([], config.replace);
 
-  if (replaceArray && replaceArray.length) {
-    return {
-      name: 'hu:replace',
-      transform(code, id) {
-        replaceArray.forEach(([key, value]) => {
-          code = code.replace(key, value);
-        });
-        return code;
-      }
-    };
-  }
+  // eslint-disable-next-line curly
+  if (replaceArray && replaceArray.length) return {
+    name: 'hu:replace',
+    transform(code, id) {
+      replaceArray.forEach(([searchValue, replaceValue]) => {
+        code = code.replace(searchValue, replaceValue);
+      });
+      return code;
+    }
+  };
 };
 
-
-function parseReplaceOptions(replace, replaceArray) {
+function parseReplaceOptions(replaceArray, replaceOptions) {
   // 不合法选项
-  if (!replace) {
+  if (!replaceOptions) {
     return;
   }
 
-  // 正常传参
-  if (Object.$isPlainObject(replace)) {
-    // 空传参
-    if (Object.$isEmptyObject(replace)) {
+  // 普通 JSON 传参
+  if (Object.$isPlainObject(replaceOptions)) {
+    // 空 JSON 传参
+    if (Object.$isEmptyObject(replaceOptions)) {
       return;
     }
 
-    Object.entries(replace).$each(([from, to]) => {
+    Object.entries(replaceOptions).forEach(([from, replaceValue]) => {
+      const searchValue = RegExp.$parse(from, 'g');
+
       replaceArray.push([
-        RegExp.$parse(from, 'g'),
-        to
+        searchValue,
+        replaceValue
       ]);
     });
-    // eslint-disable-next-line brace-style
-  }
-  // 数组类型传参
-  else if (Array.isArray(replace)) {
-    replace.forEach((config) => {
-      const { from, to } = config;
 
-      if (ZenJS.isRegExp(from)) {
-        replaceArray.push([
-          from,
-          to
-        ]);
-      } else if (ZenJS.isString(from)) {
-        parseReplaceOptions({ [from]: to }, replaceArray);
+    return replaceArray;
+  }
+
+  // 数组类型传参
+  if (Array.isArray(replaceOptions)) {
+    replaceOptions.forEach(({ from, to }) => {
+      if (from instanceof RegExp) {
+        return replaceArray.push([from, to]);
+      }
+      if (typeof from === 'string') {
+        parseReplaceOptions(replaceArray, {
+          [from]: to
+        });
       }
     });
-    // eslint-disable-next-line brace-style
-  }
-  // 不合法选项
-  else {
-    return;
   }
 
   return replaceArray;
