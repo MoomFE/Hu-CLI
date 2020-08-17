@@ -3,6 +3,7 @@
       - 导入 CSS 文件时可使用 `insert` 参数将 CSS 插入到 DOM 中: `import 'index.css?insert'`
       - 当 `mode` 选项为生产模式 ( `'production' || true` ) 时, 会自动压缩 CSS 代码
   - 🌟 新增 `init` 指令用于初始化项目
+  - 🌟 新增 `bundleReplace` 选项, 用于在写入文件前将代码中指定文本进行替换
   - 💄 更新 `banner` 插件将传入的 `banner` 转为注释的细节, 不再生成多余的空格
 
 # 1.9.1
