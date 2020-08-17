@@ -7,6 +7,7 @@ const pluginConsole = require('../plugins/console/index.js');
 const pluginConsoleTransform = require('../plugins/console/index.js').transform;
 const pluginBanner = require('../plugins/banner/index.js');
 const pluginReplace = require('../plugins/replace/index.js');
+const pluginBundleReplace = require('../plugins/replace/index.js').bundle;
 const pluginTerser = require('../plugins/terser/index.js');
 const pluginTemplateMinifier = require('../plugins/template-minifier/index.js');
 const pluginJson = require('../plugins/json/index.js');
@@ -86,6 +87,7 @@ function mergeDefaultPlugins(config, rollupConfig) {
       pluginTemplateMinifier(config, rollupConfig),
       pluginBabel(config, rollupConfig),
       pluginTerser(config, rollupConfig),
+      pluginBundleReplace(config, rollupConfig),
       pluginConsole(config, rollupConfig)
     ];
     rollupConfig.input.plugins

@@ -1,4 +1,3 @@
-
 module.exports = {
 
   // 打包模式
@@ -26,6 +25,8 @@ module.exports = {
 
   // 将代码中指定文本进行替换
   replace: {},
+  // 将代码中指定文本进行替换 - 在写入文件前进行替换
+  bundleReplace: {},
 
   // 外部依赖
   externals: {},

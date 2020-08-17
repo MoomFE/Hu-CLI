@@ -16,6 +16,26 @@ module.exports = (config) => {
   };
 };
 
+module.exports.bundle = (config) => {
+  const replaceArray = parseReplaceOptions([], config.bundleReplace);
+
+  // eslint-disable-next-line curly
+  if (replaceArray && replaceArray.length) return {
+    name: 'hu:bundleReplace',
+    generateBundle(outputOptions, bundle, isWrite) {
+      Object.entries(bundle).forEach(([name, options]) => {
+        let code = options.code;
+
+        replaceArray.forEach(([searchValue, replaceValue]) => {
+          code = code.replace(searchValue, replaceValue);
+        });
+
+        options.code = code;
+      });
+    }
+  };
+};
+
 function parseReplaceOptions(replaceArray, replaceOptions) {
   // 不合法选项
   if (!replaceOptions) {

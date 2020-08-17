@@ -64,6 +64,10 @@ Hu-CLI 是一个基于 rollup 的打包工具
       // { from: 'process.env.NODE_ENV', to: JSON.stringify('production') },
       // { from: /aaa(?=-)/, to: 'AAA' }
     ],
+    
+    // 将代码中指定文本进行替换 - 在写入文件前进行替换
+    // 规则与 "replace" 相同
+    bundleReplace: {},
 
     // 外部依赖
     //  - 用于定义项目中的外部依赖
