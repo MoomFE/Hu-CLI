@@ -8,7 +8,7 @@ const compilerRollupConfigs = require('../../Lib/compilerRollupConfigs');
 const runBuild = require('../../Lib/runBuild');
 
 
-describe('config', function () {
+describe('config.externals', function () {
   this.timeout(Infinity);
 
   it('使用 externals 选项可以定义外部依赖, 基础测试', async () => {
@@ -176,7 +176,7 @@ describe('config', function () {
     }).then(({ codes: [code], logs }) => {
       expect(code.length < 1000).is.true;
       expect(code).is.includes('(Hu));');
-      expect(code).is.includes('Hu && Object.prototype.hasOwnProperty.call(Hu, \'default\') ? Hu[\'default\'] : Hu');
+      expect(code).is.includes('_interopDefaultLegacy(Hu);');
     });
   });
 
@@ -207,7 +207,7 @@ describe('config', function () {
       expect(code).is.includes('factory(global.Hu)');
       expect(code).is.includes('require(\'@moomfe/hu\')');
       expect(code).is.includes('define([\'@moomfe/hu\']');
-      expect(code).is.includes('Hu && Object.prototype.hasOwnProperty.call(Hu, \'default\') ? Hu[\'default\'] : Hu');
+      expect(code).is.includes('_interopDefaultLegacy(Hu);');
     });
   });
 
@@ -362,7 +362,7 @@ describe('config', function () {
       }).then(({ codes: [code], logs }) => {
         expect(code.length < 1000).is.true;
         expect(code).is.includes('(Hu));');
-        expect(code).is.includes('Hu && Object.prototype.hasOwnProperty.call(Hu, \'default\') ? Hu[\'default\'] : Hu');
+        expect(code).is.includes('_interopDefaultLegacy(Hu);');
       });
     }
   });
@@ -396,7 +396,7 @@ describe('config', function () {
         expect(code).is.includes('factory(global.Hu)');
         expect(code).is.includes('require(\'@moomfe/hu\')');
         expect(code).is.includes('define([\'@moomfe/hu\']');
-        expect(code).is.includes('Hu && Object.prototype.hasOwnProperty.call(Hu, \'default\') ? Hu[\'default\'] : Hu');
+        expect(code).is.includes('_interopDefaultLegacy(Hu);');
       });
     }
   });
@@ -540,7 +540,7 @@ describe('config', function () {
     }).then(({ codes: [code], logs }) => {
       expect(code.length < 1000).is.true;
       expect(code).is.includes('(Huu));');
-      expect(code).is.includes('Hu && Object.prototype.hasOwnProperty.call(Hu, \'default\') ? Hu[\'default\'] : Hu');
+      expect(code).is.includes('_interopDefaultLegacy(Hu);');
     });
   });
 
@@ -573,7 +573,7 @@ describe('config', function () {
       expect(code).is.includes('factory(global.Huu)');
       expect(code).is.includes('require(\'@moomfe/hu\')');
       expect(code).is.includes('define([\'@moomfe/hu\']');
-      expect(code).is.includes('Hu && Object.prototype.hasOwnProperty.call(Hu, \'default\') ? Hu[\'default\'] : Hu');
+      expect(code).is.includes('_interopDefaultLegacy(Hu);');
     });
   });
 
@@ -731,7 +731,7 @@ describe('config', function () {
     }).then(({ codes: [code], logs }) => {
       expect(code.length < 1000).is.true;
       expect(code).is.includes('(Huu));');
-      expect(code).is.includes('Hu && Object.prototype.hasOwnProperty.call(Hu, \'default\') ? Hu[\'default\'] : Hu');
+      expect(code).is.includes('_interopDefaultLegacy(Hu);');
     });
   });
 
@@ -765,7 +765,7 @@ describe('config', function () {
       expect(code).is.not.includes('factory(global.Huu)');
       expect(code).is.not.includes('require(\'@moomfe/hu\')');
       expect(code).is.not.includes('define([\'@moomfe/hu\']');
-      expect(code).is.not.includes('Hu && Object.prototype.hasOwnProperty.call(Hu, \'default\') ? Hu[\'default\'] : Hu');
+      expect(code).is.not.includes('_interopDefaultLegacy(Hu);');
     });
   });
 
@@ -928,7 +928,7 @@ describe('config', function () {
     }).then(({ codes: [code], logs }) => {
       expect(code.length < 1000).is.true;
       expect(code).is.includes('(Huu));');
-      expect(code).is.includes('Hu && Object.prototype.hasOwnProperty.call(Hu, \'default\') ? Hu[\'default\'] : Hu');
+      expect(code).is.includes('_interopDefaultLegacy(Hu);');
     });
   });
 
@@ -965,7 +965,7 @@ describe('config', function () {
       expect(code).is.includes('factory(global.Huuu)');
       expect(code).is.includes('require(\'@moomfe/hu\')');
       expect(code).is.includes('define([\'@moomfe/hu\']');
-      expect(code).is.includes('Hu && Object.prototype.hasOwnProperty.call(Hu, \'default\') ? Hu[\'default\'] : Hu');
+      expect(code).is.includes('_interopDefaultLegacy(Hu);');
     });
   });
 
@@ -1169,7 +1169,7 @@ describe('config', function () {
     }).then(({ codes: [code], logs }) => {
       expect(code.length < 1000).is.false;
       expect(code).is.not.includes('(Hu));');
-      expect(code).is.not.includes('Hu && Object.prototype.hasOwnProperty.call(Hu, \'default\') ? Hu[\'default\'] : Hu');
+      expect(code).is.not.includes('_interopDefaultLegacy(Hu);');
     });
   });
 
@@ -1215,7 +1215,7 @@ describe('config', function () {
       expect(code).is.includes('factory(global.Huuu)');
       expect(code).is.includes('require(\'@moomfe/huuu\')');
       expect(code).is.includes('define([\'@moomfe/huuu\']');
-      expect(code).is.includes('Hu && Object.prototype.hasOwnProperty.call(Hu, \'default\') ? Hu[\'default\'] : Hu');
+      expect(code).is.includes('_interopDefaultLegacy(Hu);');
     });
   });
 
@@ -1398,7 +1398,7 @@ describe('config', function () {
     }).then(({ codes: [code], logs }) => {
       expect(code.length < 1000).is.false;
       expect(code).is.not.includes('(Huu));');
-      expect(code).is.not.includes('Hu && Object.prototype.hasOwnProperty.call(Hu, \'default\') ? Hu[\'default\'] : Hu');
+      expect(code).is.not.includes('_interopDefaultLegacy(Hu);');
     });
   });
 
@@ -1441,7 +1441,7 @@ describe('config', function () {
       expect(code).is.includes('factory(global.Huuu)');
       expect(code).is.includes('require(\'@moomfe/huuu\')');
       expect(code).is.includes('define([\'@moomfe/huuu\']');
-      expect(code).is.includes('Hu && Object.prototype.hasOwnProperty.call(Hu, \'default\') ? Hu[\'default\'] : Hu');
+      expect(code).is.includes('_interopDefaultLegacy(Hu);');
     });
   });
 
@@ -1625,7 +1625,7 @@ describe('config', function () {
     }).then(({ codes: [code], logs }) => {
       expect(code.length < 1000).is.false;
       expect(code).is.not.includes('(Hu));');
-      expect(code).is.not.includes('Hu && Object.prototype.hasOwnProperty.call(Hu, \'default\') ? Hu[\'default\'] : Hu');
+      expect(code).is.not.includes('_interopDefaultLegacy(Hu);');
     });
   });
 
@@ -1667,7 +1667,7 @@ describe('config', function () {
       expect(code).is.includes('factory(global.Huu)');
       expect(code).is.includes('require(\'@moomfe/huuuu\')');
       expect(code).is.includes('define([\'@moomfe/huuuu\']');
-      expect(code).is.includes('Hu && Object.prototype.hasOwnProperty.call(Hu, \'default\') ? Hu[\'default\'] : Hu');
+      expect(code).is.includes('_interopDefaultLegacy(Hu);');
     });
   });
 
@@ -1835,7 +1835,7 @@ describe('config', function () {
     }).then(({ codes: [code], logs }) => {
       expect(code.length < 1000).is.true;
       expect(code).is.includes('(Huu));');
-      expect(code).is.includes('Hu && Object.prototype.hasOwnProperty.call(Hu, \'default\') ? Hu[\'default\'] : Hu');
+      expect(code).is.includes('_interopDefaultLegacy(Hu);');
     });
   });
 
@@ -1875,7 +1875,7 @@ describe('config', function () {
       expect(code).is.includes('factory(global.Huu)');
       expect(code).is.includes('require(\'@moomfe/huuuu\')');
       expect(code).is.includes('define([\'@moomfe/huuuu\']');
-      expect(code).is.includes('Hu && Object.prototype.hasOwnProperty.call(Hu, \'default\') ? Hu[\'default\'] : Hu');
+      expect(code).is.includes('_interopDefaultLegacy(Hu);');
     });
   });
 
@@ -2049,7 +2049,7 @@ describe('config', function () {
     }).then(({ codes: [code], logs }) => {
       expect(code.length < 1000).is.false;
       expect(code).is.not.includes('(Hu));');
-      expect(code).is.not.includes('Hu && Object.prototype.hasOwnProperty.call(Hu, \'default\') ? Hu[\'default\'] : Hu');
+      expect(code).is.not.includes('_interopDefaultLegacy(Hu);');
     });
   });
 
@@ -2087,7 +2087,7 @@ describe('config', function () {
       expect(code).is.includes('factory(global.Huu)');
       expect(code).is.includes('require(\'@moomfe/hu\')');
       expect(code).is.includes('define([\'@moomfe/hu\']');
-      expect(code).is.includes('Hu && Object.prototype.hasOwnProperty.call(Hu, \'default\') ? Hu[\'default\'] : Hu');
+      expect(code).is.includes('_interopDefaultLegacy(Hu);');
     });
   });
 
@@ -2243,7 +2243,7 @@ describe('config', function () {
     }).then(({ codes: [code], logs }) => {
       expect(code.length < 1000).is.false;
       expect(code).is.not.includes('(Hu));');
-      expect(code).is.not.includes('Hu && Object.prototype.hasOwnProperty.call(Hu, \'default\') ? Hu[\'default\'] : Hu');
+      expect(code).is.not.includes('_interopDefaultLegacy(Hu);');
     });
   });
 
@@ -2277,7 +2277,7 @@ describe('config', function () {
       expect(code).is.not.includes('factory(global.Hu)');
       expect(code).is.not.includes('require(\'@moomfe/hu\')');
       expect(code).is.not.includes('define([\'@moomfe/hu\']');
-      expect(code).is.not.includes('Hu && Object.prototype.hasOwnProperty.call(Hu, \'default\') ? Hu[\'default\'] : Hu');
+      expect(code).is.not.includes('_interopDefaultLegacy(Hu);');
     });
   });
 });
