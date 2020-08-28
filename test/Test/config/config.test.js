@@ -549,6 +549,54 @@ describe('config', function () {
     expect(rollupConfigs.length).is.equals(2);
   });
 
+  it('会加载 @moomfe/hu-template-minifier 用于模板压缩', () => {
+    // 1
+    {
+      const rollupConfig = compilerRollupConfigs({
+        mode: 'production'
+      })[0];
+
+      expect(
+        rollupConfig.input.plugins.$find({ name: 'hu-template-minifier' })
+      ).is.not.undefined;
+    }
+    // 2
+    {
+      const rollupConfig = compilerRollupConfigs({
+        mode: true
+      })[0];
+
+      expect(
+        rollupConfig.input.plugins.$find({ name: 'hu-template-minifier' })
+      ).is.not.undefined;
+    }
+
+    // -------------------------------------------
+    // - 反向测试
+    // -------------------------------------------
+
+    // 1
+    {
+      const rollupConfig = compilerRollupConfigs({
+        mode: 'development'
+      })[0];
+
+      expect(
+        rollupConfig.input.plugins.$find({ name: 'hu-template-minifier' })
+      ).is.not.undefined;
+    }
+    // 2
+    {
+      const rollupConfig = compilerRollupConfigs({
+        mode: false
+      })[0];
+
+      expect(
+        rollupConfig.input.plugins.$find({ name: 'hu-template-minifier' })
+      ).is.not.undefined;
+    }
+  });
+
   it('使用 configureRollup 可以用于修改已经解析完成的 rollup 配置', () => {
     const rollupConfig = compilerRollupConfigs({
       // eslint-disable-next-line no-shadow
@@ -589,54 +637,6 @@ describe('config', function () {
     })[0];
 
     expect(config.xxx).is.equals(123);
-  });
-
-  it('使用 mode 并指定为生产环境时, 会加载 @moomfe/hu-template-minifier 用于模板压缩', () => {
-    // 1
-    {
-      const rollupConfig = compilerRollupConfigs({
-        mode: 'production'
-      })[0];
-
-      expect(
-        rollupConfig.input.plugins.$find({ name: 'hu-template-minifier' })
-      ).is.not.undefined;
-    }
-    // 2
-    {
-      const rollupConfig = compilerRollupConfigs({
-        mode: true
-      })[0];
-
-      expect(
-        rollupConfig.input.plugins.$find({ name: 'hu-template-minifier' })
-      ).is.not.undefined;
-    }
-
-    // -------------------------------------------
-    // - 反向测试
-    // -------------------------------------------
-
-    // 1
-    {
-      const rollupConfig = compilerRollupConfigs({
-        mode: 'development'
-      })[0];
-
-      expect(
-        rollupConfig.input.plugins.$find({ name: 'hu-template-minifier' })
-      ).is.undefined;
-    }
-    // 2
-    {
-      const rollupConfig = compilerRollupConfigs({
-        mode: false
-      })[0];
-
-      expect(
-        rollupConfig.input.plugins.$find({ name: 'hu-template-minifier' })
-      ).is.undefined;
-    }
   });
 
   it('使用 mode 并指定为生产环境时, 会加载 terser 用于代码压缩', () => {
