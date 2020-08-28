@@ -177,7 +177,7 @@ describe('plugins.replace', function () {
       ).is.true;
     });
   });
-  it.only('在使用 bundleReplace 选项进行打包时, 可以对各种字符进行替换', () => {
+  it('在使用 bundleReplace 选项进行打包时, 可以对各种字符进行替换', () => {
     return runBuild({
       _code: `
         console.log("-=~!@#$%^&*()_+[]\\\\{}|;':\`,./<>?")
