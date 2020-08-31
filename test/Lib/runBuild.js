@@ -19,18 +19,25 @@ module.exports = async (userConfig) => {
   // 执行指令
   return (async () => {
     const codes = [];
+    let error;
 
     // 执行打包程序
     const stdout = await proxyLog(async () => {
-      await build(rollupConfigs);
+      try {
+        await build(rollupConfigs);
+      } catch (_error) {
+        error = _error;
+      }
     });
 
-    // 读取所有输出文件内容
-    for (const { config: rollupConfig } of rollupConfigs) {
-      codes.push(await readFile(rollupConfig.output, 'utf-8')); // eslint-disable-line no-await-in-loop
+    if (!error) {
+      // 读取所有输出文件内容
+      for (const { config: rollupConfig } of rollupConfigs) {
+        codes.push(await readFile(rollupConfig.output, 'utf-8')); // eslint-disable-line no-await-in-loop
+      }
     }
 
     // 返回结果
-    return { codes, stdout, logs: stdout };
+    return { codes, stdout, logs: stdout, error };
   })();
 };

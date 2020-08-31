@@ -31,10 +31,7 @@ module.exports = async (
 
         // 读取所有输出文件内容
         for (const { config: rollupConfig } of rollupConfigs) {
-          codes.push(
-            // eslint-disable-next-line no-await-in-loop
-            await readFile(rollupConfig.output, 'utf-8')
-          );
+          codes.push(await readFile(rollupConfig.output, 'utf-8')); // eslint-disable-line no-await-in-loop
         }
 
         resolve({ codes, stdout, logs: stdout });

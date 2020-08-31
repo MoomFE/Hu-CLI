@@ -46,11 +46,12 @@ describe('plugins.css', function () {
       _files: {
         'index.css': 'body{ background-color: #FFF }'
       }
-    }).then(({ codes: [code], logs }) => {
+    }).then(({ codes: [code], logs, error }) => {
       const fn = new Function(`return ${
         code
       }`);
 
+      expect(error).is.not.throw;
       expect(
         backgroundColorToStringReg.test(fn())
       ).is.true;
@@ -65,11 +66,12 @@ describe('plugins.css', function () {
       _files: {
         'index.scss': 'body{ background-color: #FFF }'
       }
-    }).then(({ codes: [code], logs }) => {
+    }).then(({ codes: [code], logs, error }) => {
       const fn = new Function(`return ${
         code
       }`);
 
+      expect(error).is.not.throw;
       expect(
         backgroundColorToStringReg.test(fn())
       ).is.true;
@@ -84,11 +86,12 @@ describe('plugins.css', function () {
       _files: {
         'index.sass': 'body{ background-color: #FFF }'
       }
-    }).then(({ codes: [code], logs }) => {
+    }).then(({ codes: [code], logs, error }) => {
       const fn = new Function(`return ${
         code
       }`);
 
+      expect(error).is.not.throw;
       expect(
         backgroundColorToStringReg.test(fn())
       ).is.true;
@@ -103,7 +106,8 @@ describe('plugins.css', function () {
       _files: {
         'index.css': 'body{ background-color: #FFF }'
       }
-    }).then(({ codes: [code], logs }) => {
+    }).then(({ codes: [code], logs, error }) => {
+      expect(error).is.not.throw;
       expect(
         backgroundColorInsertReg.test(code)
       ).is.true;
@@ -118,7 +122,8 @@ describe('plugins.css', function () {
       _files: {
         'index.scss': 'body{ background-color: #FFF }'
       }
-    }).then(({ codes: [code], logs }) => {
+    }).then(({ codes: [code], logs, error }) => {
+      expect(error).is.not.throw;
       expect(
         backgroundColorInsertReg.test(code)
       ).is.true;
@@ -133,7 +138,8 @@ describe('plugins.css', function () {
       _files: {
         'index.sass': 'body{ background-color: #FFF }'
       }
-    }).then(({ codes: [code], logs }) => {
+    }).then(({ codes: [code], logs, error }) => {
+      expect(error).is.not.throw;
       expect(
         backgroundColorInsertReg.test(code)
       ).is.true;
@@ -154,11 +160,12 @@ describe('plugins.css', function () {
           body{ background-color: $color }
         `
       }
-    }).then(({ codes: [code], logs }) => {
+    }).then(({ codes: [code], logs, error }) => {
       const fn = new Function(`return ${
         code
       }`);
 
+      expect(error).is.not.throw;
       expect(
         backgroundColorToStringReg.test(fn())
       ).is.true;
@@ -177,11 +184,12 @@ describe('plugins.css', function () {
           body{ background-color: $color }
         `
       }
-    }).then(({ codes: [code], logs }) => {
+    }).then(({ codes: [code], logs, error }) => {
       const fn = new Function(`return ${
         code
       }`);
 
+      expect(error).is.not.throw;
       expect(
         backgroundColorToStringReg.test(fn())
       ).is.true;
@@ -200,11 +208,12 @@ describe('plugins.css', function () {
           body{ background-color: $color }
         `
       }
-    }).then(({ codes: [code], logs }) => {
+    }).then(({ codes: [code], logs, error }) => {
       const fn = new Function(`return ${
         code
       }`);
 
+      expect(error).is.not.throw;
       expect(
         backgroundColorToStringReg.test(fn())
       ).is.true;
@@ -222,10 +231,12 @@ describe('plugins.css', function () {
           body{ background-color: #FFF }
         `
       }
-    }).then(({ codes: [code], logs }) => {
+    }).then(({ codes: [code], logs, error }) => {
       const fn = new Function(`return ${
         code
       }`);
+
+      expect(error).is.not.throw;
 
       expect(
         backgroundColorToStringReg.test(fn())
@@ -253,18 +264,19 @@ describe('plugins.css', function () {
           body{ background-color: $color }
         `
       }
-    }).then(({ codes: [code], logs }) => {
+    }).then(({ codes: [code], logs, error }) => {
       const fn = new Function(`return ${
         code
       }`);
 
+      expect(error).is.not.throw;
       expect(
         backgroundColorToStringReg.test(fn())
       ).is.true;
     });
   });
 
-  it.skip('使用 Sass 语言时, 使用 @import 相对路径的方式导入其他样式文件 - 导入的样式文件使用 ./ 前缀时则导入指定文件, 不会查找打包入口文件夹', () => {
+  it('使用 Sass 语言时, 使用 @import 相对路径的方式导入其他样式文件 - 导入的样式文件使用 ./ 前缀时则导入指定文件, 不会查找打包入口文件夹', () => {
     return runBuild({
       _code: `
         export { default } from './style/index.scss?toString'
@@ -276,14 +288,8 @@ describe('plugins.css', function () {
           body{ background-color: $color }
         `
       }
-    }).then(({ codes: [code], logs }) => {
-      // const fn = new Function(`return ${
-      //   code
-      // }`);
-
-      // expect(
-      //   backgroundColorToStringReg.test(fn())
-      // ).is.true;
+    }).then(({ codes: [code], logs, error }) => {
+      expect(error).is.throw;
     });
   });
 });

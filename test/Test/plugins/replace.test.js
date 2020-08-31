@@ -219,7 +219,6 @@ describe('plugins.replace', function () {
         'consolelog``': 'console.log("")'
       }
     }).then(({ codes, logs }) => {
-      console.log(codes[0]);
       expect(
         codes[0].includes('console.log("")'),
       ).is.true;
