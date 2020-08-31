@@ -2,6 +2,7 @@ const path = require('path');
 const { pathExists, outputFile } = require('fs-extra');
 const { yellow } = require('chalk');
 const inquirer = require('inquirer');
+const slash = require('slash');
 const print = require('../utils/print.js');
 
 
@@ -38,8 +39,8 @@ module.exports = async () => {
  * 创建 .eslintrc.js 规则文件
  */
 function createEslintrcFile(root) {
-  let eslintrcRelativePath = path.posix.join(
-    ...path.relative(root, path.resolve(__dirname, '../../.eslintrc.js')).split(path.sep)
+  let eslintrcRelativePath = slash(
+    path.relative(root, path.resolve(__dirname, '../../.eslintrc.js'))
   );
 
   if (!path.isAbsolute(eslintrcRelativePath) && !eslintrcRelativePath.startsWith('.')) {
