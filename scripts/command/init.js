@@ -47,9 +47,6 @@ function createEslintrcFile(root) {
     eslintrcRelativePath = `./${eslintrcRelativePath}`;
   }
 
-  eslintrcRelativePath = JSON.stringify(eslintrcRelativePath);
-  eslintrcRelativePath = eslintrcRelativePath.replace(/(^")|("$)/g, "'");
-
   const data = `
     module.exports = {
       root: true,
@@ -57,7 +54,7 @@ function createEslintrcFile(root) {
         browser: true
       },
       extends: [
-        ${eslintrcRelativePath}
+        '${eslintrcRelativePath}'
       ]
     };
   `
