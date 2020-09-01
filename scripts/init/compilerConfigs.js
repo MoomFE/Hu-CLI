@@ -3,6 +3,9 @@ const { resolve, dirname } = require('path');
 const defaultConfig = require('../config.js');
 
 
+/**
+ * 编译 Hu-CLI 配置文件
+ */
 module.exports = function compilerConfigs(originConfigs, parentConfig, configs = []) {
   const HU_RUNNING_CONFIG = process.env.HU_RUNNING_CONFIG;
   let rootPath = process.cwd();

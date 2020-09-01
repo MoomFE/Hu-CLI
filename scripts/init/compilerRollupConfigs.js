@@ -15,6 +15,9 @@ const pluginBabel = require('../plugins/babel/index.js');
 const pluginCSS = require('../plugins/css/index.js');
 
 
+/**
+ * 将 Hu-CLI 配置文件编译为 Rollup 的配置文件
+ */
 module.exports = (configs) => {
   const rollupConfigs = [];
 

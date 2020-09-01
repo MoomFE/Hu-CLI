@@ -8,6 +8,9 @@ const { pathExists } = require('fs-extra');
 const print = require('../../utils/print.js');
 
 
+/**
+ * 获取 Hu-CLI 配置文件内容
+ */
 module.exports = async () => {
   const root = process.cwd();
   const configFile = resolve(root, process.env.HU_RUNNING_CONFIG);
