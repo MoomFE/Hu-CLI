@@ -753,7 +753,7 @@ describe('config', function () {
     expect(config.xxx).is.equals(123);
   });
 
-  it.only('使用 assetsDir 选项可以配置静态资源目录', () => {
+  it('使用 assetsDir 选项可以配置静态资源目录', () => {
     // 不使用 assetsDir 选项时
     {
       const rollupConfig = compilerRollupConfigs({})[0];
