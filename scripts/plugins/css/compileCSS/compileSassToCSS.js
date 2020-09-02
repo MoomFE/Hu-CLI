@@ -1,6 +1,6 @@
 const sass = require('node-sass');
 const { isAbsolute, resolve, dirname } = require('path');
-const { access, constants, readFile } = require('fs-extra');
+const { pathExists, readFile } = require('fs-extra');
 
 
 /**
@@ -34,8 +34,8 @@ async function getImporterFile(url, prev, includePaths) {
       finalPath = resolve(includePath, url);
 
       try {
-        await access(finalPath, constants.F_OK); // eslint-disable-line no-await-in-loop
-        break;
+        if (await pathExists(finalPath)) break; // eslint-disable-line no-await-in-loop
+        throw new Error('');
       } catch (error) {
         finalPath = undefined;
         continue;
