@@ -93,7 +93,7 @@ module.exports = (config, rollupConfig) => {
       }
 
       // 保存需要写入到磁盘中的 CSS 文件内容
-      if (search.length === 0 && code) {
+      if (search.length === 0) {
         cssDatas.set(id, code);
       }
 
@@ -106,15 +106,11 @@ module.exports = (config, rollupConfig) => {
      */
     generateBundle(outputOptions, bundle, isWrite) {
       if (cssDatas.size) {
-        const source = Array.from(cssDatas.values()).join('\n').trim();
-
-        if (source) {
-          this.emitFile({
-            type: 'asset',
-            fileName: 'index.css',
-            source
-          });
-        }
+        this.emitFile({
+          type: 'asset',
+          fileName: 'index.css',
+          source: Array.from(cssDatas.values()).join('\n')
+        });
       }
     }
 
