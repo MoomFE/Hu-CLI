@@ -4,6 +4,7 @@
 
 require('@moomfe/zenjs');
 const expect = require('chai').expect;
+const slash = require('slash');
 const compilerRollupConfigs = require('../../Lib/compilerRollupConfigs');
 const runBuild = require('../../Lib/runBuild');
 const proxyLog = require('../../Lib/utils/proxyLog');
@@ -532,23 +533,6 @@ describe('config', function () {
     }
   });
 
-  it('未使用 pipe 选项进行多项目打包时, 当前配置表会视为一个有效的配置表', () => {
-    expect(
-      compilerRollupConfigs().length
-    ).is.equals(1);
-  });
-
-  it('当使用 pipe 选项进行多项目打包时, 当前配置表将不再视为一个有效的配置表', () => {
-    const rollupConfigs = compilerRollupConfigs({
-      pipe: [
-        {},
-        {}
-      ]
-    });
-
-    expect(rollupConfigs.length).is.equals(2);
-  });
-
   it('会加载 @moomfe/hu-template-minifier 用于模板压缩', () => {
     // 1
     {
@@ -595,6 +579,23 @@ describe('config', function () {
         rollupConfig.input.plugins.$find({ name: 'hu-template-minifier' })
       ).is.not.undefined;
     }
+  });
+
+  it('未使用 pipe 选项进行多项目打包时, 当前配置表会视为一个有效的配置表', () => {
+    expect(
+      compilerRollupConfigs().length
+    ).is.equals(1);
+  });
+
+  it('当使用 pipe 选项进行多项目打包时, 当前配置表将不再视为一个有效的配置表', () => {
+    const rollupConfigs = compilerRollupConfigs({
+      pipe: [
+        {},
+        {}
+      ]
+    });
+
+    expect(rollupConfigs.length).is.equals(2);
   });
 
   it('使用 configureRollup 可以用于修改已经解析完成的 rollup 配置', () => {
@@ -750,5 +751,24 @@ describe('config', function () {
     });
 
     expect(config.xxx).is.equals(123);
+  });
+
+  it.only('使用 assetsDir 选项可以配置静态资源目录', () => {
+    // 不使用 assetsDir 选项时
+    {
+      const rollupConfig = compilerRollupConfigs({})[0];
+      const output = slash(rollupConfig.output.file);
+
+      expect(output.endsWith('dist/index.js')).is.true;
+    }
+    // 使用 assetsDir 选项时
+    {
+      const rollupConfig = compilerRollupConfigs({
+        assetsDir: '123'
+      })[0];
+      const output = slash(rollupConfig.output.file);
+
+      expect(output.endsWith('dist/123/index.js')).is.true;
+    }
   });
 });
