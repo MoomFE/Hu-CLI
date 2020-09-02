@@ -38,6 +38,13 @@ module.exports = async (userConfig) => {
     }
 
     // 返回结果
-    return { codes, stdout, logs: stdout, error };
+    return {
+      codes,
+      stdout,
+      logs: stdout,
+      error,
+      config,
+      rollupConfigs
+    };
   })();
 };

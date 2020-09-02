@@ -5,7 +5,8 @@
 
 require('@moomfe/zenjs');
 const expect = require('chai').expect;
-const { resolve } = require('path');
+const { resolve, dirname } = require('path');
+const { pathExists, readFile } = require('fs-extra');
 const runBuild = require('../../Lib/runBuild');
 const { root } = require('../../Lib/const');
 
@@ -31,7 +32,7 @@ describe('plugins.css', function () {
         'index.scss': '',
         'index.sass': ''
       }
-    }).then(({ codes: [code], logs }) => {
+    }).then(() => {
       isRun = true;
     });
 
@@ -46,12 +47,18 @@ describe('plugins.css', function () {
       _files: {
         'index.css': 'body{ background-color: #FFF }'
       }
-    }).then(({ codes: [code], logs, error }) => {
+    }).then(async ({ codes: [code], error, rollupConfigs: [rollupConfig] }) => {
+      // 判断是否报错
+      expect(error).is.not.throw;
+
+      // 判断是否输出样式文件
+      const cssFile = resolve(dirname(rollupConfig.output.file), 'index.css');
+      expect(await pathExists(cssFile)).is.false;
+
       const fn = new Function(`return ${
         code
       }`);
 
-      expect(error).is.not.throw;
       expect(
         backgroundColorToStringReg.test(fn())
       ).is.true;
@@ -66,12 +73,18 @@ describe('plugins.css', function () {
       _files: {
         'index.scss': 'body{ background-color: #FFF }'
       }
-    }).then(({ codes: [code], logs, error }) => {
+    }).then(async ({ codes: [code], error, rollupConfigs: [rollupConfig] }) => {
+      // 判断是否报错
+      expect(error).is.not.throw;
+
+      // 判断是否输出样式文件
+      const cssFile = resolve(dirname(rollupConfig.output.file), 'index.css');
+      expect(await pathExists(cssFile)).is.false;
+
       const fn = new Function(`return ${
         code
       }`);
 
-      expect(error).is.not.throw;
       expect(
         backgroundColorToStringReg.test(fn())
       ).is.true;
@@ -86,12 +99,18 @@ describe('plugins.css', function () {
       _files: {
         'index.sass': 'body{ background-color: #FFF }'
       }
-    }).then(({ codes: [code], logs, error }) => {
+    }).then(async ({ codes: [code], error, rollupConfigs: [rollupConfig] }) => {
+      // 判断是否报错
+      expect(error).is.not.throw;
+
+      // 判断是否输出样式文件
+      const cssFile = resolve(dirname(rollupConfig.output.file), 'index.css');
+      expect(await pathExists(cssFile)).is.false;
+
       const fn = new Function(`return ${
         code
       }`);
 
-      expect(error).is.not.throw;
       expect(
         backgroundColorToStringReg.test(fn())
       ).is.true;
@@ -106,8 +125,14 @@ describe('plugins.css', function () {
       _files: {
         'index.css': 'body{ background-color: #FFF }'
       }
-    }).then(({ codes: [code], logs, error }) => {
+    }).then(async ({ codes: [code], error, rollupConfigs: [rollupConfig] }) => {
+      // 判断是否报错
       expect(error).is.not.throw;
+
+      // 判断是否输出样式文件
+      const cssFile = resolve(dirname(rollupConfig.output.file), 'index.css');
+      expect(await pathExists(cssFile)).is.false;
+
       expect(
         backgroundColorInsertReg.test(code)
       ).is.true;
@@ -122,8 +147,14 @@ describe('plugins.css', function () {
       _files: {
         'index.scss': 'body{ background-color: #FFF }'
       }
-    }).then(({ codes: [code], logs, error }) => {
+    }).then(async ({ codes: [code], error, rollupConfigs: [rollupConfig] }) => {
+      // 判断是否报错
       expect(error).is.not.throw;
+
+      // 判断是否输出样式文件
+      const cssFile = resolve(dirname(rollupConfig.output.file), 'index.css');
+      expect(await pathExists(cssFile)).is.false;
+
       expect(
         backgroundColorInsertReg.test(code)
       ).is.true;
@@ -138,11 +169,36 @@ describe('plugins.css', function () {
       _files: {
         'index.sass': 'body{ background-color: #FFF }'
       }
-    }).then(({ codes: [code], logs, error }) => {
+    }).then(async ({ codes: [code], error, rollupConfigs: [rollupConfig] }) => {
+      // 判断是否报错
       expect(error).is.not.throw;
+
+      // 判断是否输出样式文件
+      const cssFile = resolve(dirname(rollupConfig.output.file), 'index.css');
+      expect(await pathExists(cssFile)).is.false;
+
       expect(
         backgroundColorInsertReg.test(code)
       ).is.true;
+    });
+  });
+
+  it('不使用后缀导入 CSS 文件时, 会将导入的 CSS 内容输出为文件', () => {
+    return runBuild({
+      _code: `
+        import './index.scss'
+      `,
+      _files: {
+        'index.scss': 'body{ background-color: #FFF }'
+      }
+    }).then(async ({ rollupConfigs: [rollupConfig], error }) => {
+      // 判断是否报错
+      expect(error).is.not.throw;
+
+      // 判断是否输出样式文件
+      const cssFile = resolve(dirname(rollupConfig.output.file), 'index.css');
+      expect(await pathExists(cssFile)).is.true;
+      expect(backgroundColorToStringReg.test(await readFile(cssFile))).is.true;
     });
   });
 
@@ -160,12 +216,18 @@ describe('plugins.css', function () {
           body{ background-color: $color }
         `
       }
-    }).then(({ codes: [code], logs, error }) => {
+    }).then(async ({ codes: [code], error, rollupConfigs: [rollupConfig] }) => {
+      // 判断是否报错
+      expect(error).is.not.throw;
+
+      // 判断是否输出样式文件
+      const cssFile = resolve(dirname(rollupConfig.output.file), 'index.css');
+      expect(await pathExists(cssFile)).is.false;
+
       const fn = new Function(`return ${
         code
       }`);
 
-      expect(error).is.not.throw;
       expect(
         backgroundColorToStringReg.test(fn())
       ).is.true;
@@ -184,12 +246,18 @@ describe('plugins.css', function () {
           body{ background-color: $color }
         `
       }
-    }).then(({ codes: [code], logs, error }) => {
+    }).then(async ({ codes: [code], error, rollupConfigs: [rollupConfig] }) => {
+      // 判断是否报错
+      expect(error).is.not.throw;
+
+      // 判断是否输出样式文件
+      const cssFile = resolve(dirname(rollupConfig.output.file), 'index.css');
+      expect(await pathExists(cssFile)).is.false;
+
       const fn = new Function(`return ${
         code
       }`);
 
-      expect(error).is.not.throw;
       expect(
         backgroundColorToStringReg.test(fn())
       ).is.true;
@@ -208,12 +276,18 @@ describe('plugins.css', function () {
           body{ background-color: $color }
         `
       }
-    }).then(({ codes: [code], logs, error }) => {
+    }).then(async ({ codes: [code], error, rollupConfigs: [rollupConfig] }) => {
+      // 判断是否报错
+      expect(error).is.not.throw;
+
+      // 判断是否输出样式文件
+      const cssFile = resolve(dirname(rollupConfig.output.file), 'index.css');
+      expect(await pathExists(cssFile)).is.false;
+
       const fn = new Function(`return ${
         code
       }`);
 
-      expect(error).is.not.throw;
       expect(
         backgroundColorToStringReg.test(fn())
       ).is.true;
@@ -231,12 +305,17 @@ describe('plugins.css', function () {
           body{ background-color: #FFF }
         `
       }
-    }).then(({ codes: [code], logs, error }) => {
+    }).then(async ({ codes: [code], error, rollupConfigs: [rollupConfig] }) => {
+      // 判断是否报错
+      expect(error).is.not.throw;
+
+      // 判断是否输出样式文件
+      const cssFile = resolve(dirname(rollupConfig.output.file), 'index.css');
+      expect(await pathExists(cssFile)).is.false;
+
       const fn = new Function(`return ${
         code
       }`);
-
-      expect(error).is.not.throw;
 
       expect(
         backgroundColorToStringReg.test(fn())
@@ -264,12 +343,18 @@ describe('plugins.css', function () {
           body{ background-color: $color }
         `
       }
-    }).then(({ codes: [code], logs, error }) => {
+    }).then(async ({ codes: [code], error, rollupConfigs: [rollupConfig] }) => {
+      // 判断是否报错
+      expect(error).is.not.throw;
+
+      // 判断是否输出样式文件
+      const cssFile = resolve(dirname(rollupConfig.output.file), 'index.css');
+      expect(await pathExists(cssFile)).is.false;
+
       const fn = new Function(`return ${
         code
       }`);
 
-      expect(error).is.not.throw;
       expect(
         backgroundColorToStringReg.test(fn())
       ).is.true;
@@ -288,7 +373,8 @@ describe('plugins.css', function () {
           body{ background-color: $color }
         `
       }
-    }).then(({ codes: [code], logs, error }) => {
+    }).then(({ error }) => {
+      // 判断是否报错
       expect(error).is.throw;
     });
   });
