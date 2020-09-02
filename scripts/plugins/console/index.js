@@ -49,10 +49,14 @@ module.exports = (config, rollupConfig) => {
       // 取出所有需要写入到磁盘的文件
       Object.entries(bundle).forEach(([name, options]) => {
         delete bundle[name];
-        outputMap.set(
-          options.isEntry ? config.output : resolve(config.outputDir, options.fileName),
-          options.code
-        );
+
+        let output = config.output;
+
+        if (!options.isEntry) {
+          output = resolve(config.outputDir, config.assetsDir, options.fileName);
+        }
+
+        outputMap.set(output, options.code);
       });
 
       // 写入文件到磁盘

@@ -46,6 +46,9 @@ Hu-CLI 是一个基于 rollup 的打包工具
     // 打包输出目录
     outputDir: './dist',
 
+    // 静态资源目录, 相对于 `outputDir` 目录
+    assetsDir: '',
+
     // 输出的文件类型 ( amd, cjs, system, esm, iife, umd )
     format: 'iife',
     // 生成 UMD 和 IIFE 模块的名字

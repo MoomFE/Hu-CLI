@@ -28,7 +28,7 @@ module.exports = function compilerConfigs(originConfigs, parentConfig, configs =
     config.inputDir = inputDir;
     config.outputDir = outputDir;
     config.input = resolve(inputDir, config.input);
-    config.output = resolve(outputDir, config.output);
+    config.output = resolve(outputDir, config.assetsDir, config.output);
 
     if (config.externals == null) config.externals = {};
     if (config.pluginOptions == null) config.pluginOptions = {};
