@@ -51,12 +51,19 @@ module.exports = (config, rollupConfig) => {
         delete bundle[name];
 
         let output = config.output;
+        let code = '';
 
         if (!options.isEntry) {
           output = resolve(config.outputDir, config.assetsDir, options.fileName);
         }
 
-        outputMap.set(output, options.code);
+        switch (options.type) {
+          case 'chunk': code = options.code; break;
+          case 'asset': code = options.source; break;
+          default:
+        }
+
+        outputMap.set(output, code);
       });
 
       // 写入文件到磁盘

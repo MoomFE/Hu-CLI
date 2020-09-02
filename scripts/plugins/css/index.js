@@ -13,9 +13,23 @@ const extensions = [
 
 
 module.exports = (config, rollupConfig) => {
+  /**
+   * 存储需要写入到磁盘中的 CSS 文件内容
+   */
+  const cssDatas = new Map();
+
   return {
 
     name: 'hu:css',
+
+    /**
+     * 构建开始时
+     * 初始化相关变量
+     */
+    buildStart() {
+      // 清空上次构建时缓存的内容
+      cssDatas.clear();
+    },
 
     /**
      * 解析路径时
@@ -78,8 +92,31 @@ module.exports = (config, rollupConfig) => {
         `;
       }
 
+      // 保存需要写入到磁盘中的 CSS 文件内容
+      if (search.length === 0 && code) {
+        cssDatas.set(id, code);
+      }
+
       return '';
-    })
+    }),
+
+    /**
+     * 构建完成时
+     * 把 CSS 文件写入到磁盘
+     */
+    generateBundle(outputOptions, bundle, isWrite) {
+      if (cssDatas.size) {
+        const source = Array.from(cssDatas.values()).join('\n').trim();
+
+        if (source) {
+          this.emitFile({
+            type: 'asset',
+            fileName: 'index.css',
+            source
+          });
+        }
+      }
+    }
 
   };
 };
