@@ -4,6 +4,7 @@
       - 当 `mode` 选项为生产模式 ( `'production' || true` ) 时, 会自动压缩 CSS 代码
   - 🌟 新增 `init` 指令用于初始化项目
   - 🌟 新增 `bundleReplace` 选项, 用于在写入文件前将代码中指定文本进行替换
+  - 🌟 新增 `assetsDir` 选项, 用于配置静态资源目录
   - 💄 更新 `banner` 插件将传入的 `banner` 转为注释的细节, 不再生成多余的空格
   - 💄 始终加载 `@moomfe/hu-template-minifier` 用于模板压缩
 
