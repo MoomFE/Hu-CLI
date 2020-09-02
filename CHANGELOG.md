@@ -1,6 +1,7 @@
   - 🌟 支持导入 `.css`, `.scss`, `.sass` 类型的文件
       - 导入 CSS 文件时可使用 `toString` 参数导入解析过后的 CSS 字符串: `import 'index.css?toString'`
       - 导入 CSS 文件时可使用 `insert` 参数将 CSS 插入到 DOM 中: `import 'index.css?insert'`
+      - 导入 CSS 文件时未使用参数, 构建完成后会将导入的 CSS 文件输出为文件
       - 当 `mode` 选项为生产模式 ( `'production' || true` ) 时, 会自动压缩 CSS 代码
   - 🌟 新增 `init` 指令用于初始化项目
   - 🌟 新增 `bundleReplace` 选项, 用于在写入文件前将代码中指定文本进行替换
