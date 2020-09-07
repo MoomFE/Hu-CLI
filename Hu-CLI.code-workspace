@@ -22,7 +22,8 @@
       "package-lock.json": true,
       "scripts": true,
       "test": true,
-      "typings": true
+      "typings": true,
+      "yarn.lock": true
     },
     "editor.tabSize": 2,
     "editor.detectIndentation": false,
